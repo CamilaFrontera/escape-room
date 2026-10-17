@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<title>Error 500</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: una terminal por pantalla (pistas y servidor), centrada, grande para leer a 2 m. Tema único oscuro arcade, a propósito. */
+:root{
+  --bg:#170D2E; --screen:#22164A; --ink:#F4F0FF; --muted:#D6CEF2; --line:#3D2E78; --dark:#0B0618;
+  --cyan:#3EE6FF; --yellow:#FFD23F; --pink:#FF4FA3; --green:#5CF28B; --red:#FF5A5A;
+  --pixel:"Press Start 2P","Courier New",monospace;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:21px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background-image:radial-gradient(ellipse at 50% 0%,#3A1F7A 0%,transparent 60%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0 2px,transparent 2px 4px)}
+body.alarm{animation:alarm 1s steps(2,start) infinite}
+@keyframes alarm{50%{background-color:#3a0d1f}}
+.wrap{max-width:1040px;margin:0 auto;min-height:100%;box-sizing:border-box;padding-block:clamp(16px,4vh,40px);display:flex;flex-direction:column;justify-content:center;gap:22px}
+h1,h2,h3,p{margin:0}
+h1{font-family:var(--pixel);color:var(--yellow);text-shadow:5px 5px 0 var(--pink);font-size:clamp(40px,9vw,96px);line-height:1.15}
+h2{font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.15;text-wrap:balance}
+.px{font-family:var(--pixel);letter-spacing:.03em;line-height:1.6}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.small{font-size:16px;color:var(--muted)}
+.center{text-align:center;align-items:center}
+
+.term{background:var(--screen);border:4px solid var(--line);box-shadow:10px 10px 0 var(--dark);display:flex;flex-direction:column}
+.term.alert{border-color:var(--pink)}
+.bar{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--line);font-family:var(--mono);font-size:17px;color:var(--muted);user-select:none}
+.term.alert .bar{background:var(--pink);color:var(--dark);font-weight:700}
+.dot{width:14px;height:14px;border-radius:50%;flex:none}
+.bar .grow{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.body{padding:clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:22px}
+
+.btn{font-family:var(--pixel);font-size:clamp(13px,2.2vw,17px);line-height:1.4;border:0;cursor:pointer;padding:18px 26px;background:var(--yellow);color:var(--dark);box-shadow:0 6px 0 #B38F14;text-transform:uppercase}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #B38F14}
+.btn.big{font-size:clamp(16px,3vw,26px);padding:24px 40px}
+.btn.ghost{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 2px var(--line);font-size:11px;padding:10px 14px}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:4px solid var(--green);outline-offset:4px}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.row.c{justify-content:center}
+.blink{animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+
+/* menú */
+.menu{display:flex;flex-direction:column;gap:16px}
+.menu-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.menu-h h1{font-size:clamp(36px,5vw,56px)}
+.menu-net{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cards .card:first-child{grid-column:1/-1}
+.card{display:flex;flex-direction:column;gap:4px;padding:14px 18px;background:var(--screen);color:var(--ink);text-decoration:none;border-top:5px solid var(--c,var(--cyan))}
+.card:hover{background:#2b1d5c}
+.card b{font-family:var(--pixel);font-size:12px;color:var(--c,var(--cyan));line-height:1.6}
+.card strong{font-size:20px}
+.card span{font-size:16px;color:var(--muted)}
+.card code{font-family:var(--mono);font-size:16px;color:var(--yellow);overflow-wrap:anywhere;margin-top:4px}
+.net{font-family:var(--pixel);font-size:11px;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.net.on{color:var(--green)} .net.off{color:var(--red)}
+.term.alert .bar .net{color:var(--dark)}
+.tclock{font-family:var(--pixel);font-size:15px;color:var(--yellow);font-variant-numeric:tabular-nums}
+.tclock.warn{color:var(--pink)} .tclock.crit{color:var(--red)}
+.team{display:flex;gap:6px}
+.team i{font-style:normal;font-family:var(--pixel);font-size:13px;width:26px;height:26px;display:grid;place-items:center;background:var(--dark);color:#5a4b8f}
+.team i.on{background:var(--c);color:var(--dark);box-shadow:0 0 0 2px var(--dark)}
+.waitbody{gap:16px;padding-block:48px}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:80;background:var(--c);color:var(--dark);font-family:var(--pixel);font-size:13px;line-height:1.6;padding:14px 20px;box-shadow:6px 6px 0 var(--dark);animation:pop .35s ease-out;max-width:calc(100vw - 32px);text-align:center}
+/* servidor en dos columnas para que entre en una notebook */
+.body.srv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:center;text-align:center}
+@media (max-width:900px){.body.srv{grid-template-columns:1fr}}
+.srv-l,.srv-r{display:flex;flex-direction:column;gap:16px;align-items:center}
+.srv .clock{font-size:clamp(64px,9vw,120px)}
+.tablero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;max-width:420px}
+.tb{background:var(--dark);padding:12px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 0 0 3px var(--line)}
+.tb .px{font-size:13px;color:var(--c)}
+.tb b{font-family:var(--pixel);font-weight:400;font-size:11px;color:var(--muted)}
+.tb.ok{box-shadow:inset 0 0 0 3px var(--c)}
+.tb.ok b{color:var(--c)}
+.srv .slots input{width:clamp(60px,7vw,100px);height:clamp(80px,10vw,124px);font-size:clamp(36px,5vw,64px)}
+.srv h2{font-size:clamp(24px,3vw,34px)}
+.srv .denied{font-size:17px;padding:14px}
+
+/* pistas */
+.answer{display:flex;flex-wrap:wrap;gap:14px;align-items:stretch}
+.answer input{flex:1 1 240px;min-width:0;font-family:var(--mono);font-size:30px;font-weight:700;padding:14px 18px;background:var(--dark);color:var(--ink);border:3px solid var(--line);text-transform:uppercase}
+.answer input:focus{border-color:var(--cyan);outline:none}
+.fb{font-family:var(--mono);font-size:20px;min-height:1.5em}
+.fb.bad{color:var(--red)}
+.fb.ok{color:var(--green)}
+.hint{background:var(--dark);border-left:0;padding:16px 20px;font-size:19px;color:var(--yellow)}
+.cipher{font-family:var(--pixel);font-size:clamp(44px,10vw,96px);color:var(--cyan);letter-spacing:.2em;text-align:center;line-height:1.3}
+.abc{font-family:var(--mono);font-size:clamp(15px,2.3vw,22px);letter-spacing:.18em;text-align:center;color:var(--muted);overflow-wrap:anywhere}
+.abc b{color:var(--yellow)}
+pre.code{margin:0;font-family:var(--mono);font-size:clamp(22px,3.6vw,36px);line-height:1.5;background:var(--dark);padding:22px 28px;overflow-x:auto;color:var(--ink)}
+.kw{color:var(--pink)}.num{color:var(--yellow)}.fn{color:var(--cyan)}
+.gloss{display:flex;flex-wrap:wrap;gap:10px}
+.gloss span{font-family:var(--mono);font-size:17px;padding:6px 12px;background:var(--line)}
+
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:720px){.compare{grid-template-columns:1fr}}
+.phone{background:#F4F0FF;color:#1b1433;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.phone .tag{font-family:var(--pixel);font-size:11px;align-self:flex-start;padding:6px 10px;color:var(--dark)}
+.phone h4{margin:0;font-size:19px}
+.f{display:flex;flex-direction:column;gap:3px}
+.f label{font-size:13px;font-weight:700;color:#5b4f80}
+.f input,.f select{font-family:var(--body);font-size:17px;padding:8px 10px;border:2px solid #cfc8e6;border-radius:8px;background:#fff;color:#1b1433;min-width:0}
+.sendwrap{overflow:hidden;border-radius:8px}
+.send{font-family:var(--body);font-weight:700;font-size:18px;border:0;border-radius:8px;padding:12px;background:#5b3fd6;color:#fff;width:100%;cursor:pointer}
+.sendwrap.broken .send{text-align:left;padding-left:91%;white-space:nowrap;overflow:hidden}
+
+.win{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:10px 0}
+.digit{font-family:var(--pixel);font-size:clamp(110px,22vw,220px);line-height:1;color:var(--green);text-shadow:8px 8px 0 var(--dark)}
+.stage{font-family:var(--mono);font-size:22px;padding:8px 16px;background:var(--line)}
+
+/* servidor */
+.clock{font-family:var(--pixel);font-size:clamp(64px,15vw,150px);line-height:1;text-align:center;color:var(--yellow);font-variant-numeric:tabular-nums}
+.clock.warn{color:var(--pink)}
+.clock.crit{color:var(--red)}
+.banner{font-family:var(--pixel);font-size:clamp(14px,2.4vw,20px);text-align:center;padding:14px;background:var(--red);color:var(--dark)}
+.slots{display:flex;gap:18px;justify-content:center}
+.slots input{width:clamp(80px,14vw,130px);height:clamp(100px,17vw,160px);font-family:var(--pixel);font-size:clamp(44px,8vw,80px);text-align:center;background:var(--dark);color:var(--green);border:4px solid var(--line);caret-color:var(--green)}
+.slots input:focus{border-color:var(--green);outline:none}
+.glitch{position:relative;display:inline-block}
+.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.slots{gap:clamp(8px,2vw,18px)}
+.slots input{width:clamp(64px,12vw,120px);height:clamp(88px,15vw,150px);font-size:clamp(38px,7vw,72px)}
+.cssfix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+@media (max-width:720px){.cssfix{grid-template-columns:1fr}}
+.css{font-family:var(--mono);font-size:clamp(20px,2.8vw,26px);background:var(--dark);padding:22px 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.prop{display:flex;align-items:center;gap:10px;padding-left:28px;flex-wrap:wrap}
+.prop span{color:var(--pink)}
+.prop select{font-family:var(--mono);font-size:clamp(18px,2.6vw,24px);font-weight:700;padding:8px 10px;background:var(--line);color:var(--yellow);border:2px solid var(--cyan);cursor:pointer}
+.aulabox{height:140px;overflow:hidden;border:2px dashed #cfc8e6;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.aula{font-family:var(--pixel);line-height:1;text-align:center}
+.learn{background:var(--dark);padding:16px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 0 0 2px var(--c)}
+.learn .px{font-size:12px;color:var(--c)}
+.learn p{font-size:clamp(18px,2.4vw,21px)}
+.lesson{background:var(--dark);padding:20px 24px;display:flex;flex-direction:column;gap:10px;text-align:left;max-width:720px;width:100%;box-sizing:border-box;box-shadow:inset 0 0 0 3px var(--c)}
+.lesson .px{font-size:13px;color:var(--c)}
+.lesson p{font-size:clamp(18px,2.4vw,21px)}
+pre.code.small-code{font-size:clamp(14px,2vw,18px);padding:14px 18px;background:#05030c}
+.rules{display:flex;flex-direction:column;gap:12px}
+.rule{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) auto;gap:14px;align-items:center;background:var(--dark);padding:14px 16px;border:2px solid transparent}
+.rule.marked-err{border-color:var(--red)}
+@media (max-width:760px){.rule{grid-template-columns:1fr}}
+.rule .val{display:flex;flex-direction:column;min-width:0}
+.rule .val small{font-size:14px;color:var(--muted)}
+.rule .val b{font-family:var(--mono);font-size:clamp(18px,2.4vw,22px);overflow-wrap:anywhere}
+.rule .cond{font-size:18px}
+.rule .si{font-family:var(--mono);font-weight:700;color:var(--pink)}
+.rule .then{font-family:var(--mono);font-weight:700;color:var(--red);white-space:nowrap}
+.pick{display:flex;gap:8px}
+.pick button{font-family:var(--mono);font-weight:700;font-size:16px;padding:12px 14px;border:2px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;min-height:44px}
+.pick button[data-v="ok"].on{background:var(--green);border-color:var(--green);color:var(--dark)}
+.pick button[data-v="err"].on{background:var(--red);border-color:var(--red);color:var(--dark)}
+.ctable-wrap{overflow-x:auto;padding-bottom:6px}
+.ctable{display:flex;gap:3px;width:max-content;margin:0 auto}
+.clabel{display:flex;flex-direction:column;justify-content:space-around;font-family:var(--pixel);font-size:10px;color:var(--muted);padding-right:8px;gap:6px}
+.ccol{display:flex;flex-direction:column;gap:3px;border:0;padding:0;background:none;cursor:pointer;font-family:var(--mono);font-weight:700}
+.ccol span{display:block;width:30px;padding:8px 0;text-align:center;font-size:20px}
+.ccol span:first-child{background:var(--line);color:var(--ink)}
+.ccol span:last-child{background:var(--dark);color:var(--cyan)}
+.ccol.hl span{background:var(--yellow)!important;color:var(--dark)!important}
+.blocks-wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.blocks-wrap{grid-template-columns:1fr}}
+.blocks{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:clamp(19px,2.6vw,24px)}
+.blk{padding:14px 18px;border-radius:10px;color:var(--dark)}
+.b-set{background:var(--cyan)}
+.b-add{background:var(--green)}
+.b-show{background:var(--pink)}
+.b-loop{background:var(--yellow);padding:0;display:flex;flex-direction:column}
+.b-head{padding:14px 18px}
+.b-inner{margin-left:28px;padding:6px 10px 6px 0;background:var(--screen);border-radius:8px 0 0 8px}
+.b-foot{height:18px}
+.blk .var{background:rgba(255,255,255,.55);padding:2px 10px;border-radius:999px}
+.blk .lit{background:var(--dark);color:var(--ink);padding:2px 10px;border-radius:999px;font-family:var(--mono)}
+.trace{border-collapse:collapse;width:100%;font-size:18px;background:var(--dark)}
+.trace th,.trace td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}
+.trace th{font-family:var(--pixel);font-size:10px;color:var(--muted);font-weight:400}
+.trace input{width:64px;font-family:var(--mono);font-size:22px;font-weight:700;text-align:center;background:var(--screen);color:var(--yellow);border:2px solid var(--line);padding:4px}
+.prop small{flex-basis:100%;font-family:var(--body);font-size:15px;color:var(--muted);padding-left:2px}
+.fact{max-width:56ch;font-size:18px;text-align:left;background:var(--dark);padding:14px 18px;border-top:4px solid var(--c);margin:6px 0 0}
+.fact .px{display:block;font-size:11px;color:var(--c);margin-bottom:6px}
+.mission{display:flex;flex-direction:column;gap:6px;padding:16px 20px;background:var(--dark);border-left:6px solid var(--c)}
+.mission .px{font-size:11px;color:var(--c)}
+.mission b{font-size:clamp(20px,2.8vw,26px)}
+.mission span:last-child{font-size:18px;color:var(--muted)}
+.prop small{flex-basis:100%;font-family:var(--body);font-size:15px;color:var(--muted)}
+.slot{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--pixel);font-size:16px}
+.tries{display:flex;align-items:center;gap:10px}
+.tries i{width:22px;height:22px;background:var(--line)}
+.tries i.on{background:var(--green)}
+.denied{display:flex;flex-direction:column;gap:10px;align-items:center;padding:20px;background:var(--red);color:var(--dark);font-size:20px}
+.denied.pop{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.85)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+.winterm{border-color:var(--green)}
+.winterm .bar{background:var(--green);color:var(--dark);font-weight:700}
+.party{color:var(--green);text-shadow:5px 5px 0 var(--dark);animation:party .6s steps(2,start) 6}
+@keyframes party{50%{color:var(--yellow)}}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%;max-width:640px}
+.stats div{background:var(--dark);padding:14px 10px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.stats span{font-size:11px;color:var(--muted)}
+.stats b{font-family:var(--pixel);font-size:clamp(18px,3vw,28px);color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:70}
+@media (prefers-reduced-motion:reduce){.party,.denied.pop{animation:none}}
+.corner{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:8px}
+@media (prefers-reduced-motion:reduce){.blink,body.alarm,.shake{animation:none}}
+</style>
+</head>
+<body>
+<main class="wrap" id="app" aria-live="polite"></main>
+<div class="corner"><button class="btn ghost" id="fs" type="button">Pantalla completa</button></div>
+
+<script>
+/* =========================================================
+   ERROR 500 · sala de acertijos · ISFDyT N° 125
+   Rutas: #cliente  #codigo  #calidad  #servidor  (sin # = menú)
+   Orden de las pistas: 1 ▲ Calidad · 2 ◆ Cliente · 3 ● Código · 4 ★ Diseño
+   Código final: 4 - 3 - 5 - 7
+   ========================================================= */
+const CODE = "4357";
+const DURATION = 10 * 60;  // segundos de juego
+const MAX_TRIES = 3;       // intentos para el código final
+const PENALTY = 30;        // segundos que se descuentan por código incorrecto
+
+/* ---------------- sonido (Web Audio, sin archivos) ---------------- */
+let AC = null, noiseBuf = null, master = null;
+function ac(){
+  try{
+    if(!AC){
+      AC = new (window.AudioContext || window.webkitAudioContext)();
+      master = AC.createGain(); master.gain.value = .9; master.connect(AC.destination);
+      noiseBuf = AC.createBuffer(1, AC.sampleRate * .5, AC.sampleRate);
+      const d = noiseBuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+    }
+    if(AC.state === "suspended") AC.resume();
+  }catch(e){ AC = null; }
+  return AC;
+}
+function tone(f, dur=.12, type="square", vol=.06, when=0, slideTo=null){
+  const a = ac(); if(!a) return;
+  const t = a.currentTime + when, o = a.createOscillator(), g = a.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t);
+  if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g).connect(master); o.start(t); o.stop(t + dur + .02);
+}
+function hat(vol=.03, when=0, dur=.04){
+  const a = ac(); if(!a) return;
+  const t = a.currentTime + when, s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+  s.buffer = noiseBuf; f.type = "highpass"; f.frequency.value = 7000;
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  s.connect(f).connect(g).connect(master); s.start(t); s.stop(t + dur + .02);
+}
+const SFX = {
+  key(){ tone(1200,.03,"square",.02); },
+  ok(){ [523,659,784,1046].forEach((f,i)=>tone(f,.14,"square",.06,i*.09)); },
+  bad(){ tone(196,.18,"sawtooth",.07); tone(147,.3,"sawtooth",.07,.16); },
+  start(){ [392,523,659,784,1046].forEach((f,i)=>tone(f,.12,"square",.06,i*.07)); },
+  warn(){ for(let i=0;i<3;i++){ tone(880,.15,"square",.07,i*.35); tone(660,.15,"square",.07,i*.35+.17); } },
+  beep(){ tone(1320,.09,"square",.08); },
+  denied(){ tone(220,.25,"sawtooth",.09); tone(110,.6,"sawtooth",.1,.22,70); for(let i=0;i<3;i++) tone(880,.08,"square",.05,.9+i*.12); },
+  win(){
+    [523,523,523,698,880,1046,880,1046,1318].forEach((f,i)=>tone(f,.16,"square",.07,i*.12));
+    [131,175,262].forEach((f,i)=>tone(f,.5,"triangle",.08,.4+i*.35));
+    [784,988,1175,1568,1175,1568,2093].forEach((f,i)=>tone(f,.14,"square",.06,1.6+i*.1));
+    for(let i=0;i<10;i++) hat(.05,1.6+i*.08,.06);
+    tone(262,1.4,"triangle",.1,2.4); tone(330,1.4,"triangle",.08,2.4); tone(392,1.4,"triangle",.08,2.4); tone(523,1.4,"square",.04,2.4);
+  },
+  lose(){ [440,415,392,370,349,330,311,294].forEach((f,i)=>tone(f,.22,"sawtooth",.06,i*.2)); tone(110,1.2,"sawtooth",.08,1.6,55); }
+};
+
+/* ---- música de tensión: ostinato de bajo + hi-hat; se acelera al final ---- */
+const BASS = [110,110,131,110, 98,110,147,131, 110,110,131,165, 147,131,123,98]; // La menor
+const LEAD = [440,0,523,0, 494,0,440,0, 392,0,440,0, 494,0,523,587];
+const music = { on:false, step:0, next:0, timer:null, bpm:116, level:0 };
+function musicStart(){
+  const a = ac(); if(!a || music.on) return;
+  music.on = true; music.step = 0; music.next = a.currentTime + .05;
+  music.timer = setInterval(scheduleMusic, 25);
+}
+function musicStop(){ music.on = false; clearInterval(music.timer); }
+function scheduleMusic(){
+  const a = AC; if(!a || !music.on) return;
+  while(music.next < a.currentTime + .12){
+    const s = music.step % 16, when = music.next - a.currentTime, eighth = 60 / music.bpm / 2;
+    tone(BASS[s], eighth * .9, "square", .045, when);
+    if(s % 2 === 1) hat(.025, when);
+    if(s % 4 === 0) tone(55, .12, "triangle", .12, when, 40);            // bombo
+    if(music.level >= 1 && LEAD[s]) tone(LEAD[s], eighth*.8, "square", .025, when);
+    if(music.level >= 2 && s === 0) tone(660, eighth*14, "sine", .03, when, 990); // sirena
+    music.next += eighth; music.step++;
+  }
+}
+
+/* ---------------- utilidades ---------------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").trim().toUpperCase();
+const pad = n => String(n).padStart(2,"0");
+function bar(title, alert, extra=""){
+  return `<div class="bar" id="bar"><span class="dot" style="background:${alert?"#170D2E":"#FF4FA3"}"></span><span class="dot" style="background:${alert?"#170D2E":"#FFD23F"}"></span><span class="dot" style="background:${alert?"#170D2E":"#5CF28B"}"></span><span class="grow">&nbsp; ${esc(title)}</span>${extra}</div>`;
+}
+/* triple clic en la barra superior: en el servidor cancela la partida; en una terminal sin conexión, la reinicia */
+function bindReset(fn){
+  const b = document.getElementById("bar"); if(!b) return;
+  let n = 0, t = null;
+  b.addEventListener("click", () => { n++; clearTimeout(t); t = setTimeout(()=>n=0, 600); if(n >= 3){ n = 0; fn(); } });
+}
+
+/* ---------------- las cuatro pistas, con variantes ----------------
+   Cada terminal elige una variante al azar cada vez que se carga o se reinicia
+   (sin repetir la anterior en esa computadora). Todas las variantes de una pista
+   dan el MISMO dígito, así el código del servidor no cambia: 4 - 3 - 5 - 7. */
+
+/* --- helpers de contenido --- */
+function formPhone(tag, tagColor, title, rows, btn, live){
+  return `
+    <div class="phone" aria-label="${tag}">
+      <span class="tag" style="background:${tagColor}">${tag}</span>
+      <h4>${esc(title)}</h4>
+      ${rows.map((r,i) => `<div class="f"><label${live?` for="o${i}"`:""}>${esc(r.label)}</label><input${live?` id="o${i}"`:` readonly tabindex="-1"`} value="${esc(live ? r.got : r.exp)}"></div>`).join("")}
+      <div class="sendwrap${live && btn.broken ? " broken" : ""}"><button class="send" type="button"${live?` data-send`:` tabindex="-1"`}>${esc(live ? (btn.got || "Enviar") : "Enviar")}</button></div>
+    </div>`;
+}
+function compareForms(title, rows, btn){
+  return `<div class="compare">${formPhone("ESPERADO","var(--green)",title,rows,btn,false)}${formPhone("OBTENIDO","var(--pink)",title,rows,btn,true)}</div>`;
+}
+const ABC_ROW = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+function codeBlock(lines){ return `<pre class="code">${lines}</pre>`; }
+const K = w => `<span class="kw">${w}</span>`, N = w => `<span class="num">${w}</span>`, F = w => `<span class="fn">${w}</span>`;
+function gloss(items){ return `<div class="gloss">${items.map(i => `<span>${i}</span>`).join("")}</div>`; }
+
+const PISTAS = {
+  /* ▲ 1 · CALIDAD — siempre hay 4 errores → dígito 4 */
+  calidad: {
+    n: 1, color: "#FF4FA3", sym: "▲", term: "TERMINAL 1 ▲ CALIDAD",
+    title: "Control de calidad",
+    mission: "Encontrá los errores de la pantalla de la derecha.",
+    how: "La de la izquierda (ESPERADO) está bien. La de la derecha (OBTENIDO) tiene errores: compará dato por dato, contá cuántos están mal y escribí ese número.",
+    stage: "Etapa: probar",
+    check: v => ["4","CUATRO"].includes(norm(v)),
+    placeholder: "Cantidad de errores",
+    hint: "Mirá fila por fila: si el dato de la derecha es distinto al de la izquierda, es un error. No te olvides del botón de abajo. Son menos de 6.",
+    digit: "4",
+    fact: "Hiciste <b>testing</b>. Los programas detectan estos errores con <b>condiciones</b>: <span class=\"mono\">SI</span> un dato no tiene sentido <span class=\"mono\">→</span> mostrar error. Por eso un formulario te avisa cuando algo está mal.",
+    variants: [
+      { intro: "Así tenía que quedar la inscripción al instituto, y así quedó programada. ¿Cuántos errores tiene la versión obtenida? Podés tocarla y probarla.",
+        content: () => compareForms("Inscripción ISFDyT 125", [
+          {label:"Nombre", exp:"Juan", got:"Juan"},
+          {label:"Apellido", exp:"González", got:"Gonz?lez"},
+          {label:"Fecha de nacimiento", exp:"14/03/2009", got:"31/02/2009"},
+          {label:"Email", exp:"juan.gonzalez@mail.com", got:"juan.gonzalezmail.com"},
+          {label:"Carrera", exp:"Desarrollo de Software", got:"Desarrollo de Software"}], {broken:true}) },
+      { intro: "Así tenía que quedar el pedido de certificado de alumno regular, y así quedó programado. ¿Cuántos errores tiene la versión obtenida?",
+        content: () => compareForms("Pedido de certificado", [
+          {label:"Nombre", exp:"Lucía Fernández", got:"Lucía Fernández"},
+          {label:"DNI", exp:"45127789", got:"4512A789"},
+          {label:"Teléfono", exp:"11-4567-8901", got:"11-45"},
+          {label:"Fecha de retiro", exp:"15/11/2026", got:"35/11/2026"},
+          {label:"Motivo", exp:"Presentar en el trabajo", got:"Presentar en el trabajo"}], {got:"Enviarr"}) },
+      { intro: "Así tenía que quedar la inscripción a la mesa de examen, y así quedó programada. ¿Cuántos errores tiene la versión obtenida?",
+        content: () => compareForms("Mesa de examen", [
+          {label:"Alumna", exp:"Martina Pérez", got:"Martina Pérez"},
+          {label:"Legajo", exp:"1250", got:"-1250"},
+          {label:"Materia", exp:"Matemática", got:"Matemática"},
+          {label:"Fecha", exp:"26/02/2027", got:"29/02/2027"},
+          {label:"Email", exp:"martina@mail.com", got:"martina@@mail.com"},
+          {label:"Horario", exp:"18:00", got:"25:00"}], {}) },
+      { intro: "Así tenía que quedar el préstamo de la biblioteca del instituto, y así quedó programado. ¿Cuántos errores tiene la versión obtenida?",
+        content: () => compareForms("Préstamo de biblioteca", [
+          {label:"Usuario", exp:"Tomás Ruiz", got:"Tomás Ruiz"},
+          {label:"Libro", exp:"Rayuela", got:"Rayuela"},
+          {label:"Fecha de préstamo", exp:"10/11/2026", got:"10/11/2026"},
+          {label:"Fecha de devolución", exp:"24/11/2026", got:"05/11/2026"},
+          {label:"Cantidad", exp:"1", got:"-2"},
+          {label:"Email", exp:"tomas.ruiz@mail.com", got:"tomás ruiz@mail.com"}], {broken:true}) }
+    ]
+  },
+
+  /* ◆ 2 · CLIENTE — el mensaje siempre dice TRES → dígito 3 */
+  cliente: {
+    n: 2, color: "#3EE6FF", sym: "◆", term: "TERMINAL 2 ◆ CLIENTE",
+    title: "El mensaje del cliente",
+    intro: "Antes de programar hay que entender qué pide el cliente. Pero su mensaje llegó en clave.",
+    mission: "Descubrí qué palabra escondió el cliente.",
+    stage: "Etapa: entender qué pide el cliente",
+    check: v => ["TRES","3"].includes(norm(v)),
+    placeholder: "Mensaje descifrado",
+    digit: "3",
+    variants: [
+      { how: "Cada letra del mensaje está 3 lugares más adelante que la verdadera. Buscá cada letra en el abecedario y volvé 3 lugares para atrás.",
+        hint: "Ejemplo con la primera letra: W → V → U → T. La primera letra es T. Hacé lo mismo con U, H y V.",
+        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b>, que según se cuenta usaba Julio César. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
+        content: () => `<div class="cipher" aria-label="Mensaje cifrado: W U H V">WUHV</div>
+          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A → D</p>
+          <div class="abc">${ABC_ROW}</div>` },
+      { how: "Cada letra del mensaje está 1 lugar más adelante que la verdadera. Buscá cada letra en el abecedario y fijate cuál está justo antes.",
+        hint: "Ejemplo con la primera letra: antes de la U está la T. La primera letra es T. Hacé lo mismo con S, F y T.",
+        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b> (corrimiento de 1). Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
+        content: () => `<div class="cipher" aria-label="Mensaje cifrado: U S F T">USFT</div>
+          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A → B</p>
+          <div class="abc">${ABC_ROW}</div>` },
+      { how: "Cada número es una letra: el 1 es la A, el 2 es la B, el 3 es la C… Contá en el abecedario para saber qué letra es cada número.",
+        hint: "Ejemplo: el 5 es la E (A, B, C, D, E). El 20 es la T. Hacé lo mismo con el 18 y el 19.",
+        fact: "Acabás de <b>descifrar</b> un mensaje donde cada letra era un número. Las computadoras guardan todo así: cada letra que escribís se convierte en un número.",
+        content: () => `<div class="cipher" style="font-size:clamp(34px,7vw,64px);letter-spacing:.08em" aria-label="Mensaje cifrado: 20, 18, 5, 19">20·18·5·19</div>
+          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A = 1, B = 2, C = 3…</p>
+          <div class="abc">${ABC_ROW}</div>` },
+      { how: "Abajo del abecedario está el mismo abecedario dado vuelta. Buscá cada letra del mensaje en la fila celeste y mirá qué letra tiene justo arriba.",
+        hint: "Ejemplo: la G de la fila celeste tiene arriba la T. La primera letra es T. Hacé lo mismo con I, V y H.",
+        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado Atbash</b>, que da vuelta el abecedario. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
+        content: () => `<div class="cipher" aria-label="Mensaje cifrado: G I V H">GIVH</div>
+          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A ↔ Z · B ↔ Y</p>
+          <div class="abc">${ABC_ROW}</div>
+          <div class="abc" style="color:var(--cyan)">${ABC_ROW.split(" ").reverse().join(" ")}</div>` }
+    ]
+  },
+
+  /* ● 3 · CÓDIGO — el programa siempre muestra 5 → dígito 5 */
+  codigo: {
+    n: 3, color: "#FFD23F", sym: "●", term: "TERMINAL 3 ● CÓDIGO",
+    title: "El código",
+    intro: "Un programa es una lista de instrucciones que la computadora sigue en orden, como una receta.",
+    mission: "Averiguá qué número aparece en pantalla al final.",
+    how: "x es como una cajita que guarda un número. Leé las líneas de arriba hacia abajo y andá anotando cuánto vale x. Lo que muestra «print» es la respuesta.",
+    stage: "Etapa: programar",
+    check: v => ["5","CINCO"].includes(norm(v)),
+    placeholder: "Lo que muestra",
+    digit: "5",
+    variants: [
+      { hint: "x empieza en 2. «repeat 3 times» hace 3 veces la línea de abajo (sumar 1). Vuelta 1: x vale 3. Vuelta 2: x vale 4. ¿Y en la vuelta 3?",
+        fact: "Leíste un <b>bloque de código</b>: la computadora sigue las instrucciones en orden, y <b>repeat</b> es un <b>bucle</b> que repite lo de adentro. Hacerlo a mano como vos se llama <b>prueba de escritorio</b>.",
+        content: () => codeBlock(`x = ${N(2)}\n${K("repeat")} ${N(3)} ${K("times")}:\n    x = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","print = mostrar"]) },
+      { hint: "x empieza en 10. La segunda línea le resta 3: x vale 7. La tercera línea le resta 2. ¿Cuánto queda?",
+        fact: "Leíste un <b>bloque de código</b>: la computadora sigue las instrucciones <b>en orden</b>, una por una, y cada línea cambia el valor guardado en x (una <b>variable</b>).",
+        content: () => codeBlock(`x = ${N(10)}\nx = x - ${N(3)}\nx = x - ${N(2)}\n${F("print")} x`) + gloss(["print = mostrar"]) },
+      { hint: "Solo la línea corrida a la derecha se repite. x empieza en 1, se multiplica por 2 dos veces (1 → 2 → 4) y después, una sola vez, se le suma 1.",
+        fact: "Leíste un <b>bloque de código</b>: lo que está corrido a la derecha queda <b>adentro</b> del bucle <b>repeat</b>; lo demás se hace una sola vez. Hacerlo a mano se llama <b>prueba de escritorio</b>.",
+        content: () => codeBlock(`x = ${N(1)}\n${K("repeat")} ${N(2)} ${K("times")}:\n    x = x * ${N(2)}\nx = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","* = multiplicar","print = mostrar"]) },
+      { hint: "«if x > 5» pregunta: ¿x es mayor que 5? x vale 7, así que la respuesta es SÍ: se hace la línea de abajo del if (restar 2) y se saltea la del else.",
+        fact: "Leíste una <b>condición</b>: <b>if</b> (si) pregunta algo y, según la respuesta, el programa hace una cosa o la otra (<b>else</b>, si no). Así deciden todos los programas.",
+        content: () => codeBlock(`x = ${N(7)}\n${K("if")} x > ${N(5)}:\n    x = x - ${N(2)}\n${K("else")}:\n    x = x + ${N(2)}\n${F("print")} x`) + gloss(["if = si","else = si no","> = mayor que","print = mostrar"]) },
+      { hint: "x empieza en 0. «repeat 5 times» suma 1 cinco veces: 1, 2, 3… seguí contando.",
+        fact: "Leíste un <b>bloque de código</b>: <b>repeat</b> es un <b>bucle</b> que repite lo de adentro las veces que le digas. Así un programa puede hacer lo mismo miles de veces sin cansarse.",
+        content: () => codeBlock(`x = ${N(0)}\n${K("repeat")} ${N(5)} ${K("times")}:\n    x = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","print = mostrar"]) }
+    ]
+  },
+
+  /* ★ 4 · DISEÑO — al arreglar el CSS aparece el 7 → dígito 7 */
+  diseno: {
+    n: 4, color: "#5CF28B", sym: "★", term: "TERMINAL 4 ★ DISEÑO",
+    title: "Arreglá la página",
+    intro: "La página de inscripciones se rompió y el número de aula no se ve.",
+    mission: "Hacé que aparezca el número de aula.",
+    how: "Cambiá la opción de cada línea. A la derecha ves cómo queda la página al instante. El número tiene que verse bien: visible, de un color que se lea sobre el blanco y de un tamaño normal.",
+    stage: "Etapa: diseño web",
+    live: true,
+    digit: "7",
+    fact: "Usaste <b>CSS</b>, el lenguaje que decide cómo se ve cada página web. Cada regla tiene una <b>propiedad</b> y un <b>valor</b>: si algo se muestra, de qué color es, de qué tamaño.",
+    variants: [
+      { hint: "Elegí: display → block (visible), color → navy (azul oscuro) y font-size → 48px (grande).",
+        props: [ { p:"display", es:"mostrar", o:[["none","oculto"],["block","visible"]], ok:"block" },
+                 { p:"color", es:"color de la letra", o:[["white","blanco"],["ivory","blanco marfil"],["navy","azul oscuro"]], ok:"navy" },
+                 { p:"font-size", es:"tamaño de la letra", o:[["2px","diminuto"],["400px","gigante"],["48px","grande"]], ok:"48px" } ] },
+      { hint: "Elegí: visibility → visible, opacity → 1 (se ve entero) y font-size → 56px (grande).",
+        props: [ { p:"visibility", es:"visibilidad", o:[["hidden","escondido"],["visible","visible"]], ok:"visible" },
+                 { p:"opacity", es:"transparencia", o:[["0","invisible"],["0.05","casi invisible"],["1","se ve entero"]], ok:"1" },
+                 { p:"font-size", es:"tamaño de la letra", o:[["1px","diminuto"],["56px","grande"],["500px","gigante"]], ok:"56px" } ] },
+      { hint: "Elegí: display → inline-block (visible), color → purple (violeta) y opacity → 1 (se ve entero).",
+        props: [ { p:"display", es:"mostrar", o:[["none","oculto"],["inline-block","visible"]], ok:"inline-block" },
+                 { p:"color", es:"color de la letra", o:[["white","blanco"],["snow","blanco nieve"],["purple","violeta"]], ok:"purple" },
+                 { p:"opacity", es:"transparencia", o:[["0","invisible"],["1","se ve entero"]], ok:"1" } ] },
+      { hint: "Elegí: visibility → visible, color → darkred (rojo oscuro) y font-size → 64px (grande).",
+        props: [ { p:"visibility", es:"visibilidad", o:[["hidden","escondido"],["visible","visible"]], ok:"visible" },
+                 { p:"color", es:"color de la letra", o:[["white","blanco"],["darkred","rojo oscuro"],["lightyellow","amarillo clarito"]], ok:"darkred" },
+                 { p:"font-size", es:"tamaño de la letra", o:[["0px","nada"],["64px","grande"],["999px","gigante"]], ok:"64px" } ] }
+    ]
+  }
+};
+/* el contenido del desafío de diseño se arma con las propiedades de su variante */
+PISTAS.diseno.variants.forEach(v => v.content = () => `
+  <div class="cssfix">
+    <div class="css" aria-label="Editor de CSS">
+      <div><span class="fn">.aula</span> {</div>
+      ${v.props.map((q,i) => `<label class="prop" for="c${i}"><span>${q.p}:</span><select id="c${i}">${q.o.map(([val,txt]) => `<option value="${val}">${val} · ${txt}</option>`).join("")}</select>;<small>${q.es}</small></label>`).join("")}
+      <div>}</div>
+    </div>
+    <div class="phone preview" aria-label="Vista previa de la página">
+      <span class="tag" style="background:var(--green)">VISTA PREVIA</span>
+      <h4>Inscripciones 2027</h4>
+      <p style="margin:0;font-size:16px">Tu aula asignada es:</p>
+      <div class="aulabox"><span id="aula" class="aula">7</span></div>
+    </div>
+  </div>`);
+
+/* elige una variante al azar, sin repetir la última que salió en esta computadora */
+function pickVariant(key){
+  const vs = PISTAS[key].variants, k = "e500-var-" + key;
+  let last = -1; try{ last = +localStorage.getItem(k); }catch(e){}
+  let i = Math.floor(Math.random() * vs.length);
+  if(vs.length > 1 && i === last) i = (i + 1 + Math.floor(Math.random() * (vs.length - 1))) % vs.length;
+  try{ localStorage.setItem(k, i); }catch(e){}
+  return i;
+}
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* =========================================================
+   CONEXIÓN EN TIEMPO REAL
+   El servidor manda el estado de la partida; cada terminal avisa cuando resuelve su desafío.
+   · Si FIREBASE_URL tiene la dirección de una Realtime Database de Firebase, se usa esa (sin límite práctico).
+   · Si está vacía, se usa ntfy.sh (servicio público, gratis, sin cuenta, con límite diario de mensajes).
+   SALA es el "canal": se puede pisar con ?sala=nombre para probar sin mezclarse con otra partida.
+   ========================================================= */
+const FIREBASE_URL = "https://error500-isfdyt125-default-rtdb.firebaseio.com";   // dejar vacío ("") para usar ntfy.sh
+const QS = new URLSearchParams(location.search);
+const SALA = (QS.get("sala") || "isfdyt125-error500-k7q3").replace(/[^\w-]/g, "").slice(0, 64);
+const DB = (QS.get("db") || FIREBASE_URL).replace(/\/$/, "");
+const NTFY = (QS.get("ntfy") || "https://ntfy.sh").replace(/\/$/, "");
+const VIA = DB ? "firebase" : "ntfy";
+const ME = Math.random().toString(36).slice(2, 9);
+const NET = { ok:null, ready:false, lastId:null, seen:new Set(), es:null, retry:null, skew:0, queue:[], sending:false, on:null };
+let bc = null; try{ bc = new BroadcastChannel("e500-" + SALA); }catch(e){}
+
+function netPaint(){
+  document.querySelectorAll("[data-net]").forEach(el => {
+    el.className = "net " + (NET.ok ? "on" : NET.ok === false ? "off" : "");
+    el.textContent = NET.ok ? "● EN LÍNEA" : NET.ok === false ? "○ SIN CONEXIÓN" : "○ CONECTANDO…";
+  });
+}
+function netStatus(ok){ if(NET.ok !== ok){ NET.ok = ok; netPaint(); if(NET.on) NET.on({ k:"_net" }); } }
+
+function recibir(d, recv, live){
+  if(!d || !d.k || !d.u || NET.seen.has(d.u)) return;
+  NET.seen.add(d.u);
+  d._recv = recv;              // cuándo se envió, en el reloj de ESTA notebook
+  if(NET.on) NET.on(d, live);
+}
+if(bc) bc.onmessage = e => recibir(e.data, Date.now(), true);
+
+/* enviar: todo pasa por una cola, así si se corta internet se manda cuando vuelve */
+function enviar(d){
+  d.u = ME + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+  d.t = Date.now();
+  NET.seen.add(d.u);
+  try{ if(bc) bc.postMessage(d); }catch(e){}
+  NET.queue.push({ d }); vaciarCola();
+}
+/* el servidor borra los mensajes viejos al empezar cada grupo (solo Firebase) */
+function limpiarSala(){ if(VIA === "firebase"){ NET.queue.push({ borrar:true }); vaciarCola(); } }
+function vaciarCola(){
+  if(NET.sending || !NET.queue.length) return;
+  NET.sending = true;
+  const it = NET.queue[0];
+  const req = VIA === "firebase"
+    ? (it.borrar ? fetch(`${DB}/salas/${SALA}/msgs.json`, { method:"DELETE" })
+                 : fetch(`${DB}/salas/${SALA}/msgs.json`, { method:"POST", body:JSON.stringify({ ...it.d, ts:{ ".sv":"timestamp" } }) }))
+    : fetch(NTFY + "/" + SALA, { method:"POST", body:JSON.stringify(it.d) });
+  req.then(r => { if(!r.ok) throw new Error(r.status); NET.queue.shift(); netStatus(true); })
+    .catch(() => { netStatus(false); return new Promise(ok => setTimeout(ok, 3000)); })
+    .finally(() => { NET.sending = false; vaciarCola(); });
+}
+function conectar(){ (VIA === "firebase" ? conectarFirebase : conectarNtfy)(); }
+
+/* --- ntfy.sh --- */
+function desdeNtfy(m, live){
+  if(!m) return;
+  if(m.time && live) NET.skew = Date.now() - (m.time * 1000 + 500);
+  if(m.event !== "message") return;
+  NET.lastId = m.id;
+  let d; try{ d = JSON.parse(m.message); }catch(e){ return; }
+  recibir(d, live ? Date.now() : m.time * 1000 + 500 + NET.skew, live);
+}
+function conectarNtfy(){
+  clearTimeout(NET.retry);
+  try{ if(NET.es) NET.es.close(); }catch(e){}
+  fetch(`${NTFY}/${SALA}/json?poll=1&since=${NET.lastId || "30m"}`)
+    .then(r => { if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(txt => {
+      txt.split("\n").filter(Boolean).forEach(l => { try{ desdeNtfy(JSON.parse(l), false); }catch(e){} });
+      NET.ready = true; netStatus(true); if(NET.on) NET.on({ k:"_sync" });
+      const es = new EventSource(`${NTFY}/${SALA}/sse` + (NET.lastId ? `?since=${NET.lastId}` : ""));
+      es.onmessage = e => { try{ desdeNtfy(JSON.parse(e.data), true); }catch(err){} };
+      es.addEventListener("open", e => { netStatus(true); try{ if(e.data) desdeNtfy(JSON.parse(e.data), true); }catch(err){} });
+      es.addEventListener("keepalive", e => { try{ desdeNtfy(JSON.parse(e.data), true); }catch(err){} });
+      es.onerror = () => { netStatus(false); es.close(); NET.retry = setTimeout(conectarNtfy, 3000); };
+      NET.es = es;
+    })
+    .catch(() => { NET.ready = true; netStatus(false); if(NET.on) NET.on({ k:"_sync" }); NET.retry = setTimeout(conectarNtfy, 4000); });
+}
+
+/* --- Firebase Realtime Database (por su API REST, sin librerías) --- */
+function desdeFirebase(m, live){
+  if(!m || typeof m !== "object" || !m.k) return;
+  const ts = typeof m.ts === "number" ? m.ts : Date.now() - NET.skew;
+  if(live) NET.skew = Date.now() - ts;
+  recibir(m, live ? Date.now() : ts + NET.skew, live);
+}
+function conectarFirebase(){
+  clearTimeout(NET.retry);
+  try{ if(NET.es) NET.es.close(); }catch(e){}
+  /* la hora del servidor de Firebase, para que todos los relojes coincidan */
+  const t0 = Date.now();
+  fetch(`${DB}/salas/${SALA}/hora/${ME}.json`, { method:"PUT", body:JSON.stringify({ ".sv":"timestamp" }) })
+    .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(ts => { const t1 = Date.now(); if(typeof ts === "number") NET.skew = (t0 + t1) / 2 - ts; abrirFirebase(); })
+    .catch(() => { NET.ready = true; netStatus(false); if(NET.on) NET.on({ k:"_sync" }); NET.retry = setTimeout(conectarFirebase, 4000); });
+}
+function abrirFirebase(){
+  const es = new EventSource(`${DB}/salas/${SALA}/msgs.json`);
+  let primero = true;
+  const tomar = (e, parche) => {
+    let x; try{ x = JSON.parse(e.data); }catch(err){ return; }
+    if(!x) return;
+    netStatus(true);
+    if(x.path === "/" && !parche){
+      /* foto completa: al conectar (o reconectar) llegan todos los mensajes de la partida */
+      if(x.data) Object.keys(x.data).sort().forEach(k => desdeFirebase(x.data[k], false));
+      if(primero){ primero = false; NET.ready = true; if(NET.on) NET.on({ k:"_sync" }); }
+    } else if(parche){
+      if(x.data) Object.keys(x.data).sort().forEach(k => desdeFirebase(x.data[k], true));
+    } else desdeFirebase(x.data, true);
+  };
+  es.addEventListener("put", e => tomar(e, false));
+  es.addEventListener("patch", e => tomar(e, true));
+  es.addEventListener("keep-alive", () => netStatus(true));
+  es.addEventListener("cancel", () => { netStatus(false); });
+  es.onerror = () => { netStatus(false); if(es.readyState === 2){ NET.retry = setTimeout(conectarFirebase, 3000); } };
+  NET.es = es;
+}
+const ORDEN_P = ["calidad","cliente","codigo","diseno"];
+const fmt = s => `${Math.floor(s/60)}:${pad(s%60)}`;
+function equipoHTML(res){
+  return `<span class="team" aria-label="Fragmentos recuperados por el equipo">${ORDEN_P.map(k => `<i class="${res.has(k) ? "on" : ""}" style="--c:${PISTAS[k].color}">${PISTAS[k].sym}</i>`).join("")}</span>`;
+}
+
+/* ---------------- terminal: un desafío ---------------- */
+function renderPista(key, o = {}){
+  const P = { ...PISTAS[key], ...PISTAS[key].variants[o.v], vIndex:o.v };
+  let fails = 0, solved = false;
+  document.body.classList.remove("alarm");
+  const extra = `<span class="tclock" id="tclock"></span>`;
+  const draw = () => {
+    app.innerHTML = `
+      <div class="term">
+        ${bar(P.term + " · sistema-academico-125", false, extra)}
+        <div class="body">
+          <div class="row" style="justify-content:space-between">
+            <span class="px" style="font-size:14px;color:${P.color}">${P.sym} FRAGMENTO ${P.n} DE 4 PERDIDO</span>
+            <span class="px small" style="font-size:11px">ERROR 500 · CASO ${P.vIndex + 1}</span>
+          </div>
+          <h2>${esc(P.title)}</h2>
+          <p class="muted">${esc(P.intro)}</p>
+          <div class="mission" style="--c:${P.color}"><span class="px">TU MISIÓN</span><b>${esc(P.mission)}</b><span>${esc(P.how)}</span></div>
+          ${P.content()}
+          ${P.live ? `<div class="row"><button class="btn" id="chk" type="button">Verificar</button></div>` : `
+          <form class="answer" id="f" autocomplete="off">
+            <label for="ans" class="px" style="flex-basis:100%;font-size:12px;color:var(--muted)">TU RESPUESTA</label>
+            <input id="ans" name="ans" placeholder="${esc(P.placeholder)}" autocapitalize="characters" spellcheck="false">
+            <button class="btn" type="submit">Verificar</button>
+          </form>`}
+          <div class="fb" id="fb" role="status"></div>
+          <div class="hint" id="hint" hidden><b>Ayuda del sistema:</b> ${esc(P.hint)}</div>
+        </div>
+      </div>`;
+    if(o.reset) bindReset(o.reset);
+    if(o.paint) o.paint();
+    const fb = document.getElementById("fb");
+    const fail = () => {
+      fails++; SFX.bad(); fb.className = "fb bad"; fb.textContent = `> ACCESO DENEGADO. Intento ${fails}.`;
+      const t = app.querySelector(".term"); t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake");
+      if(fails >= 1) document.getElementById("hint").hidden = false;
+    };
+    if(P.live){
+      /* desafío de diseño: la vista previa cambia en vivo con cada propiedad */
+      const sel = P.props.map((_,i) => document.getElementById("c"+i)), aula = document.getElementById("aula");
+      const ok = () => P.props.every((q,i) => sel[i].value === q.ok);
+      const apply = sound => {
+        P.props.forEach((q,i) => aula.style.setProperty(q.p, sel[i].value));
+        if(sound) SFX.key();
+        if(!solved && ok()){ solved = true; fb.className = "fb ok"; fb.textContent = "> ESTILOS CORRECTOS"; SFX.ok(); setTimeout(win, 1400); }
+      };
+      sel.forEach(s => s.addEventListener("change", () => apply(true)));
+      apply(false);
+      document.getElementById("chk").addEventListener("click", () => { if(!solved) fail(); });
+      return;
+    }
+    const input = document.getElementById("ans");
+    input.addEventListener("input", () => SFX.key());
+    app.querySelectorAll("[data-send]").forEach(b => b.addEventListener("click", () => SFX.bad()));
+    document.getElementById("f").addEventListener("submit", e => {
+      e.preventDefault(); if(solved) return;
+      if(P.check(input.value)){ solved = true; SFX.ok(); setTimeout(win, 350); }
+      else{ fail(); input.select(); }
+    });
+    setTimeout(()=>{ try{ input.focus({ preventScroll:true }); }catch(e){} }, 50);
+  };
+  const win = () => {
+    if(o.onWin) o.onWin();
+    app.innerHTML = `
+      <div class="term">
+        ${bar(P.term + " · sistema-academico-125", false, extra)}
+        <div class="body win">
+          <span class="px" style="font-size:16px;color:var(--green)">FRAGMENTO ${P.n} DE 4 RECUPERADO</span>
+          <span class="px" style="font-size:40px;color:${P.color}">${P.sym}</span>
+          <div class="digit">${P.digit}</div>
+          <span class="stage">${esc(P.stage)}</span>
+          <p class="muted" style="max-width:36ch">Anotá este número: va en el <b style="color:var(--ink)">casillero ${P.n}</b> del servidor.</p>
+          <p class="fact" style="--c:${P.color}"><span class="px">¿SABÍAS QUE…?</span> ${P.fact}</p>
+        </div>
+      </div>`;
+    if(o.reset) bindReset(o.reset);
+    if(o.paint) o.paint();
+  };
+  if(o.solved) win(); else draw();
+}
+
+/* ---------------- terminal: sigue al servidor ----------------
+   espera → pantalla de espera · jugando → desafío · fin → resultado del grupo.
+   Solo se reinicia cuando el servidor arranca una partida nueva. */
+const T = { key:null, id:null, fase:null, end:0, res:new Set(), resultado:null, v:0, solved:false, offline:false, tick:null, shown:"" };
+function terminal(key){
+  Object.assign(T, { key, id:null, fase:null, end:0, res:new Set(), resultado:null, offline:false, shown:"" });
+  const mem = store.get("e500-p-" + key);
+  NET.on = (d, live) => {
+    if(d.k === "estado" && T.offline && d.id !== T.id && d.fase !== "fin"){ T.offline = false; T.shown = ""; }   // vuelve a seguir al servidor
+    if(d.k === "estado"){
+      if(d.id !== T.id){
+        T.id = d.id; T.res = new Set();
+        const m = store.get("e500-p-" + key);
+        if(m && m.id === d.id){ T.v = m.v; T.solved = m.solved; }
+        else{ T.v = pickVariant(key); T.solved = false; store.set("e500-p-" + key, { id:d.id, v:T.v, solved:false }); }
+      }
+      T.fase = d.fase; T.resultado = d.resultado || null; T.info = d;
+      if(d.fase === "jugando") T.end = d._recv + d.restante * 1000;
+      if(live && d.aviso === "denegado") avisoTerminal(`EN EL SERVIDOR: ACCESO DENEGADO · −${PENALTY} SEG`);
+      if(live && d.fase === "jugando" && d.aviso === "inicio") SFX.start();
+      if(live && d.fase === "fin") (d.resultado === "ganado" ? SFX.win : SFX.lose)();
+    }
+    if(d.k === "resuelto" && d.id === T.id){
+      T.res.add(d.pista);
+      if(live && d.pista !== key) avisoTerminal(`${PISTAS[d.pista].sym} TERMINAL ${PISTAS[d.pista].n} RECUPERÓ SU FRAGMENTO`, PISTAS[d.pista].color);
+    }
+    pintarTerminal();
+  };
+  pintarTerminal();
+  clearInterval(T.tick);
+  T.tick = setInterval(() => {
+    const el = document.getElementById("tclock"); if(!el) return;
+    if(T.fase === "jugando" && !T.offline){
+      const left = Math.max(0, Math.ceil((T.end - Date.now()) / 1000));
+      el.textContent = fmt(left); el.className = "tclock" + (left <= 30 ? " crit" : left <= 60 ? " warn" : "");
+    } else el.textContent = "";
+  }, 250);
+  /* si no hay conexión ni partida, a los 8 segundos se ofrece jugar sin conexión */
+  setTimeout(pintarTerminal, 8000);
+}
+function pintarTerminal(){
+  const key = T.key, P = PISTAS[key]; if(!key) return;
+  if(T.offline) return;
+  const ahora = T.id ? `${T.id}|${T.fase}|${T.fase === "jugando" ? "" : T.resultado}` : `nada|${NET.ok}|${NET.ready}|${performance.now() > 7500}`;
+  if(ahora !== T.shown){
+    T.shown = ahora;
+    if(T.id && T.fase === "jugando"){
+      renderPista(key, { v:T.v, solved:T.solved, paint:pintarEquipo,
+        onWin:() => { T.solved = true; T.res.add(key); store.set("e500-p-" + key, { id:T.id, v:T.v, solved:true }); enviar({ k:"resuelto", id:T.id, pista:key }); } });
+    } else if(T.id && T.fase === "fin") finTerminal();
+    else esperaTerminal();
+    window.scrollTo(0, 0);
+  }
+  pintarEquipo(); netPaint();
+}
+function pintarEquipo(){
+  const b = document.querySelector(".term .bar"); if(!b || T.offline) return;
+  let t = b.querySelector(".team"); const html = equipoHTML(T.res);
+  if(t) t.outerHTML = html; else b.insertAdjacentHTML("beforeend", html);
+}
+function esperaTerminal(){
+  const P = PISTAS[T.key];
+  const sinRed = NET.ready && NET.ok === false && !T.id && (performance.now() > 7500);
+  app.innerHTML = `
+    <div class="term">
+      ${bar(P.term + " · sistema-academico-125")}
+      <div class="body center waitbody">
+        <span class="px" style="font-size:clamp(48px,8vw,80px);color:${P.color}">${P.sym}</span>
+        <span class="px" style="font-size:16px;color:${P.color}">${esc(P.term)}</span>
+        <h2>Esperando al servidor</h2>
+        <p class="muted" style="max-width:40ch">Cuando el servidor inicie la partida, acá aparece tu desafío.</p>
+        <span class="net" data-net></span>
+        ${sinRed ? `<p class="small" style="max-width:46ch">No hay conexión con las otras notebooks. Revisá el wifi; se reconecta solo. Si no vuelve, el equipo puede usar esta terminal sin conexión.</p>
+          <button class="btn ghost" id="offline" type="button">Jugar sin conexión</button>` : ""}
+      </div>
+    </div>`;
+  const ob = document.getElementById("offline");
+  if(ob) ob.addEventListener("click", manualTerminal);
+}
+function manualTerminal(){
+  T.offline = true; T.shown = "";
+  const go = () => { renderPista(T.key, { v:pickVariant(T.key), reset:go }); window.scrollTo(0,0); };
+  go();
+}
+function finTerminal(){
+  const P = PISTAS[T.key], won = T.resultado === "ganado", d = T.info || {};
+  const titulo = won ? "SISTEMA<br>RESTAURADO" : T.resultado === "tiempo" ? "SE ACABÓ<br>EL TIEMPO" : "SISTEMA<br>BLOQUEADO";
+  app.innerHTML = `
+    <div class="term ${won ? "winterm" : "alert"}">
+      ${bar(P.term + " · sistema-academico-125", !won)}
+      <div class="body win">
+        <h1 class="${won ? "party" : ""}" style="${won ? "" : "color:var(--red);"}font-size:clamp(32px,6vw,64px)">${titulo}</h1>
+        ${won && d.nivel ? `<p class="px" style="font-size:clamp(13px,2vw,18px);color:var(--yellow)">★ ${esc(d.nivel)} ★</p>` : ""}
+        <h2>${won ? "¡Lo lograron en equipo!" : "Esta vez el servidor ganó."}</h2>
+        <p class="muted" style="max-width:44ch">Miren el proyector. Esta terminal se reinicia sola cuando empiece el próximo grupo.</p>
+        <span class="net" data-net></span>
+      </div>
+    </div>`;
+  if(won) confetti();
+}
+function avisoTerminal(txt, color){
+  const el = document.createElement("div");
+  el.className = "toast"; el.style.setProperty("--c", color || "var(--red)"); el.textContent = txt;
+  document.body.appendChild(el); setTimeout(() => el.remove(), 3500);
+}
+
+/* ---------------- servidor (proyector) ---------------- */
+const S = { state:"idle", id:null, end:0, tick:null, fails:0, res:new Set(), warned300:false, warned60:false, warned30:false, lastBeep:null };
+function stopGame(){ clearInterval(S.tick); musicStop(); document.body.classList.remove("alarm"); }
+function nuevaId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+function guardarS(){ store.set("e500-srv-" + SALA, { id:S.id, state:S.state, end:S.end, fails:S.fails }); }
+function restante(){ return Math.max(0, Math.ceil((S.end - Date.now()) / 1000)); }
+function publicarEstado(extra = {}){
+  enviar({ k:"estado", id:S.id, fase:S.state === "playing" ? "jugando" : S.state === "idle" ? "espera" : "fin", restante:restante(), ...extra });
+}
+function servidor(){
+  NET.on = (d, live) => {
+    if(d.k === "resuelto" && d.id === S.id && !S.res.has(d.pista)){
+      S.res.add(d.pista);
+      pintarTablero();
+      if(live && S.state === "playing"){ SFX.ok(); avisoTerminal(`${PISTAS[d.pista].sym} TERMINAL ${PISTAS[d.pista].n} · FRAGMENTO RECUPERADO`, PISTAS[d.pista].color); }
+    }
+    if(d.k === "_net" || d.k === "_sync") netPaint();
+  };
+  const m = store.get("e500-srv-" + SALA);
+  if(m && m.state === "playing" && m.end > Date.now()){
+    Object.assign(S, m); S.res = new Set();
+    jugando(true);
+  } else renderServer(m && m.state === "idle" ? m.id : null);
+}
+function renderServer(idPrevia){
+  stopGame();
+  Object.assign(S, { state:"idle", fails:0, res:new Set(), warned300:false, warned60:false, warned30:false, lastBeep:null });
+  S.id = idPrevia || nuevaId(); S.end = 0; guardarS();
+  if(!idPrevia) limpiarSala();   // los mensajes del grupo anterior ya no hacen falta
+  publicarEstado();   // las terminales pasan a "esperando" con un caso nuevo
+  app.innerHTML = `
+    <div class="term alert">
+      ${bar("ALERTA · servidor instituto-125", true, `<span class="net" data-net></span>`)}
+      <div class="body center" style="text-align:center">
+        <p class="mono" style="color:var(--cyan)">$ conectar --servidor instituto-125</p>
+        <h1 class="glitch">ERROR 500</h1>
+        <p class="mono muted">Internal Server Error · el sistema se cayó</p>
+        <h2>Falta una semana para las inscripciones.<br>¿Pueden restaurarlo en 10 minutos?</h2>
+        <p class="muted" style="max-width:60ch;margin:0 auto">Hay cuatro terminales con fragmentos perdidos: <b style="color:var(--pink)">1 ▲ Calidad</b>, <b style="color:var(--cyan)">2 ◆ Cliente</b>, <b style="color:var(--yellow)">3 ● Código</b> y <b style="color:var(--green)">4 ★ Diseño</b>. Pueden resolverlas al mismo tiempo. Después vuelvan acá con el código: tienen ${MAX_TRIES} intentos y cada error les cuesta ${PENALTY} segundos.</p>
+        <div class="row c"><button class="btn big" id="go" type="button">▶ Iniciar partida · 10:00</button></div>
+      </div>
+    </div>`;
+  bindReset(() => renderServer());
+  netPaint();
+  document.getElementById("go").addEventListener("click", () => startGame());
+}
+function startGame(){
+  ac(); SFX.start();
+  S.state = "playing"; S.end = Date.now() + DURATION * 1000; S.fails = 0; guardarS();
+  publicarEstado({ aviso:"inicio" });
+  jugando(false);
+}
+function jugando(reanudada){
+  music.bpm = 116; music.level = 0;
+  if(reanudada) document.addEventListener("pointerdown", () => { if(S.state === "playing" && !music.on) musicStart(); }, { once:true });
+  else setTimeout(musicStart, 500);
+  app.innerHTML = `
+    <div class="term alert" id="t">
+      ${bar("ALERTA · servidor instituto-125", true, `<span class="net" data-net></span>`)}
+      <div class="body srv">
+        <div class="srv-l">
+          <div class="clock" id="clock" role="timer" aria-live="off">10:00</div>
+          <div class="banner" id="banner" hidden></div>
+          <div class="tablero" id="tablero" aria-label="Terminales"></div>
+        </div>
+        <div class="srv-r">
+          <p class="mono" style="color:var(--pink);font-size:20px">ERROR 500 · sistema caído</p>
+          <h2>Ingresá el código de restauración</h2>
+          <form id="cf" autocomplete="off" style="display:flex;flex-direction:column;gap:18px;align-items:center">
+            <div class="slots">
+              <label class="slot"><input id="d0" inputmode="numeric" maxlength="1" aria-label="Fragmento 1, Calidad"><span style="color:var(--pink)">1 ▲</span></label>
+              <label class="slot"><input id="d1" inputmode="numeric" maxlength="1" aria-label="Fragmento 2, Cliente"><span style="color:var(--cyan)">2 ◆</span></label>
+              <label class="slot"><input id="d2" inputmode="numeric" maxlength="1" aria-label="Fragmento 3, Código"><span style="color:var(--yellow)">3 ●</span></label>
+              <label class="slot"><input id="d3" inputmode="numeric" maxlength="1" aria-label="Fragmento 4, Diseño"><span style="color:var(--green)">4 ★</span></label>
+            </div>
+            <div class="tries" id="tries" aria-label="Intentos restantes"></div>
+            <button class="btn big" type="submit">Restaurar sistema</button>
+          </form>
+          <div class="denied" id="denied" role="alert" hidden></div>
+        </div>
+      </div>
+    </div>`;
+  bindReset(() => renderServer());   // emergencia: triple clic cancela la partida
+  netPaint(); pintarTablero();
+  const ds = [0,1,2,3].map(i => document.getElementById("d"+i));
+  ds.forEach((d,i) => {
+    d.addEventListener("input", () => { d.value = d.value.replace(/\D/g,"").slice(-1); SFX.key(); if(d.value && i < ds.length - 1) ds[i+1].focus(); });
+    d.addEventListener("keydown", e => { if(e.key === "Backspace" && !d.value && i > 0){ ds[i-1].focus(); } });
+  });
+  setTimeout(()=>{ try{ ds[0].focus(); }catch(e){} }, 50);
+  drawTries();
+  document.getElementById("cf").addEventListener("submit", e => {
+    e.preventDefault(); if(S.state !== "playing") return;
+    const v = ds.map(d => d.value).join("");
+    const empty = ds.find(d => !d.value);
+    if(empty){ SFX.bad(); empty.focus(); return; }   // incompleto: no gasta intento
+    if(v === CODE) return gameWon();
+    S.fails++;
+    const left = MAX_TRIES - S.fails;
+    if(left <= 0) return gameLost("locked");
+    S.end -= PENALTY * 1000; guardarS(); SFX.denied(); drawTries();
+    publicarEstado({ aviso:"denegado" });
+    const box = document.getElementById("denied");
+    box.hidden = false;
+    box.innerHTML = `<span class="px" style="font-size:clamp(18px,2.4vw,26px)">ACCESO DENEGADO · −${PENALTY} SEG</span><span>El código <b class="mono">${esc(v.split("").join(" - "))}</b> no restauró el sistema. ${left === 1 ? "<b>¡Les queda UN solo intento!</b>" : `Les quedan ${left} intentos.`}</span>`;
+    box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
+    const t = document.getElementById("t"); t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake");
+    ds.forEach(d => d.value = ""); ds[0].focus();
+    updateClock();
+  });
+  S.tick = setInterval(updateClock, 200); updateClock();
+}
+function pintarTablero(){
+  const el = document.getElementById("tablero"); if(!el) return;
+  el.innerHTML = ORDEN_P.map(k => { const P = PISTAS[k], ok = S.res.has(k);
+    return `<div class="tb ${ok ? "ok" : ""}" style="--c:${P.color}"><span class="px">${P.sym} ${P.n}</span><b>${ok ? "RECUPERADO" : "EN CURSO"}</b></div>`; }).join("");
+}
+function drawTries(){
+  const el = document.getElementById("tries"); if(!el) return;
+  const left = MAX_TRIES - S.fails;
+  el.innerHTML = `<span class="px" style="font-size:12px;color:var(--muted)">INTENTOS</span>` +
+    Array.from({length:MAX_TRIES}, (_,i) => `<i class="${i < left ? "on" : ""}"></i>`).join("");
+}
+function updateClock(){
+  if(S.state !== "playing") return;
+  const left = restante();
+  const c = document.getElementById("clock"); if(!c) return;
+  c.textContent = fmt(left);
+  c.className = "clock" + (left <= 30 ? " crit" : left <= 60 ? " warn" : "");
+  const banner = document.getElementById("banner");
+  if(left <= 300 && !S.warned300){ S.warned300 = true; if(left > 290){ SFX.warn(); banner.hidden = false; banner.textContent = "⚠ QUEDAN 5 MINUTOS"; setTimeout(() => { if(S.state === "playing" && !S.warned60) banner.hidden = true; }, 5000); } music.bpm = 124; music.level = 1; }
+  if(left <= 60 && !S.warned60){ S.warned60 = true; SFX.warn(); music.bpm = 140; music.level = 1; banner.hidden = false; banner.textContent = "⚠ QUEDA 1 MINUTO"; }
+  if(left <= 30 && !S.warned30){ S.warned30 = true; SFX.warn(); music.bpm = 160; music.level = 2; banner.hidden = false; banner.textContent = "⚠ QUEDAN 30 SEGUNDOS"; document.body.classList.add("alarm"); }
+  if(left <= 10 && left > 0 && S.lastBeep !== left){ S.lastBeep = left; SFX.beep(); banner.textContent = `⚠ ${left}`; }
+  if(left <= 0) gameLost("time");
+}
+function nivelDe(left){ return left >= 360 ? "NIVEL: LEYENDAS DEL CÓDIGO" : left >= 180 ? "NIVEL: EQUIPO SENIOR" : left >= 60 ? "NIVEL: EQUIPO DE EMERGENCIA" : "NIVEL: SALVADOS POR UN PIXEL"; }
+function gameWon(){
+  const left = restante(), used = DURATION - left;
+  S.state = "won"; stopGame(); SFX.win(); guardarS();
+  const rank = nivelDe(left);
+  publicarEstado({ resultado:"ganado", nivel:rank, restante:left });
+  app.innerHTML = `
+    <div class="term winterm">
+      ${bar("servidor instituto-125 · en línea", false, `<span class="net" data-net></span>`)}
+      <div class="body win">
+        <p class="mono" style="color:var(--green)">$ status --servidor instituto-125 → 200 OK ✔</p>
+        <h1 class="party" style="font-size:clamp(34px,6vw,72px)">SISTEMA RESTAURADO</h1>
+        <div class="stats">
+          <div><span class="px">TIEMPO</span><b>${fmt(used)}</b></div>
+          <div><span class="px">SOBRARON</span><b>${fmt(left)}</b></div>
+          <div><span class="px">INTENTOS</span><b>${S.fails + 1}/${MAX_TRIES}</b></div>
+        </div>
+        <p class="px" style="font-size:clamp(13px,2vw,18px);color:var(--yellow)">★ ${rank} ★</p>
+        <h2>¡Salvaron las inscripciones del instituto!</h2>
+        <p class="muted" style="max-width:60ch">Encontraron los errores, entendieron al cliente, leyeron código y arreglaron el diseño, en equipo y contra reloj. Eso es exactamente lo que hacemos en la <b style="color:var(--ink)">Tecnicatura en Desarrollo de Software</b>. ¿Se imaginan haciéndolo todos los días?</p>
+        <div class="row c"><button class="btn big" id="again" type="button">▶ Siguiente grupo</button></div>
+      </div>
+    </div>`;
+  netPaint();
+  document.getElementById("again").addEventListener("click", () => renderServer());
+  confetti();
+}
+/* lluvia de píxeles para la celebración */
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = document.createElement("canvas"); c.className = "confetti"; document.body.appendChild(c);
+  const x = c.getContext("2d"), W = c.width = innerWidth, H = c.height = innerHeight;
+  const cols = ["#FFD23F","#FF4FA3","#3EE6FF","#5CF28B","#F4F0FF"];
+  const ps = Array.from({length:180}, () => ({ x: Math.random()*W, y: -Math.random()*H, s: 6 + Math.random()*10, v: 2 + Math.random()*4, d: (Math.random()-.5)*2, c: cols[Math.floor(Math.random()*cols.length)] }));
+  const t0 = performance.now();
+  (function frame(t){
+    x.clearRect(0,0,W,H);
+    ps.forEach(p => { p.y += p.v; p.x += p.d; x.fillStyle = p.c; x.fillRect(Math.round(p.x), Math.round(p.y), p.s, p.s); });
+    if(t - t0 < 6000 && document.body.contains(c)) requestAnimationFrame(frame); else c.remove();
+  })(t0);
+}
+function gameLost(reason){
+  S.state = "lost"; stopGame(); SFX.lose(); guardarS();
+  const locked = reason === "locked";
+  publicarEstado({ resultado:locked ? "bloqueado" : "tiempo", restante:0 });
+  app.innerHTML = `
+    <div class="term alert">
+      ${bar("ALERTA · servidor instituto-125", true, `<span class="net" data-net></span>`)}
+      <div class="body win">
+        <p class="mono" style="color:var(--red)">$ status --servidor instituto-125 → ${locked ? "423 LOCKED" : "500"}</p>
+        <h1 style="color:var(--red);font-size:clamp(32px,6vw,68px)">${locked ? "SISTEMA<br>BLOQUEADO" : "SE ACABÓ<br>EL TIEMPO"}</h1>
+        <h2>${locked ? `Usaron los ${MAX_TRIES} intentos y el sistema se bloqueó por seguridad.` : "El servidor sigue caído… por ahora."}</h2>
+        <p class="muted" style="max-width:52ch">En la vida real también pasa: se aprende, se revisa qué falló y se vuelve a intentar. Pidan ayuda al equipo y descubran juntos cuál era el código.</p>
+        <div class="row c"><button class="btn big" id="again" type="button">▶ Siguiente grupo</button></div>
+      </div>
+    </div>`;
+  netPaint();
+  document.getElementById("again").addEventListener("click", () => renderServer());
+}
+
+/* ---------------- menú (lo usa el equipo para preparar cada notebook) ---------------- */
+function renderMenu(){
+  stopGame(); NET.on = d => { if(d.k === "_net" || d.k === "_sync") netPaint(); };
+  const base = location.origin + location.pathname + location.search;
+  const dir = h => esc((base + "#" + h).replace(/^https?:\/\//, ""));
+  const card = (h, c, tag, t) => `<a class="card" href="#${h}" style="--c:${c}"><b>${tag}</b><strong>${t}</strong><code>${dir(h)}</code></a>`;
+  app.innerHTML = `
+    <div class="menu">
+      <div class="menu-h">
+        <div><span class="px small" style="font-size:11px">ISFDyT N° 125 · NOCHE DEL INSTITUTO</span><h1>ERROR 500</h1></div>
+        <div class="menu-net"><span class="net" data-net></span><span class="px small" style="font-size:10px">SALA: ${esc(SALA)} · ${VIA === "firebase" ? "FIREBASE" : "NTFY.SH"}</span></div>
+      </div>
+      <p class="muted" style="font-size:18px">Abrí en cada notebook su dirección (o tocá su tarjeta). Quedan conectadas entre sí: el servidor inicia la partida y todas se reinician juntas al terminar.</p>
+      <div class="cards">
+        ${card("servidor", "#F4F0FF", "■ SERVIDOR · PROYECTOR", "Timer, música y código final · desde acá se inicia cada partida")}
+        ${card("calidad", "#FF4FA3", "1 ▲ CALIDAD", "Encontrar los errores")}
+        ${card("cliente", "#3EE6FF", "2 ◆ CLIENTE", "Descifrar el mensaje del cliente")}
+        ${card("codigo", "#FFD23F", "3 ● CÓDIGO", "Leer un programa en inglés")}
+        ${card("diseno", "#5CF28B", "4 ★ DISEÑO", "Arreglar el CSS de la página")}
+      </div>
+      <p class="small">Para el equipo: <b>Ctrl + Alt + R</b> reinicia a mano cualquier notebook (sirve sin internet). En el servidor corta la partida; en una terminal pone un caso nuevo.</p>
+    </div>`;
+  netPaint();
+}
+
+/* ---------------- router ---------------- */
+function route(){
+  clearInterval(T.tick); T.key = null;
+  const h = (location.hash || "").replace("#","");
+  if(PISTAS[h]) terminal(h);
+  else if(h === "servidor") servidor();
+  else renderMenu();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", () => { stopGame(); route(); });
+/* reinicio manual de emergencia (no necesita internet): Ctrl + Alt + R
+   · en una terminal: caso nuevo y desafío listo para jugar; vuelve a seguir al servidor en la próxima partida
+   · en el servidor: corta la partida y queda listo para el próximo grupo */
+document.addEventListener("keydown", e => {
+  if(!(e.ctrlKey && e.altKey && e.code === "KeyR")) return;
+  e.preventDefault();
+  const h = (location.hash || "").replace("#","");
+  if(h === "servidor"){ renderServer(); avisoTerminal("REINICIO MANUAL · LISTO PARA EL PRÓXIMO GRUPO", "var(--yellow)"); }
+  else if(PISTAS[h]){ manualTerminal(); avisoTerminal("REINICIO MANUAL · CASO NUEVO", "var(--yellow)"); }
+});
+document.addEventListener("pointerdown", () => ac(), { once:true });
+
+/* pantalla completa (opcional) */
+document.getElementById("fs").addEventListener("click", () => {
+  try{
+    if(document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(()=>{});
+  }catch(e){}
+});
+
+conectar();
+route();
+</script>
+</body>
+</html>
