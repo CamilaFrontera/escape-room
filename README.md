@@ -6,29 +6,17 @@ El sistema del instituto "se cayó" y un grupo de 3 a 6 visitantes tiene **10 mi
 
 ## Direcciones para cada PC
 
-| PC | Abrir |
-|---|---|
-| 1 ▲ Calidad | https://camilafrontera.github.io/escape-room/#calidad |
-| 2 ◆ Cliente | https://camilafrontera.github.io/escape-room/#cliente |
-| 3 ● Código | https://camilafrontera.github.io/escape-room/#codigo |
-| 4 ★ Diseño | https://camilafrontera.github.io/escape-room/#diseno |
-| Proyector | https://camilafrontera.github.io/escape-room/#servidor |
+Las terminales siguen el orden real de un proyecto: primero se escucha al cliente, después se diseña, se programa y se prueba.
 
-## Las terminales
-
-Es una sola página. Cada computadora abre la misma dirección con un final distinto:
-
-| PC | Dirección | Qué muestra |
+| PC | Abrir | Desafío |
 |---|---|---|
-| 1 | `index.html#calidad` | ▲ Pantalla con errores para encontrar (la más sencilla) |
-| 2 | `index.html#cliente` | ◆ Mensaje cifrado del cliente |
-| 3 | `index.html#codigo` | ● Programa en inglés para leer |
-| 4 | `index.html#diseno` | ★ Página sin estilos: cambiar el CSS hasta que aparezca el número |
-| Proyector | `index.html#servidor` | ERROR 500, timer de 10 minutos con música y código final |
+| 1 ◆ Cliente | https://camilafrontera.github.io/escape-room/#cliente | Descifrar la palabra en clave del mensaje del cliente |
+| 2 ★ Diseño | https://camilafrontera.github.io/escape-room/#diseno | Armar el botón «Inscribirme» igual que el manual de marca del cliente: fondo, letra, esquinas, tamaño y mayúsculas, viendo el CSS que se genera |
+| 3 ● Código | https://camilafrontera.github.io/escape-room/#codigo | Averiguar qué número muestra un programa |
+| 4 ▲ Calidad | https://camilafrontera.github.io/escape-room/#calidad | Contar los errores entre la pantalla esperada y la obtenida |
+| Proyector | https://camilafrontera.github.io/escape-room/#servidor | ERROR 500, timer de 10 minutos con música y código final |
 
-**Cada desafío tiene varias versiones (casos)** y cada terminal elige una al azar cada vez que se abre o se reinicia, sin repetir la anterior. Todas las versiones de un desafío dan el mismo número, así que el código final no cambia nunca. Arriba a la derecha de cada terminal se ve qué caso tocó.
-
-Sin nada después del `#` se abre un menú con la dirección exacta de cada notebook y el estado de la conexión.
+Sin nada después del `#` se abre un menú con la dirección exacta de cada notebook, el estado de la conexión y **el código de la partida en curso** (para el equipo).
 
 ## Cómo se juega
 
@@ -36,14 +24,14 @@ Las cinco notebooks están **conectadas en tiempo real**:
 
 1. Mientras no hay partida, las terminales muestran **«Esperando al servidor»**.
 2. El game master toca **Iniciar partida** en el servidor. En ese momento se desbloquean las cuatro terminales a la vez, arranca el timer (también se ve arriba en cada terminal) y la música de tensión.
-3. El grupo resuelve las cuatro terminales **al mismo tiempo**. Cada respuesta correcta muestra un fragmento numerado (1 a 4) con su dígito y un dato corto **«¿Sabías que…?»**. El servidor marca cada terminal como RECUPERADO apenas se resuelve, y en la barra de cada terminal se ve cuáles ya resolvió el resto del equipo.
+3. El grupo resuelve las cuatro terminales **al mismo tiempo**. Cada partida tiene **un código nuevo**: el servidor sortea un número para cada terminal y cada desafío se arma con ese número (Cliente y Código: 1 a 9; Diseño: 1 a 9; Calidad: 2 a 5 errores). Además, cada terminal elige al azar uno de sus casos. Cada respuesta correcta muestra un fragmento numerado (1 a 4) con su dígito y un dato corto **«¿Sabías que…?»**. El servidor marca cada terminal como RECUPERADO apenas se resuelve, y en la barra de cada terminal se ve cuáles ya resolvió el resto del equipo.
 4. En el servidor se ingresa cada fragmento en su casillero. Hay **3 intentos como máximo**. Cada código incorrecto **descuenta 30 segundos**, muestra ACCESO DENEGADO y avisa en todas las terminales.
 5. Si aciertan: **SISTEMA RESTAURADO** con lluvia de píxeles, música, tiempo, intentos y un nivel según el tiempo que sobró. Si usan los 3 intentos: **SISTEMA BLOQUEADO**. Si se termina el tiempo: **SE ACABÓ EL TIEMPO**. El resultado aparece también en las cuatro terminales.
 6. **Siguiente grupo** en el servidor reinicia todo: las terminales vuelven a «Esperando al servidor», cada una con un caso nuevo.
 
-Las terminales **no se pueden reiniciar por separado**: solo se reinician cuando el servidor termina una partida y empieza la siguiente. Si una notebook se recarga en medio de una partida, vuelve al mismo caso (y si ya lo había resuelto, sigue resuelto).
+Las terminales **no se reinician por separado**: solo cuando el servidor termina una partida y empieza la siguiente (salvo el reinicio manual de emergencia, Ctrl + Alt + R). Si una notebook se recarga en medio de una partida, vuelve al mismo caso (y si ya lo había resuelto, sigue resuelto).
 
-Con 5 minutos restantes aparece un aviso y se suma una melodía; con 1 minuto la música se acelera; con 30 segundos suena una alarma; los últimos 10 segundos tienen cuenta regresiva con pitidos. Cada terminal tiene arriba un recuadro **«Tu misión»**. Desde el primer intento fallido aparece una ayuda con un ejemplo resuelto. Un código incompleto no gasta intentos.
+Con 5 minutos restantes aparece un aviso y se suma una melodía; con 1 minuto la música se acelera; con 30 segundos suena una alarma; los últimos 10 segundos tienen cuenta regresiva con pitidos. Cada terminal tiene un recuadro **«Tu misión»** y un botón **Pedir pista**, que descuenta 30 segundos del tiempo de todo el grupo (avisa en todas las pantallas). Después del **segundo intento fallido** aparece gratis una ayuda mucho más obvia. Un código incompleto no gasta intentos.
 
 ## Conexión entre notebooks
 
@@ -91,12 +79,8 @@ Las terminales que están esperando y no tienen conexión también muestran un b
 
 ## Para el equipo (no mostrar a los jugadores)
 
-- Soluciones (iguales en todos los casos):
-  - 1 ▲ Calidad: siempre hay **4 errores** → **4**. Casos: inscripción, certificado, mesa de examen, biblioteca.
-  - 2 ◆ Cliente: el mensaje siempre dice **TRES** → **3**. Casos: César +3 (WUHV), César +1 (USFT), números (20·18·5·19), abecedario invertido (GIVH).
-  - 3 ● Código: el programa siempre muestra **5** → **5**. Casos: suma en bucle, restas en orden, bucle con multiplicación, condición if/else, bucle de 0 a 5.
-  - 4 ★ Diseño: al elegir los valores correctos aparece el **7** → **7**. Casos: `block` + `navy` + `48px` · `visible` + `1` + `56px` · `inline-block` + `purple` + `1` · `visible` + `darkred` + `64px`. Los colores están en palabras y cada opción tiene su significado en español.
-- **Código final: 4 3 5 7.** Está en la constante `CODE` de `index.html`.
+- **El código cambia en cada partida.** El menú (la dirección sin `#`) muestra el de la partida en curso.
+- **Código de respaldo: 3 7 5 4.** Si una terminal se juega sin conexión (o con Ctrl + Alt + R), usa su número de respaldo: Cliente 3, Diseño 7, Código 5, Calidad 4. El servidor acepta, casillero por casillero, el número sorteado o el de respaldo, así una terminal sin conexión no traba al grupo.
 - **Próximo grupo:** botón **Siguiente grupo** en el servidor. **Cortar una partida a la mitad:** Ctrl + Alt + R en el servidor (o triple clic en su barra rosa).
 - **Sonido:** se genera en el navegador, sin archivos. Los navegadores solo permiten audio después de un clic, por eso la música arranca con el botón Iniciar. Subir el volumen de la PC del proyector.
 - Botón **Pantalla completa** abajo a la derecha (o F11).
@@ -110,4 +94,4 @@ Las terminales que están esperando y no tienen conexión también muestran un b
 
 ## Personalizar
 
-Al principio del `<script>`: `CODE` (código final), `DURATION` (segundos de juego), `MAX_TRIES` (intentos), `PENALTY` (segundos que descuenta cada error) y el objeto `PISTAS`: cada pista tiene una lista `variants` con sus casos. Para agregar un caso nuevo, copiá uno existente y cambiá el contenido, cuidando que dé el mismo número.
+Al principio del `<script>`: `DURATION` (segundos de juego), `MAX_TRIES` (intentos), `PENALTY` (segundos que descuenta cada error) y el objeto `PISTAS`: cada pista tiene una función `build(número, azar, caso)` que arma el desafío para el número sorteado. `RANGO` define entre qué números se sortea cada terminal y `FIJO` el código de respaldo.
