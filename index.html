@@ -80,7 +80,8 @@ h2{font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.15;text-wrap:b
 .body.srv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:center;text-align:center}
 @media (max-width:900px){.body.srv{grid-template-columns:1fr}}
 .srv-l,.srv-r{display:flex;flex-direction:column;gap:16px;align-items:center}
-.srv .clock{font-size:clamp(64px,9vw,120px)}
+.srv-l{container-type:inline-size;width:100%}
+.srv .clock{font-size:min(18cqw,112px);white-space:nowrap;letter-spacing:0}
 .tablero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;max-width:420px}
 .tb{background:var(--dark);padding:12px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 0 0 3px var(--line)}
 .tb .px{font-size:13px;color:var(--c)}
@@ -89,7 +90,14 @@ h2{font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.15;text-wrap:b
 .tb.ok b{color:var(--c)}
 .srv .slots input{width:clamp(60px,7vw,100px);height:clamp(80px,10vw,124px);font-size:clamp(36px,5vw,64px)}
 .srv h2{font-size:clamp(24px,3vw,34px)}
-.srv .denied{font-size:17px;padding:14px}
+.srv .btn.big{font-size:clamp(16px,1.6vw,21px);padding:22px 30px}
+.term{position:relative}
+.srv .denied{position:absolute;left:24px;right:24px;bottom:24px;z-index:5;font-size:18px;padding:16px;box-shadow:8px 8px 0 var(--dark)}
+.body.center h1.glitch{font-size:clamp(40px,6vw,76px)}
+.body.center h2{font-size:clamp(24px,3vw,36px)}
+.body.center{gap:16px}
+.winterm .win,.term.alert .win{gap:12px}
+.win .stats div{padding:10px}
 
 /* pistas */
 .answer{display:flex;flex-wrap:wrap;gap:14px;align-items:stretch}
@@ -114,9 +122,11 @@ pre.code{margin:0;font-family:var(--mono);font-size:clamp(22px,3.6vw,36px);line-
 .phone h4{margin:0;font-size:19px}
 .f{display:flex;flex-direction:column;gap:3px}
 .f label{font-size:13px;font-weight:700;color:#5b4f80}
+.f .lbl{font-size:13px;font-weight:700;color:#5b4f80}
+.f .val{display:block;font-family:var(--body);font-size:17px;padding:8px 10px;border:2px solid #cfc8e6;border-radius:8px;background:#fff;color:#1b1433;min-height:1.5em;overflow-wrap:anywhere;user-select:none}
 .f input,.f select{font-family:var(--body);font-size:17px;padding:8px 10px;border:2px solid #cfc8e6;border-radius:8px;background:#fff;color:#1b1433;min-width:0}
 .sendwrap{overflow:hidden;border-radius:8px}
-.send{font-family:var(--body);font-weight:700;font-size:18px;border:0;border-radius:8px;padding:12px;background:#5b3fd6;color:#fff;width:100%;cursor:pointer}
+.send{display:block;box-sizing:border-box;font-family:var(--body);font-weight:700;font-size:18px;border:0;border-radius:8px;padding:12px;background:#5b3fd6;color:#fff;width:100%;text-align:center;user-select:none}
 .sendwrap.broken .send{text-align:left;padding-left:91%;white-space:nowrap;overflow:hidden}
 
 .win{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:10px 0}
@@ -217,20 +227,104 @@ pre.code.small-code{font-size:clamp(14px,2vw,18px);padding:14px 18px;background:
 @media (prefers-reduced-motion:reduce){.party,.denied.pop{animation:none}}
 .corner{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:8px}
 @media (prefers-reduced-motion:reduce){.blink,body.alarm,.shake{animation:none}}
+.wrap:has(.split){max-width:1240px;padding-block:10px}
+.split-l .answer input{flex:1 1 140px}
+.split-l .fb{font-size:17px}
+.split-l .hint{font-size:16px;padding:10px 14px;line-height:1.4}
+.body.split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:28px;align-items:start;padding:20px 28px}
+.split-l{display:flex;flex-direction:column;gap:10px}
+.split-r .hint{font-size:15px;padding:9px 13px;line-height:1.4}
+.split-r .gloss span{font-size:15px;padding:4px 10px}
+.split-l h2{font-size:clamp(26px,2.6vw,34px)}
+.split-l .mission b{font-size:20px}
+.split-l .mission span:last-child{font-size:17px}
+.split-l .answer input{font-size:22px;padding:10px 14px}
+.split .compare{gap:14px}
+.split .phone{padding:12px 14px;gap:6px;border-radius:14px}
+.split .phone h4{font-size:16px}
+.split .phone .f{gap:2px}
+.split .f .lbl{font-size:12px}
+.split .f .val{padding:4px 9px;font-size:16px}
+.split .send{padding:8px;font-size:16px}
+@media (max-width:900px){.body.split{grid-template-columns:1fr}}
+.hints{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.hintbtn{font-size:12px;padding:10px 14px;color:var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow)}
+.hint.obvia{color:var(--green)}
+.clientmsg{background:#F4F0FF;color:#1b1433;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:6px}
+.clientmsg .px{font-size:10px;color:#5b4f80}
+.clientmsg p{margin:0;font-size:20px;line-height:1.4}
+.clientmsg .enc{font-family:var(--mono);background:#1b1433;color:var(--cyan);padding:2px 8px;border-radius:6px;letter-spacing:.12em}
+.split .cipher{font-size:clamp(40px,5vw,72px)}
+.split .abc{font-size:clamp(14px,1.5vw,18px);letter-spacing:.12em}
+.split-r{display:flex;flex-direction:column;gap:14px;min-width:0}
+.editor{background:#0d0a1c;border:3px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.ed-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#1a1338;font-family:var(--mono);font-size:15px;color:var(--muted)}
+.ed-bar .dot{width:11px;height:11px}
+.ed-file{margin-left:8px;padding:4px 10px;background:#0d0a1c;color:var(--ink);border-top:2px solid var(--yellow)}
+.ed-tag{margin-left:auto;font-family:var(--pixel);font-size:10px;color:var(--yellow)}
+.ed-lines{margin:0;padding:10px 0;list-style:none;counter-reset:ln;font-family:var(--mono);font-size:clamp(18px,1.6vw,22px);line-height:1.45}
+.ed-lines li{counter-increment:ln;display:flex;white-space:pre}
+.ed-lines li::before{content:counter(ln);width:2.4em;flex:none;text-align:right;padding-right:16px;color:#5a4b8f;user-select:none}
+.ed-lines code{font-family:inherit;color:var(--ink)}
+.ed-console{border-top:3px solid var(--line);background:#05030c;padding:10px 16px;display:flex;flex-direction:column;gap:6px}
+.ed-console .px{font-size:10px;color:var(--muted)}
+.ed-out{font-family:var(--mono);font-size:24px;color:var(--green)}
+.ed-out b{display:inline-block;min-width:1.4em;text-align:center;background:var(--line);color:var(--yellow)}
+.code-note{margin:0;font-size:17px;color:var(--muted);background:var(--dark);padding:10px 14px;border-left:4px solid var(--yellow)}
+.ctrls{display:flex;flex-direction:column;gap:8px;background:var(--dark);padding:12px 14px}
+.ctrl{display:grid;grid-template-columns:5.5em minmax(0,1fr);align-items:center;gap:10px}
+.cl-l{font-family:var(--pixel);font-size:10px;color:var(--muted)}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.swb{width:32px;height:32px;border-radius:8px;border:3px solid transparent;background:var(--sw);cursor:pointer;box-shadow:0 0 0 2px #2a2050}
+.swb[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 3px var(--green)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-family:var(--body);font-weight:700;font-size:15px;padding:6px 10px;border:2px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--dark)}
+.shape{display:inline-block;width:22px;height:14px;background:currentColor;flex:none}
+.rng{display:flex;align-items:center;gap:12px}
+.rng input{flex:1;accent-color:var(--green);min-width:0}
+.rng b{font-family:var(--mono);font-size:18px;color:var(--yellow);min-width:4em}
+.brand{background:#F4F0FF;color:#1b1433;border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.brand .px{font-size:10px;color:#5b4f80}
+.brand-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px}
+.brand-rows div{display:flex;flex-direction:column}
+.brand-rows span{font-size:12px;font-weight:700;color:#5b4f80}
+.brand-rows b{font-size:16px;display:flex;align-items:center;gap:8px}
+.brand-rows .chip{width:22px;height:22px;border-radius:6px;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
+.brand-rows .shape{color:#1b1433}
+.dz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.dprev{justify-content:flex-start}
+.dbtnwrap{min-height:96px;display:flex;align-items:center;justify-content:center}
+.dbtn{font-family:var(--body);font-weight:700;padding:.6em 1.2em;line-height:1.2;transition:all .15s;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.aula-ok{margin:0;font-size:17px;text-align:center}
+.aula-ok b{font-family:var(--pixel);font-size:30px;color:#1b1433;vertical-align:middle}
+.dcss{font-size:15px;padding:12px 14px;gap:2px;line-height:1.5}
+.dcss .cl{white-space:pre;overflow:hidden;text-overflow:ellipsis}
+.dcss .cl.hot{background:rgba(92,242,139,.18);outline:1px solid var(--green)}
+.dcss .cm{color:#6f63a3}
+@media (max-height:740px){
+  .split-l{gap:8px}
+  .split-l h2{font-size:24px}
+  .split-l .mission{padding:10px 14px;gap:4px}
+  .split-l .mission b{font-size:18px}
+  .split-l .mission span:last-child{font-size:15px}
+  .ctrls{gap:6px;padding:10px 12px}
+  .seg button{min-height:34px;padding:4px 9px}
+  .swb{width:28px;height:28px}
+}
 </style>
 </head>
 <body>
 <main class="wrap" id="app" aria-live="polite"></main>
-<div class="corner"><button class="btn ghost" id="fs" type="button">Pantalla completa</button></div>
+<div class="corner"><button class="btn ghost" id="snd" type="button" hidden></button><button class="btn ghost" id="fs" type="button">Pantalla completa</button></div>
 
 <script>
 /* =========================================================
    ERROR 500 · sala de acertijos · ISFDyT N° 125
    Rutas: #cliente  #codigo  #calidad  #servidor  (sin # = menú)
-   Orden de las pistas: 1 ▲ Calidad · 2 ◆ Cliente · 3 ● Código · 4 ★ Diseño
-   Código final: 4 - 3 - 5 - 7
+   Orden de las pistas (como en un proyecto real): 1 ◆ Cliente · 2 ★ Diseño · 3 ● Código · 4 ▲ Calidad
+   El código final cambia en cada partida (lo sortea el servidor). Sin conexión se usa el de respaldo: 3 - 7 - 5 - 4
    ========================================================= */
-const CODE = "4357";
 const DURATION = 10 * 60;  // segundos de juego
 const MAX_TRIES = 3;       // intentos para el código final
 const PENALTY = 30;        // segundos que se descuentan por código incorrecto
@@ -249,7 +343,10 @@ function ac(){
   }catch(e){ AC = null; }
   return AC;
 }
+/* sonido: 2 = música y efectos · 1 = solo efectos · 0 = nada (se elige en el servidor y se recuerda en esa notebook) */
+let SONIDO = 2; try{ const v = localStorage.getItem("e500-sonido"); if(v !== null) SONIDO = +v; }catch(e){}
 function tone(f, dur=.12, type="square", vol=.06, when=0, slideTo=null){
+  if(SONIDO === 0) return;
   const a = ac(); if(!a) return;
   const t = a.currentTime + when, o = a.createOscillator(), g = a.createGain();
   o.type = type; o.frequency.setValueAtTime(f, t);
@@ -258,6 +355,7 @@ function tone(f, dur=.12, type="square", vol=.06, when=0, slideTo=null){
   o.connect(g).connect(master); o.start(t); o.stop(t + dur + .02);
 }
 function hat(vol=.03, when=0, dur=.04){
+  if(SONIDO === 0) return;
   const a = ac(); if(!a) return;
   const t = a.currentTime + when, s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
   s.buffer = noiseBuf; f.type = "highpass"; f.frequency.value = 7000;
@@ -285,13 +383,23 @@ const SFX = {
 /* ---- música de tensión: ostinato de bajo + hi-hat; se acelera al final ---- */
 const BASS = [110,110,131,110, 98,110,147,131, 110,110,131,165, 147,131,123,98]; // La menor
 const LEAD = [440,0,523,0, 494,0,440,0, 392,0,440,0, 494,0,523,587];
-const music = { on:false, step:0, next:0, timer:null, bpm:116, level:0 };
+const music = { on:false, want:false, step:0, next:0, timer:null, bpm:116, level:0 };
 function musicStart(){
+  music.want = true;
+  if(SONIDO < 2) return;
   const a = ac(); if(!a || music.on) return;
   music.on = true; music.step = 0; music.next = a.currentTime + .05;
   music.timer = setInterval(scheduleMusic, 25);
 }
-function musicStop(){ music.on = false; clearInterval(music.timer); }
+function musicStop(){ music.want = false; music.on = false; clearInterval(music.timer); }
+const SONIDO_TXT = ["🔇 SIN SONIDO", "🔉 SOLO EFECTOS", "🔊 MÚSICA Y EFECTOS"];
+function pintarSonido(){ const b = document.getElementById("snd"); if(b){ b.textContent = SONIDO_TXT[SONIDO]; b.setAttribute("aria-label", "Sonido: " + SONIDO_TXT[SONIDO].slice(2).toLowerCase() + ". Tocá para cambiar"); } }
+function setSonido(m){
+  SONIDO = m; try{ localStorage.setItem("e500-sonido", m); }catch(e){}
+  if(m < 2 && music.on){ music.on = false; clearInterval(music.timer); }          // corta la música pero recuerda que estaba sonando
+  if(m === 2 && music.want && !music.on){ const w = music.want; musicStart(); music.want = w; }
+  pintarSonido();
+}
 function scheduleMusic(){
   const a = AC; if(!a || !music.on) return;
   while(music.next < a.currentTime + .12){
@@ -320,195 +428,310 @@ function bindReset(fn){
   b.addEventListener("click", () => { n++; clearTimeout(t); t = setTimeout(()=>n=0, 600); if(n >= 3){ n = 0; fn(); } });
 }
 
-/* ---------------- las cuatro pistas, con variantes ----------------
-   Cada terminal elige una variante al azar cada vez que se carga o se reinicia
-   (sin repetir la anterior en esa computadora). Todas las variantes de una pista
-   dan el MISMO dígito, así el código del servidor no cambia: 4 - 3 - 5 - 7. */
+/* ---------------- las cuatro pistas ----------------
+   Orden real del trabajo: 1 ◆ Cliente → 2 ★ Diseño → 3 ● Código → 4 ▲ Calidad.
+   El servidor sortea un número para cada terminal en cada partida y cada desafío se arma con ese número.
+   Cada terminal además elige al azar uno de sus "casos" (formas distintas del mismo desafío). */
+const ORDEN_P = ["cliente","diseno","codigo","calidad"];
+const RANGO = { cliente:[1,9], diseno:[1,9], codigo:[1,9], calidad:[2,5] };
+const FIJO = { cliente:3, diseno:7, codigo:5, calidad:4 };   // código de respaldo si se juega sin conexión: 3 - 7 - 5 - 4
+const NUM = ["CERO","UNO","DOS","TRES","CUATRO","CINCO","SEIS","SIETE","OCHO","NUEVE"];
+function sortearCodigo(){ const c = {}; ORDEN_P.forEach(k => { const [a,b] = RANGO[k]; c[k] = a + Math.floor(Math.random() * (b - a + 1)); }); return c; }
+/* azar "con semilla": la misma partida arma siempre el mismo desafío, aunque se recargue la página */
+function rngFrom(str){
+  let h = 1779033703 ^ str.length;
+  for(let i = 0; i < str.length; i++){ h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
+  return () => { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; };
+}
+const pick = (r, a) => a[Math.floor(r() * a.length)];
+const barajar = (r, a) => { a = [...a]; for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
 /* --- helpers de contenido --- */
-function formPhone(tag, tagColor, title, rows, btn, live){
+const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ABC_ROW = ABC.split("").join(" ");
+const K = w => `<span class="kw">${w}</span>`, N = w => `<span class="num">${w}</span>`, F = w => `<span class="fn">${w}</span>`;
+function gloss(items){ return `<div class="gloss">${items.map(i => `<span>${i}</span>`).join("")}</div>`; }
+function formPhone(tag, tagColor, title, rows, btnTxt, broken){
   return `
     <div class="phone" aria-label="${tag}">
       <span class="tag" style="background:${tagColor}">${tag}</span>
       <h4>${esc(title)}</h4>
-      ${rows.map((r,i) => `<div class="f"><label${live?` for="o${i}"`:""}>${esc(r.label)}</label><input${live?` id="o${i}"`:` readonly tabindex="-1"`} value="${esc(live ? r.got : r.exp)}"></div>`).join("")}
-      <div class="sendwrap${live && btn.broken ? " broken" : ""}"><button class="send" type="button"${live?` data-send`:` tabindex="-1"`}>${esc(live ? (btn.got || "Enviar") : "Enviar")}</button></div>
+      ${rows.map(r => `<div class="f"><span class="lbl">${esc(r[0])}</span><span class="val">${esc(r[1])}</span></div>`).join("")}
+      <div class="sendwrap${broken ? " broken" : ""}"><span class="send">${esc(btnTxt)}</span></div>
     </div>`;
 }
-function compareForms(title, rows, btn){
-  return `<div class="compare">${formPhone("ESPERADO","var(--green)",title,rows,btn,false)}${formPhone("OBTENIDO","var(--pink)",title,rows,btn,true)}</div>`;
-}
-const ABC_ROW = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
-function codeBlock(lines){ return `<pre class="code">${lines}</pre>`; }
-const K = w => `<span class="kw">${w}</span>`, N = w => `<span class="num">${w}</span>`, F = w => `<span class="fn">${w}</span>`;
-function gloss(items){ return `<div class="gloss">${items.map(i => `<span>${i}</span>`).join("")}</div>`; }
 
 const PISTAS = {
-  /* ▲ 1 · CALIDAD — siempre hay 4 errores → dígito 4 */
+  /* ◆ 1 · CLIENTE — solo la palabra del número viene en clave */
+  cliente: {
+    n: 1, color: "#3EE6FF", sym: "◆", term: "TERMINAL 1 ◆ CLIENTE", side: true, hintsR: true, casos: 4,
+    title: "El mensaje del cliente",
+    intro: "Todo proyecto empieza escuchando al cliente. Pero una palabra de su mensaje llegó en clave.",
+    mission: "Descifrá la palabra en clave.",
+    stage: "Etapa 1: entender qué pide el cliente",
+    placeholder: "Palabra",
+    build(d, r, v){
+      const w = NUM[d];
+      const ctx = pick(r, ["Instalen el servidor nuevo en el aula", "Guarden la copia de seguridad en el estante",
+                           "Las notebooks nuevas van al laboratorio", "El formulario de inscripción tiene que tener esta cantidad de pasos:"]);
+      const corrido = (s, k) => s.split("").map(c => ABC[(ABC.indexOf(c) + k + 26) % 26]).join("");
+      const atrasLetras = (c, k) => Array.from({length:k + 1}, (_, i) => ABC[(ABC.indexOf(c) - i + 26) % 26]).join(" → ");
+      let enc, clave, how, h1, fact, extra = "", big = "";
+      if(v === 0 || v === 1){
+        const k = v === 0 ? 3 : 1; enc = corrido(w, k);
+        clave = `A → ${ABC[k]}`;
+        how = k === 3 ? "Cada letra está 3 lugares más adelante que la verdadera. Buscá cada letra en el abecedario y volvé 3 lugares para atrás."
+                      : "Cada letra está 1 lugar más adelante que la verdadera. Buscá cada letra en el abecedario y fijate cuál está justo antes.";
+        h1 = `Ejemplo con la primera letra: ${atrasLetras(enc[0], k)}. La primera letra es ${w[0]}. Hacé lo mismo con las demás.`;
+        fact = `Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b>${k === 1 ? " (corrimiento de 1)" : ""}, que según se cuenta usaba Julio César. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.`;
+      } else if(v === 2){
+        enc = w.split("").map(c => ABC.indexOf(c) + 1).join("·"); big = "font-size:clamp(30px,4.4vw,56px);letter-spacing:.06em";
+        clave = "A = 1, B = 2, C = 3…";
+        how = "Cada número es una letra: el 1 es la A, el 2 es la B, el 3 es la C… Contá en el abecedario para saber qué letra es cada número.";
+        h1 = `Ejemplo: el ${ABC.indexOf(w[0]) + 1} es la ${w[0]} (contá desde la A). Hacé lo mismo con los demás números.`;
+        fact = "Acabás de <b>descifrar</b> un mensaje donde cada letra era un número. Las computadoras guardan todo así: cada letra que escribís se convierte en un número.";
+      } else {
+        enc = w.split("").map(c => ABC[25 - ABC.indexOf(c)]).join("");
+        clave = "A ↔ Z · B ↔ Y";
+        how = "Abajo del abecedario está el mismo abecedario dado vuelta. Buscá cada letra en la fila celeste y mirá qué letra tiene justo arriba.";
+        h1 = `Ejemplo: la ${enc[0]} de la fila celeste tiene arriba la ${w[0]}. La primera letra es ${w[0]}. Hacé lo mismo con las demás.`;
+        fact = "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado Atbash</b>, que da vuelta el abecedario. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.";
+        extra = `<div class="abc" style="color:var(--cyan)">${ABC_ROW.split(" ").reverse().join(" ")}</div>`;
+      }
+      return {
+        how, fact, hint1: h1,
+        hint2: `Ya está casi todo: ${w.slice(0, -1).split("").join(" ")} _ · Falta la última letra.`,
+        check: x => [w, String(d)].includes(norm(x)),
+        content: () => `
+          <div class="clientmsg"><span class="px">MENSAJE DEL CLIENTE</span><p>«${esc(ctx)} <b class="enc">${esc(enc)}</b>»</p></div>
+          <div class="cipher" style="${big}" aria-label="Palabra en clave: ${esc(enc.split("").join(" "))}">${esc(enc)}</div>
+          <p class="mono" style="text-align:center;font-size:20px;color:var(--yellow);margin:0">Pista del cliente: ${clave}</p>
+          <div class="abc">${ABC_ROW}</div>${extra}`
+      };
+    }
+  },
+
+  /* ★ 2 · DISEÑO — armar el botón siguiendo el manual de marca; al coincidir aparece el número */
+  diseno: {
+    n: 2, color: "#5CF28B", sym: "★", term: "TERMINAL 2 ★ DISEÑO", side: true, hintsR: true, casos: 4,
+    title: "El botón de inscripción",
+    intro: "",
+    mission: "Armá el botón «Inscribirme» igual que en el manual de marca del cliente.",
+    how: "Usá los controles. A la derecha ves el botón en vivo y el CSS que se escribe solo. Si coincide con el manual, aparece el número.",
+    stage: "Etapa 2: diseño web",
+    live: true,
+    fact: "Usaste <b>CSS</b>, el lenguaje que decide cómo se ve cada página web. Cada línea tiene una <b>propiedad</b> (background, color, border-radius…) y un <b>valor</b>. Los diseñadores web siguen el <b>manual de marca</b> del cliente para que todo se vea igual en cada pantalla.",
+    build(d, r, v){
+      const FONDOS = [ ["violeta","#5B3FD6"], ["lila","#B49CF0"], ["verde","#1E8E5A"], ["amarillo","#FFC93C"], ["azul","#1F5FBF"], ["rojo","#D93838"], ["gris","#8A86A0"] ];
+      const ESQ = [ ["recto","0px"], ["redondeado","12px"], ["píldora","999px"] ];
+      const ESQ_L = { "recto":"recto", "redondeado":"redondo", "píldora":"píldora" };
+      const MARCAS = [
+        { quien:"Instituto 125", fondo:"violeta", letra:"white", esq:"redondeado", px:24, may:true },
+        { quien:"Biblioteca 125", fondo:"verde", letra:"white", esq:"píldora", px:20, may:false },
+        { quien:"Centro de estudiantes", fondo:"amarillo", letra:"black", esq:"recto", px:28, may:true },
+        { quien:"Secretaría 125", fondo:"azul", letra:"white", esq:"redondeado", px:32, may:false }
+      ];
+      const M = MARCAS[v];
+      const hex = n => FONDOS.find(f => f[0] === n)[1];
+      const esqTxt = { "recto":"esquinas rectas", "redondeado":"esquinas redondeadas", "píldora":"forma de píldora (bien redonda)" };
+      const st = { fondo:"gris", letra:"black", esq:"recto", px:12, may:false };   // arranca mal a propósito
+      if(M.letra === "black") st.letra = "white";
+      const faltan = () => [st.fondo !== M.fondo, st.letra !== M.letra, st.esq !== M.esq, st.px !== M.px, st.may !== M.may].filter(Boolean).length;
+      const css = (cambio) => {
+        const L = [
+          ["fondo", `background: ${N(hex(st.fondo))};`, `/* ${st.fondo} */`],
+          ["letra", `color: ${N(st.letra)};`, `/* ${st.letra === "white" ? "blanca" : "negra"} */`],
+          ["esq", `border-radius: ${N(ESQ.find(e => e[0] === st.esq)[1])};`, `/* ${st.esq} */`],
+          ["px", `font-size: ${N(st.px + "px")};`, `/* tamaño */`],
+          ["may", `text-transform: ${N(st.may ? "uppercase" : "none")};`, `/* ${st.may ? "mayúsculas" : "normal"} */`]
+        ];
+        return `<div><span class="fn">.boton</span> {</div>` + L.map(l => `<div class="cl${l[0] === cambio ? " hot" : ""}">  ${l[1].replace(/^([a-z-]+):/, '<span class="kw">$1</span>:')} <span class="cm">${l[2]}</span></div>`).join("") + `<div>}</div>`;
+      };
+      return {
+        hint1: "Compará línea por línea: color de fondo, color de la letra, esquinas, tamaño y mayúsculas. Fijate bien el tono del color y el número exacto de px.",
+        hint2: `Elegí: fondo ${M.fondo}, letra ${M.letra === "white" ? "blanca" : "negra"}, ${esqTxt[M.esq]}, ${M.px} px y ${M.may ? "MAYÚSCULAS" : "texto normal"}.`,
+        controls: () => `
+          <div class="ctrls">
+            <div class="ctrl"><span class="cl-l">Fondo</span><div class="sw">${FONDOS.map(f => `<button type="button" class="swb" data-k="fondo" data-v="${f[0]}" style="--sw:${f[1]}" title="${f[0]}" aria-label="Fondo ${f[0]}"></button>`).join("")}</div></div>
+            <div class="ctrl"><span class="cl-l">Letra</span><div class="seg"><button type="button" data-k="letra" data-v="white">Blanca</button><button type="button" data-k="letra" data-v="black">Negra</button></div></div>
+            <div class="ctrl"><span class="cl-l">Esquinas</span><div class="seg">${ESQ.map(e => `<button type="button" data-k="esq" data-v="${e[0]}"><i class="shape" style="border-radius:${e[0] === "píldora" ? "999px" : e[1] === "12px" ? "5px" : e[1]}"></i>${ESQ_L[e[0]]}</button>`).join("")}</div></div>
+            <div class="ctrl"><span class="cl-l">Tamaño</span><div class="rng"><input type="range" id="px" min="12" max="40" step="4" value="12" aria-label="Tamaño del texto"><b id="pxv">12 px</b></div></div>
+            <div class="ctrl"><span class="cl-l">Texto</span><div class="seg"><button type="button" data-k="may" data-v="0">Normal</button><button type="button" data-k="may" data-v="1">MAYÚSCULAS</button></div></div>
+          </div>`,
+        content: () => `
+          <div class="brand">
+            <span class="px">MANUAL DE MARCA · ${esc(M.quien.toUpperCase())}</span>
+            <div class="brand-rows">
+              <div><span>Fondo</span><b><i class="chip" style="background:${hex(M.fondo)}"></i>${esc(M.fondo)}</b></div>
+              <div><span>Letra</span><b>${M.letra === "white" ? "blanca" : "negra"}</b></div>
+              <div><span>Esquinas</span><b><i class="shape" style="border-radius:${M.esq === "píldora" ? "999px" : ESQ.find(e => e[0] === M.esq)[1]}"></i>${esc(esqTxt[M.esq])}</b></div>
+              <div><span>Tamaño</span><b>${M.px} px</b></div>
+              <div><span>Texto</span><b>${M.may ? "TODO EN MAYÚSCULAS" : "normal, sin mayúsculas"}</b></div>
+            </div>
+          </div>
+          <div class="dz">
+            <div class="phone dprev" aria-label="Vista previa">
+              <span class="tag" style="background:var(--green)">VISTA PREVIA</span>
+              <h4>Inscripciones 2027</h4>
+              <div class="dbtnwrap"><span class="dbtn" id="dbtn">Inscribirme</span></div>
+              <p class="aula-ok" id="aulaok" hidden>Tu aula asignada: <b>${d}</b></p>
+            </div>
+            <div class="css dcss" id="dcss" aria-label="CSS que se va escribiendo">${css()}</div>
+          </div>`,
+        mount(cb){
+          const btn = document.getElementById("dbtn"), out = document.getElementById("dcss"), rng = document.getElementById("px");
+          const pintar = cambio => {
+            btn.style.background = hex(st.fondo); btn.style.color = st.letra;
+            btn.style.borderRadius = ESQ.find(e => e[0] === st.esq)[1]; btn.style.fontSize = st.px + "px";
+            btn.style.textTransform = st.may ? "uppercase" : "none";
+            out.innerHTML = css(cambio);
+            document.getElementById("pxv").textContent = st.px + " px";
+            app.querySelectorAll(".ctrls [data-k]").forEach(b => {
+              const k = b.dataset.k, val = k === "may" ? b.dataset.v === "1" : b.dataset.v;
+              b.setAttribute("aria-pressed", String(st[k] === val));
+            });
+            if(faltan() === 0){ document.getElementById("aulaok").hidden = false; cb.onSolve(); }
+          };
+          app.querySelectorAll(".ctrls [data-k]").forEach(b => b.addEventListener("click", () => {
+            const k = b.dataset.k; st[k] = k === "may" ? b.dataset.v === "1" : b.dataset.v; cb.onChange(); pintar(k);
+          }));
+          rng.addEventListener("input", () => { st.px = +rng.value; cb.onChange(); pintar("px"); });
+          pintar();
+          return { faltan };
+        }
+      };
+    }
+  },
+
+  /* ● 3 · CÓDIGO — un programa que, al terminar, muestra el número */
+  codigo: {
+    n: 3, color: "#FFD23F", sym: "●", term: "TERMINAL 3 ● CÓDIGO", side: true, hintsR: true, casos: 5,
+    title: "El código",
+    intro: "Antes de ejecutar un programa, hay que saber qué va a mostrar.",
+    mission: "Averiguá qué número muestra el programa en la consola.",
+    how: "x es una cajita que guarda un número. Seguí las líneas en orden y anotá cuánto vale x. Lo que muestra «print» es la respuesta.",
+    stage: "Etapa 3: programar",
+    placeholder: "Número",
+    build(d, r, v){
+      /* el programa se arma como una lista de instrucciones; se dibuja y se "ejecuta" para armar las pistas */
+      let ops, fact;
+      if(v === 0){
+        let k = d >= 7 && r() < .5 ? 2 : 1, n = Math.min(3, Math.floor(d / k)) >= 2 ? pick(r, [2, 3].filter(x => x * k <= d)) : 1;
+        ops = [["set", d - n * k], ["rep", n, [["add", k]]]];
+        fact = "Leíste un <b>programa</b>: la computadora sigue las instrucciones en orden, y <b>repeat</b> es un <b>bucle</b> que repite lo de adentro. Hacerlo a mano como vos se llama <b>prueba de escritorio</b>.";
+      } else if(v === 1){
+        const p = pick(r, [2,3,4]), q = pick(r, [1,2,3]);
+        ops = [["set", d + p + q], ["sub", p], ["sub", q]];
+        fact = "Leíste un <b>programa</b>: la computadora sigue las instrucciones <b>en orden</b>, una por una, y cada línea cambia el valor guardado en x (una <b>variable</b>).";
+      } else if(v === 2){
+        ops = [["set", 1], ["rep", 2, [["mul", 2]]]];
+        if(d > 4) ops.push(["add", d - 4]); else if(d < 4) ops.push(["sub", 4 - d]);
+        fact = "Leíste un <b>programa</b>: lo que está corrido a la derecha queda <b>adentro</b> del bucle <b>repeat</b>; lo demás se hace una sola vez. Hacerlo a mano se llama <b>prueba de escritorio</b>.";
+      } else if(v === 3){
+        let a, b, si;
+        if(r() < .5){ b = Math.max(1, 6 - d) + pick(r, [0, 1]); a = d + b; si = true; }
+        else{ b = Math.max(1, d - 5) + (d - Math.max(1, d - 5) - 1 > 0 ? pick(r, [0, 1]) : 0); a = d - b; si = false; }
+        ops = [["set", a], ["if", 5, [["sub", b]], [["add", b]]]];
+        fact = "Leíste una <b>condición</b>: <b>if</b> (si) pregunta algo y, según la respuesta, el programa hace una cosa o la otra (<b>else</b>, si no). Así deciden todos los programas.";
+      } else {
+        ops = [["set", 0], ["rep", d, [["add", 1]]]];
+        fact = "Leíste un <b>programa</b>: <b>repeat</b> es un <b>bucle</b> que repite lo de adentro las veces que le digas. Así un programa puede hacer lo mismo miles de veces sin cansarse.";
+      }
+      /* dibujar */
+      const lines = [];
+      const sym = { add:"+", sub:"-", mul:"*" };
+      const draw = (list, ind) => list.forEach(o => {
+        const sp = "    ".repeat(ind);
+        if(o[0] === "set") lines.push(`${sp}x = ${N(o[1])}`);
+        else if(o[0] === "rep"){ lines.push(`${sp}${K("repeat")} ${N(o[1])} ${K("times")}:`); draw(o[2], ind + 1); }
+        else if(o[0] === "if"){ lines.push(`${sp}${K("if")} x &gt; ${N(o[1])}:`); draw(o[2], ind + 1); lines.push(`${sp}${K("else")}:`); draw(o[3], ind + 1); }
+        else lines.push(`${sp}x = x ${sym[o[0]]} ${N(o[1])}`);
+      });
+      draw(ops, 0); lines.push(`${F("print")}(x)`);
+      /* ejecutar, anotando cada paso para las pistas */
+      const pasos = []; let x = 0;
+      const val = (o, x) => o[0] === "add" ? x + o[1] : o[0] === "sub" ? x - o[1] : x * o[1];
+      const verbo = { add:"se le suma", sub:"se le resta", mul:"se multiplica por" };
+      const run = (list, vuelta) => list.forEach(o => {
+        if(o[0] === "set"){ x = o[1]; pasos.push(`x empieza en ${x}.`); }
+        else if(o[0] === "rep"){ for(let i = 1; i <= o[1]; i++) run(o[2], i); }
+        else if(o[0] === "if"){
+          const ok = x > o[1];
+          pasos.push(`¿x es mayor que ${o[1]}? x vale ${x}, así que ${ok ? "SÍ: se hace la línea de abajo del if y se saltea la del else" : "NO: se saltea la línea del if y se hace la del else"}.`);
+          run(ok ? o[2] : o[3]);
+        } else { x = val(o, x); pasos.push(`${vuelta ? `Vuelta ${vuelta}: ` : ""}${verbo[o[0]]} ${o[1]} → x vale ${x}.`); }
+      });
+      run(ops);
+      const ultimo = pasos[pasos.length - 1].replace(/x vale -?\d+\.$/, "x vale ?");
+      const usadas = new Set(ops.flat(3).filter(t => typeof t === "string"));
+      const g = ["print = mostrar"];
+      if(usadas.has("rep")) g.unshift("repeat = repetir", "times = veces");
+      if(usadas.has("if")) g.unshift("if = si", "else = si no", "&gt; = mayor que");
+      if(usadas.has("mul")) g.unshift("* = multiplicar");
+      return {
+        fact,
+        hint1: `${pasos[0]} ${pasos[1] || ""} Seguí así, línea por línea.`,
+        hint2: (pasos.length > 5 ? [pasos[0], pasos[1], "…", pasos[pasos.length - 2], ultimo] : [...pasos.slice(0, -1), ultimo]).join(" ") + " Lo que muestra print es ese último valor de x.",
+        check: s => [String(d), NUM[d]].includes(norm(s)),
+        content: () => `
+          <div class="editor" aria-label="Programa">
+            <div class="ed-bar"><span class="dot" style="background:#FF4FA3"></span><span class="dot" style="background:#FFD23F"></span><span class="dot" style="background:#5CF28B"></span><span class="ed-file">inscripciones.code</span><span class="ed-tag">CÓDIGO</span></div>
+            <ol class="ed-lines">${lines.map(l => `<li><code>${l}</code></li>`).join("")}</ol>
+            <div class="ed-console"><span class="px">CONSOLA · LO QUE MUESTRA EL PROGRAMA</span><span class="ed-out">&gt; <b>?</b></span></div>
+          </div>
+          <p class="code-note">Esto es un <b>programa</b>: la computadora ejecuta las líneas en orden, de arriba hacia abajo, y va guardando números en <b>x</b>.</p>
+          ${gloss(g)}`
+      };
+    }
+  },
+
+  /* ▲ 4 · CALIDAD — la cantidad de errores es el número */
   calidad: {
-    n: 1, color: "#FF4FA3", sym: "▲", term: "TERMINAL 1 ▲ CALIDAD",
+    n: 4, color: "#FF4FA3", sym: "▲", term: "TERMINAL 4 ▲ CALIDAD", side: true, casos: 4,
     title: "Control de calidad",
     mission: "Encontrá los errores de la pantalla de la derecha.",
-    how: "La de la izquierda (ESPERADO) está bien. La de la derecha (OBTENIDO) tiene errores: compará dato por dato, contá cuántos están mal y escribí ese número.",
-    stage: "Etapa: probar",
-    check: v => ["4","CUATRO"].includes(norm(v)),
-    placeholder: "Cantidad de errores",
-    hint: "Mirá fila por fila: si el dato de la derecha es distinto al de la izquierda, es un error. No te olvides del botón de abajo. Son menos de 6.",
-    digit: "4",
+    how: "ESPERADO está bien; OBTENIDO tiene errores. Compará fila por fila y escribí cuántos hay.",
+    stage: "Etapa 4: probar",
+    placeholder: "Cantidad",
     fact: "Hiciste <b>testing</b>. Los programas detectan estos errores con <b>condiciones</b>: <span class=\"mono\">SI</span> un dato no tiene sentido <span class=\"mono\">→</span> mostrar error. Por eso un formulario te avisa cuando algo está mal.",
-    variants: [
-      { intro: "Así tenía que quedar la inscripción al instituto, y así quedó programada. ¿Cuántos errores tiene la versión obtenida? Podés tocarla y probarla.",
-        content: () => compareForms("Inscripción ISFDyT 125", [
-          {label:"Nombre", exp:"Juan", got:"Juan"},
-          {label:"Apellido", exp:"González", got:"Gonz?lez"},
-          {label:"Fecha de nacimiento", exp:"14/03/2009", got:"31/02/2009"},
-          {label:"Email", exp:"juan.gonzalez@mail.com", got:"juan.gonzalezmail.com"},
-          {label:"Carrera", exp:"Desarrollo de Software", got:"Desarrollo de Software"}], {broken:true}) },
-      { intro: "Así tenía que quedar el pedido de certificado de alumno regular, y así quedó programado. ¿Cuántos errores tiene la versión obtenida?",
-        content: () => compareForms("Pedido de certificado", [
-          {label:"Nombre", exp:"Lucía Fernández", got:"Lucía Fernández"},
-          {label:"DNI", exp:"45127789", got:"4512A789"},
-          {label:"Teléfono", exp:"11-4567-8901", got:"11-45"},
-          {label:"Fecha de retiro", exp:"15/11/2026", got:"35/11/2026"},
-          {label:"Motivo", exp:"Presentar en el trabajo", got:"Presentar en el trabajo"}], {got:"Enviarr"}) },
-      { intro: "Así tenía que quedar la inscripción a la mesa de examen, y así quedó programada. ¿Cuántos errores tiene la versión obtenida?",
-        content: () => compareForms("Mesa de examen", [
-          {label:"Alumna", exp:"Martina Pérez", got:"Martina Pérez"},
-          {label:"Legajo", exp:"1250", got:"-1250"},
-          {label:"Materia", exp:"Matemática", got:"Matemática"},
-          {label:"Fecha", exp:"26/02/2027", got:"29/02/2027"},
-          {label:"Email", exp:"martina@mail.com", got:"martina@@mail.com"},
-          {label:"Horario", exp:"18:00", got:"25:00"}], {}) },
-      { intro: "Así tenía que quedar el préstamo de la biblioteca del instituto, y así quedó programado. ¿Cuántos errores tiene la versión obtenida?",
-        content: () => compareForms("Préstamo de biblioteca", [
-          {label:"Usuario", exp:"Tomás Ruiz", got:"Tomás Ruiz"},
-          {label:"Libro", exp:"Rayuela", got:"Rayuela"},
-          {label:"Fecha de préstamo", exp:"10/11/2026", got:"10/11/2026"},
-          {label:"Fecha de devolución", exp:"24/11/2026", got:"05/11/2026"},
-          {label:"Cantidad", exp:"1", got:"-2"},
-          {label:"Email", exp:"tomas.ruiz@mail.com", got:"tomás ruiz@mail.com"}], {broken:true}) }
-    ]
-  },
-
-  /* ◆ 2 · CLIENTE — el mensaje siempre dice TRES → dígito 3 */
-  cliente: {
-    n: 2, color: "#3EE6FF", sym: "◆", term: "TERMINAL 2 ◆ CLIENTE",
-    title: "El mensaje del cliente",
-    intro: "Antes de programar hay que entender qué pide el cliente. Pero su mensaje llegó en clave.",
-    mission: "Descubrí qué palabra escondió el cliente.",
-    stage: "Etapa: entender qué pide el cliente",
-    check: v => ["TRES","3"].includes(norm(v)),
-    placeholder: "Mensaje descifrado",
-    digit: "3",
-    variants: [
-      { how: "Cada letra del mensaje está 3 lugares más adelante que la verdadera. Buscá cada letra en el abecedario y volvé 3 lugares para atrás.",
-        hint: "Ejemplo con la primera letra: W → V → U → T. La primera letra es T. Hacé lo mismo con U, H y V.",
-        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b>, que según se cuenta usaba Julio César. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
-        content: () => `<div class="cipher" aria-label="Mensaje cifrado: W U H V">WUHV</div>
-          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A → D</p>
-          <div class="abc">${ABC_ROW}</div>` },
-      { how: "Cada letra del mensaje está 1 lugar más adelante que la verdadera. Buscá cada letra en el abecedario y fijate cuál está justo antes.",
-        hint: "Ejemplo con la primera letra: antes de la U está la T. La primera letra es T. Hacé lo mismo con S, F y T.",
-        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b> (corrimiento de 1). Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
-        content: () => `<div class="cipher" aria-label="Mensaje cifrado: U S F T">USFT</div>
-          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A → B</p>
-          <div class="abc">${ABC_ROW}</div>` },
-      { how: "Cada número es una letra: el 1 es la A, el 2 es la B, el 3 es la C… Contá en el abecedario para saber qué letra es cada número.",
-        hint: "Ejemplo: el 5 es la E (A, B, C, D, E). El 20 es la T. Hacé lo mismo con el 18 y el 19.",
-        fact: "Acabás de <b>descifrar</b> un mensaje donde cada letra era un número. Las computadoras guardan todo así: cada letra que escribís se convierte en un número.",
-        content: () => `<div class="cipher" style="font-size:clamp(34px,7vw,64px);letter-spacing:.08em" aria-label="Mensaje cifrado: 20, 18, 5, 19">20·18·5·19</div>
-          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A = 1, B = 2, C = 3…</p>
-          <div class="abc">${ABC_ROW}</div>` },
-      { how: "Abajo del abecedario está el mismo abecedario dado vuelta. Buscá cada letra del mensaje en la fila celeste y mirá qué letra tiene justo arriba.",
-        hint: "Ejemplo: la G de la fila celeste tiene arriba la T. La primera letra es T. Hacé lo mismo con I, V y H.",
-        fact: "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado Atbash</b>, que da vuelta el abecedario. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.",
-        content: () => `<div class="cipher" aria-label="Mensaje cifrado: G I V H">GIVH</div>
-          <p class="mono" style="text-align:center;font-size:22px;color:var(--yellow)">Pista del cliente: A ↔ Z · B ↔ Y</p>
-          <div class="abc">${ABC_ROW}</div>
-          <div class="abc" style="color:var(--cyan)">${ABC_ROW.split(" ").reverse().join(" ")}</div>` }
-    ]
-  },
-
-  /* ● 3 · CÓDIGO — el programa siempre muestra 5 → dígito 5 */
-  codigo: {
-    n: 3, color: "#FFD23F", sym: "●", term: "TERMINAL 3 ● CÓDIGO",
-    title: "El código",
-    intro: "Un programa es una lista de instrucciones que la computadora sigue en orden, como una receta.",
-    mission: "Averiguá qué número aparece en pantalla al final.",
-    how: "x es como una cajita que guarda un número. Leé las líneas de arriba hacia abajo y andá anotando cuánto vale x. Lo que muestra «print» es la respuesta.",
-    stage: "Etapa: programar",
-    check: v => ["5","CINCO"].includes(norm(v)),
-    placeholder: "Lo que muestra",
-    digit: "5",
-    variants: [
-      { hint: "x empieza en 2. «repeat 3 times» hace 3 veces la línea de abajo (sumar 1). Vuelta 1: x vale 3. Vuelta 2: x vale 4. ¿Y en la vuelta 3?",
-        fact: "Leíste un <b>bloque de código</b>: la computadora sigue las instrucciones en orden, y <b>repeat</b> es un <b>bucle</b> que repite lo de adentro. Hacerlo a mano como vos se llama <b>prueba de escritorio</b>.",
-        content: () => codeBlock(`x = ${N(2)}\n${K("repeat")} ${N(3)} ${K("times")}:\n    x = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","print = mostrar"]) },
-      { hint: "x empieza en 10. La segunda línea le resta 3: x vale 7. La tercera línea le resta 2. ¿Cuánto queda?",
-        fact: "Leíste un <b>bloque de código</b>: la computadora sigue las instrucciones <b>en orden</b>, una por una, y cada línea cambia el valor guardado en x (una <b>variable</b>).",
-        content: () => codeBlock(`x = ${N(10)}\nx = x - ${N(3)}\nx = x - ${N(2)}\n${F("print")} x`) + gloss(["print = mostrar"]) },
-      { hint: "Solo la línea corrida a la derecha se repite. x empieza en 1, se multiplica por 2 dos veces (1 → 2 → 4) y después, una sola vez, se le suma 1.",
-        fact: "Leíste un <b>bloque de código</b>: lo que está corrido a la derecha queda <b>adentro</b> del bucle <b>repeat</b>; lo demás se hace una sola vez. Hacerlo a mano se llama <b>prueba de escritorio</b>.",
-        content: () => codeBlock(`x = ${N(1)}\n${K("repeat")} ${N(2)} ${K("times")}:\n    x = x * ${N(2)}\nx = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","* = multiplicar","print = mostrar"]) },
-      { hint: "«if x > 5» pregunta: ¿x es mayor que 5? x vale 7, así que la respuesta es SÍ: se hace la línea de abajo del if (restar 2) y se saltea la del else.",
-        fact: "Leíste una <b>condición</b>: <b>if</b> (si) pregunta algo y, según la respuesta, el programa hace una cosa o la otra (<b>else</b>, si no). Así deciden todos los programas.",
-        content: () => codeBlock(`x = ${N(7)}\n${K("if")} x > ${N(5)}:\n    x = x - ${N(2)}\n${K("else")}:\n    x = x + ${N(2)}\n${F("print")} x`) + gloss(["if = si","else = si no","> = mayor que","print = mostrar"]) },
-      { hint: "x empieza en 0. «repeat 5 times» suma 1 cinco veces: 1, 2, 3… seguí contando.",
-        fact: "Leíste un <b>bloque de código</b>: <b>repeat</b> es un <b>bucle</b> que repite lo de adentro las veces que le digas. Así un programa puede hacer lo mismo miles de veces sin cansarse.",
-        content: () => codeBlock(`x = ${N(0)}\n${K("repeat")} ${N(5)} ${K("times")}:\n    x = x + ${N(1)}\n${F("print")} x`) + gloss(["repeat = repetir","times = veces","print = mostrar"]) }
-    ]
-  },
-
-  /* ★ 4 · DISEÑO — al arreglar el CSS aparece el 7 → dígito 7 */
-  diseno: {
-    n: 4, color: "#5CF28B", sym: "★", term: "TERMINAL 4 ★ DISEÑO",
-    title: "Arreglá la página",
-    intro: "La página de inscripciones se rompió y el número de aula no se ve.",
-    mission: "Hacé que aparezca el número de aula.",
-    how: "Cambiá la opción de cada línea. A la derecha ves cómo queda la página al instante. El número tiene que verse bien: visible, de un color que se lea sobre el blanco y de un tamaño normal.",
-    stage: "Etapa: diseño web",
-    live: true,
-    digit: "7",
-    fact: "Usaste <b>CSS</b>, el lenguaje que decide cómo se ve cada página web. Cada regla tiene una <b>propiedad</b> y un <b>valor</b>: si algo se muestra, de qué color es, de qué tamaño.",
-    variants: [
-      { hint: "Elegí: display → block (visible), color → navy (azul oscuro) y font-size → 48px (grande).",
-        props: [ { p:"display", es:"mostrar", o:[["none","oculto"],["block","visible"]], ok:"block" },
-                 { p:"color", es:"color de la letra", o:[["white","blanco"],["ivory","blanco marfil"],["navy","azul oscuro"]], ok:"navy" },
-                 { p:"font-size", es:"tamaño de la letra", o:[["2px","diminuto"],["400px","gigante"],["48px","grande"]], ok:"48px" } ] },
-      { hint: "Elegí: visibility → visible, opacity → 1 (se ve entero) y font-size → 56px (grande).",
-        props: [ { p:"visibility", es:"visibilidad", o:[["hidden","escondido"],["visible","visible"]], ok:"visible" },
-                 { p:"opacity", es:"transparencia", o:[["0","invisible"],["0.05","casi invisible"],["1","se ve entero"]], ok:"1" },
-                 { p:"font-size", es:"tamaño de la letra", o:[["1px","diminuto"],["56px","grande"],["500px","gigante"]], ok:"56px" } ] },
-      { hint: "Elegí: display → inline-block (visible), color → purple (violeta) y opacity → 1 (se ve entero).",
-        props: [ { p:"display", es:"mostrar", o:[["none","oculto"],["inline-block","visible"]], ok:"inline-block" },
-                 { p:"color", es:"color de la letra", o:[["white","blanco"],["snow","blanco nieve"],["purple","violeta"]], ok:"purple" },
-                 { p:"opacity", es:"transparencia", o:[["0","invisible"],["1","se ve entero"]], ok:"1" } ] },
-      { hint: "Elegí: visibility → visible, color → darkred (rojo oscuro) y font-size → 64px (grande).",
-        props: [ { p:"visibility", es:"visibilidad", o:[["hidden","escondido"],["visible","visible"]], ok:"visible" },
-                 { p:"color", es:"color de la letra", o:[["white","blanco"],["darkred","rojo oscuro"],["lightyellow","amarillo clarito"]], ok:"darkred" },
-                 { p:"font-size", es:"tamaño de la letra", o:[["0px","nada"],["64px","grande"],["999px","gigante"]], ok:"64px" } ] }
-    ]
+    build(d, r, v){
+      /* cada fila tiene su dato correcto y versiones con UN solo error */
+      const FORMS = [
+        { t:"Inscripción ISFDyT 125", intro:"Así tenía que quedar la inscripción al instituto, y así quedó programada.",
+          rows:[["Nombre","Juan",["Jaun"]], ["Apellido","González",["Gonz?lez"]], ["Fecha de nacimiento","14/03/2009",["14/13/2009","32/03/2009"]],
+                ["Email","juan.gonzalez@mail.com",["juan.gonzalezmail.com","juan.gonzalez@@mail.com"]], ["Teléfono","2475-123456",["2475-12A456"]],
+                ["Carrera","Desarrollo de Software",["Desarrollo de Sofware"]]], btn:{ broken:true } },
+        { t:"Pedido de certificado", intro:"Así tenía que quedar el pedido de certificado de alumno regular, y así quedó programado.",
+          rows:[["Nombre","Lucía Fernández",["Lucía F3rnández"]], ["DNI","45127789",["4512A789"]], ["Teléfono","11-4567-8901",["11-45"]],
+                ["Fecha de retiro","15/11/2026",["35/11/2026","15/11/2062"]], ["Email","lucia@mail.com",["lucia@mail","luciamail.com"]],
+                ["Motivo","Presentar en el trabajo",["Presentar en el trabajo trabajo"]]], btn:{ got:"Enviarr" } },
+        { t:"Mesa de examen", intro:"Así tenía que quedar la inscripción a la mesa de examen, y así quedó programada.",
+          rows:[["Alumna","Martina Pérez",["Martina Pérez Pérez"]], ["Legajo","1250",["-1250"]], ["Materia","Matemática",["Matemátca"]],
+                ["Fecha","26/02/2027",["29/02/2027","26/14/2027"]], ["Email","martina@mail.com",["martina@@mail.com"]], ["Horario","18:00",["25:00"]]], btn:{ broken:true } },
+        { t:"Préstamo de biblioteca", intro:"Así tenía que quedar el préstamo de la biblioteca del instituto, y así quedó programado.",
+          rows:[["Usuario","Tomás Ruiz",["Tomás Ru1z"]], ["Libro","Rayuela",["Rayuel"]], ["Fecha de préstamo","10/11/2026",["10/00/2026"]],
+                ["Fecha de devolución","24/11/2026",["24/11/1926"]], ["Cantidad","1",["-2"]], ["Email","tomas.ruiz@mail.com",["tomás ruiz@mail.com"]]], btn:{ broken:true } }
+      ];
+      const f = FORMS[v];
+      const malos = new Set(barajar(r, [...f.rows.map((_, i) => i), "btn"]).slice(0, d));
+      const got = f.rows.map((row, i) => [row[0], malos.has(i) ? pick(r, row[2]) : row[1]]);
+      const btnMal = malos.has("btn");
+      const nombres = barajar(r, [...malos].map(m => m === "btn" ? "el botón" : f.rows[m][0]));
+      const ya = nombres.slice(0, -1);
+      return {
+        intro: f.intro,
+        hint1: "Si un dato de la derecha es distinto al de la izquierda, es un error (uno por fila). Revisá también el botón de abajo.",
+        hint2: `Ya hay errores en: ${ya.join(", ")}. Falta encontrar uno más.`,
+        check: s => [String(d), NUM[d]].includes(norm(s)),
+        content: () => `<div class="compare">${formPhone("ESPERADO","var(--green)",f.t,f.rows.map(x => [x[0], x[1]]),"Enviar",false)}${formPhone("OBTENIDO","var(--pink)",f.t,got, btnMal && f.btn.got ? f.btn.got : "Enviar", btnMal && !!f.btn.broken)}</div>`
+      };
+    }
   }
 };
-/* el contenido del desafío de diseño se arma con las propiedades de su variante */
-PISTAS.diseno.variants.forEach(v => v.content = () => `
-  <div class="cssfix">
-    <div class="css" aria-label="Editor de CSS">
-      <div><span class="fn">.aula</span> {</div>
-      ${v.props.map((q,i) => `<label class="prop" for="c${i}"><span>${q.p}:</span><select id="c${i}">${q.o.map(([val,txt]) => `<option value="${val}">${val} · ${txt}</option>`).join("")}</select>;<small>${q.es}</small></label>`).join("")}
-      <div>}</div>
-    </div>
-    <div class="phone preview" aria-label="Vista previa de la página">
-      <span class="tag" style="background:var(--green)">VISTA PREVIA</span>
-      <h4>Inscripciones 2027</h4>
-      <p style="margin:0;font-size:16px">Tu aula asignada es:</p>
-      <div class="aulabox"><span id="aula" class="aula">7</span></div>
-    </div>
-  </div>`);
 
 /* elige una variante al azar, sin repetir la última que salió en esta computadora */
 function pickVariant(key){
-  const vs = PISTAS[key].variants, k = "e500-var-" + key;
+  const vs = { length: PISTAS[key].casos }, k = "e500-var-" + key;
   let last = -1; try{ last = +localStorage.getItem(k); }catch(e){}
   let i = Math.floor(Math.random() * vs.length);
   if(vs.length > 1 && i === last) i = (i + 1 + Math.floor(Math.random() * (vs.length - 1))) % vs.length;
@@ -643,74 +866,92 @@ function abrirFirebase(){
   es.onerror = () => { netStatus(false); if(es.readyState === 2){ NET.retry = setTimeout(conectarFirebase, 3000); } };
   NET.es = es;
 }
-const ORDEN_P = ["calidad","cliente","codigo","diseno"];
 const fmt = s => `${Math.floor(s/60)}:${pad(s%60)}`;
 function equipoHTML(res){
   return `<span class="team" aria-label="Fragmentos recuperados por el equipo">${ORDEN_P.map(k => `<i class="${res.has(k) ? "on" : ""}" style="--c:${PISTAS[k].color}">${PISTAS[k].sym}</i>`).join("")}</span>`;
 }
 
-/* ---------------- terminal: un desafío ---------------- */
+/* ---------------- terminal: un desafío ----------------
+   o = { v: caso, d: número, seed, solved, hint (pista ya pedida), onWin, onHint, reset, paint } */
 function renderPista(key, o = {}){
-  const P = { ...PISTAS[key], ...PISTAS[key].variants[o.v], vIndex:o.v };
-  let fails = 0, solved = false;
+  const base = PISTAS[key];
+  const P = { ...base, ...base.build(o.d, rngFrom(o.seed || String(Math.random())), o.v), vIndex:o.v, digit:o.d };
+  let fails = 0, solved = false, hintUsed = !!o.hint;
+  const rid = renderPista.n = (renderPista.n || 0) + 1;   // si se vuelve a dibujar, los temporizadores viejos no hacen nada
   document.body.classList.remove("alarm");
   const extra = `<span class="tclock" id="tclock"></span>`;
+  const costo = o.offline ? "" : ` · −${PENALTY} SEG`;
+  const hintsHTML = `
+          <div class="hints">
+            <button class="btn ghost hintbtn" id="pedir" type="button"${hintUsed ? " hidden" : ""}>💡 Pedir pista${costo}</button>
+            <div class="hint" id="hint1"${hintUsed ? "" : " hidden"}><b>Pista:</b> ${P.hint1}</div>
+            <div class="hint obvia" id="hint2" hidden><b>Ayuda del sistema (gratis):</b> ${P.hint2}</div>
+          </div>`;
   const draw = () => {
     app.innerHTML = `
       <div class="term">
         ${bar(P.term + " · sistema-academico-125", false, extra)}
-        <div class="body">
+        <div class="body${P.side ? " split" : ""}">
+          ${P.side ? `<div class="split-l">` : ""}
           <div class="row" style="justify-content:space-between">
             <span class="px" style="font-size:14px;color:${P.color}">${P.sym} FRAGMENTO ${P.n} DE 4 PERDIDO</span>
-            <span class="px small" style="font-size:11px">ERROR 500 · CASO ${P.vIndex + 1}</span>
+            <span class="px small" style="font-size:11px">CASO ${P.vIndex + 1}</span>
           </div>
           <h2>${esc(P.title)}</h2>
-          <p class="muted">${esc(P.intro)}</p>
+          ${P.intro ? `<p class="muted">${esc(P.intro)}</p>` : ""}
           <div class="mission" style="--c:${P.color}"><span class="px">TU MISIÓN</span><b>${esc(P.mission)}</b><span>${esc(P.how)}</span></div>
-          ${P.content()}
-          ${P.live ? `<div class="row"><button class="btn" id="chk" type="button">Verificar</button></div>` : `
+          ${P.side ? "" : P.content()}
+          ${P.live ? `${P.controls ? P.controls() : ""}<div class="row"><button class="btn" id="chk" type="button">Verificar</button></div>` : `
           <form class="answer" id="f" autocomplete="off">
             <label for="ans" class="px" style="flex-basis:100%;font-size:12px;color:var(--muted)">TU RESPUESTA</label>
             <input id="ans" name="ans" placeholder="${esc(P.placeholder)}" autocapitalize="characters" spellcheck="false">
             <button class="btn" type="submit">Verificar</button>
           </form>`}
           <div class="fb" id="fb" role="status"></div>
-          <div class="hint" id="hint" hidden><b>Ayuda del sistema:</b> ${esc(P.hint)}</div>
+          ${P.hintsR ? "" : hintsHTML}
+          ${P.side ? `</div><div class="split-r">${P.content()}${P.hintsR ? hintsHTML : ""}</div>` : ""}
         </div>
       </div>`;
     if(o.reset) bindReset(o.reset);
     if(o.paint) o.paint();
     const fb = document.getElementById("fb");
-    const fail = () => {
-      fails++; SFX.bad(); fb.className = "fb bad"; fb.textContent = `> ACCESO DENEGADO. Intento ${fails}.`;
+    document.getElementById("pedir").addEventListener("click", () => {
+      if(hintUsed) return; hintUsed = true; SFX.warn();
+      document.getElementById("pedir").hidden = true; document.getElementById("hint1").hidden = false;
+      if(o.onHint) o.onHint();
+    });
+    const fail = (detalle) => {
+      fails++; SFX.bad(); fb.className = "fb bad"; fb.textContent = `> ACCESO DENEGADO. Intento ${fails}.${detalle ? " " + detalle : ""}`;
       const t = app.querySelector(".term"); t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake");
-      if(fails >= 1) document.getElementById("hint").hidden = false;
+      if(fails >= 2){   // la ayuda gratis reemplaza a la pista paga (es más completa)
+        document.getElementById("hint2").hidden = false;
+        document.getElementById("hint1").hidden = true; document.getElementById("pedir").hidden = true;
+      }
     };
     if(P.live){
-      /* desafío de diseño: la vista previa cambia en vivo con cada propiedad */
-      const sel = P.props.map((_,i) => document.getElementById("c"+i)), aula = document.getElementById("aula");
-      const ok = () => P.props.every((q,i) => sel[i].value === q.ok);
-      const apply = sound => {
-        P.props.forEach((q,i) => aula.style.setProperty(q.p, sel[i].value));
-        if(sound) SFX.key();
-        if(!solved && ok()){ solved = true; fb.className = "fb ok"; fb.textContent = "> ESTILOS CORRECTOS"; SFX.ok(); setTimeout(win, 1400); }
-      };
-      sel.forEach(s => s.addEventListener("change", () => apply(true)));
-      apply(false);
-      document.getElementById("chk").addEventListener("click", () => { if(!solved) fail(); });
+      /* desafío de diseño: cada control cambia el botón en vivo */
+      const api = P.mount({
+        onChange: () => SFX.key(),
+        onSolve: () => { if(solved) return; solved = true; fb.className = "fb ok"; fb.textContent = "> ¡COINCIDE CON EL MANUAL!"; SFX.ok(); setTimeout(win, 1600); }
+      });
+      document.getElementById("chk").addEventListener("click", () => {
+        if(solved) return; const n = api.faltan();
+        fail(`Falta${n === 1 ? "" : "n"} ${n}.`);
+      });
       return;
     }
     const input = document.getElementById("ans");
     input.addEventListener("input", () => SFX.key());
-    app.querySelectorAll("[data-send]").forEach(b => b.addEventListener("click", () => SFX.bad()));
     document.getElementById("f").addEventListener("submit", e => {
       e.preventDefault(); if(solved) return;
+      if(!input.value.trim()){ input.focus(); return; }
       if(P.check(input.value)){ solved = true; SFX.ok(); setTimeout(win, 350); }
       else{ fail(); input.select(); }
     });
     setTimeout(()=>{ try{ input.focus({ preventScroll:true }); }catch(e){} }, 50);
   };
   const win = () => {
+    if(renderPista.n !== rid) return;
     if(o.onWin) o.onWin();
     app.innerHTML = `
       <div class="term">
@@ -733,7 +974,8 @@ function renderPista(key, o = {}){
 /* ---------------- terminal: sigue al servidor ----------------
    espera → pantalla de espera · jugando → desafío · fin → resultado del grupo.
    Solo se reinicia cuando el servidor arranca una partida nueva. */
-const T = { key:null, id:null, fase:null, end:0, res:new Set(), resultado:null, v:0, solved:false, offline:false, tick:null, shown:"" };
+const T = { key:null, id:null, fase:null, end:0, res:new Set(), resultado:null, v:0, d:0, solved:false, hint:false, offline:false, tick:null, shown:"" };
+const memT = () => store.set("e500-p-" + T.key, { id:T.id, v:T.v, d:T.d, solved:T.solved, hint:T.hint });
 function terminal(key){
   Object.assign(T, { key, id:null, fase:null, end:0, res:new Set(), resultado:null, offline:false, shown:"" });
   const mem = store.get("e500-p-" + key);
@@ -743,12 +985,14 @@ function terminal(key){
       if(d.id !== T.id){
         T.id = d.id; T.res = new Set();
         const m = store.get("e500-p-" + key);
-        if(m && m.id === d.id){ T.v = m.v; T.solved = m.solved; }
-        else{ T.v = pickVariant(key); T.solved = false; store.set("e500-p-" + key, { id:d.id, v:T.v, solved:false }); }
+        if(m && m.id === d.id){ T.v = m.v; T.d = m.d; T.solved = m.solved; T.hint = !!m.hint; }
+        else{ T.v = pickVariant(key); T.d = (d.cod && d.cod[key]) || FIJO[key]; T.solved = false; T.hint = false; memT(); }
       }
+      if(d.cod && d.cod[key] && d.cod[key] !== T.d){ T.d = d.cod[key]; memT(); }
       T.fase = d.fase; T.resultado = d.resultado || null; T.info = d;
       if(d.fase === "jugando") T.end = d._recv + d.restante * 1000;
       if(live && d.aviso === "denegado") avisoTerminal(`EN EL SERVIDOR: ACCESO DENEGADO · −${PENALTY} SEG`);
+      if(live && d.aviso === "pista" && d.de && PISTAS[d.de]) avisoTerminal(d.de === key ? `PISTA PEDIDA · −${PENALTY} SEG PARA TODO EL EQUIPO` : `${PISTAS[d.de].sym} TERMINAL ${PISTAS[d.de].n} PIDIÓ UNA PISTA · −${PENALTY} SEG`, "var(--yellow)");
       if(live && d.fase === "jugando" && d.aviso === "inicio") SFX.start();
       if(live && d.fase === "fin") (d.resultado === "ganado" ? SFX.win : SFX.lose)();
     }
@@ -777,8 +1021,9 @@ function pintarTerminal(){
   if(ahora !== T.shown){
     T.shown = ahora;
     if(T.id && T.fase === "jugando"){
-      renderPista(key, { v:T.v, solved:T.solved, paint:pintarEquipo,
-        onWin:() => { T.solved = true; T.res.add(key); store.set("e500-p-" + key, { id:T.id, v:T.v, solved:true }); enviar({ k:"resuelto", id:T.id, pista:key }); } });
+      renderPista(key, { v:T.v, d:T.d, seed:T.id + key, solved:T.solved, hint:T.hint, paint:pintarEquipo,
+        onHint:() => { T.hint = true; memT(); enviar({ k:"pista", id:T.id, pista:key }); },
+        onWin:() => { T.solved = true; T.res.add(key); memT(); enviar({ k:"resuelto", id:T.id, pista:key }); } });
     } else if(T.id && T.fase === "fin") finTerminal();
     else esperaTerminal();
     window.scrollTo(0, 0);
@@ -811,7 +1056,7 @@ function esperaTerminal(){
 }
 function manualTerminal(){
   T.offline = true; T.shown = "";
-  const go = () => { renderPista(T.key, { v:pickVariant(T.key), reset:go }); window.scrollTo(0,0); };
+  const go = () => { renderPista(T.key, { v:pickVariant(T.key), d:FIJO[T.key], offline:true, reset:go }); window.scrollTo(0,0); };
   go();
 }
 function finTerminal(){
@@ -837,13 +1082,16 @@ function avisoTerminal(txt, color){
 }
 
 /* ---------------- servidor (proyector) ---------------- */
-const S = { state:"idle", id:null, end:0, tick:null, fails:0, res:new Set(), warned300:false, warned60:false, warned30:false, lastBeep:null };
+const S = { state:"idle", id:null, cod:null, end:0, tick:null, fails:0, res:new Set(), pistas:[], warned300:false, warned60:false, warned30:false, lastBeep:null };
 function stopGame(){ clearInterval(S.tick); musicStop(); document.body.classList.remove("alarm"); }
 function nuevaId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
-function guardarS(){ store.set("e500-srv-" + SALA, { id:S.id, state:S.state, end:S.end, fails:S.fails }); }
+function guardarS(){ store.set("e500-srv-" + SALA, { id:S.id, cod:S.cod, state:S.state, end:S.end, fails:S.fails, pistas:S.pistas }); }
+const codigoTxt = c => ORDEN_P.map(k => c[k]).join("");
+/* acepta, casillero por casillero, el número sorteado o el de respaldo (por si una terminal jugó sin conexión) */
+function codigoOk(v){ return ORDEN_P.every((k, i) => +v[i] === S.cod[k] || +v[i] === FIJO[k]); }
 function restante(){ return Math.max(0, Math.ceil((S.end - Date.now()) / 1000)); }
 function publicarEstado(extra = {}){
-  enviar({ k:"estado", id:S.id, fase:S.state === "playing" ? "jugando" : S.state === "idle" ? "espera" : "fin", restante:restante(), ...extra });
+  enviar({ k:"estado", id:S.id, cod:S.cod, fase:S.state === "playing" ? "jugando" : S.state === "idle" ? "espera" : "fin", restante:restante(), ...extra });
 }
 function servidor(){
   NET.on = (d, live) => {
@@ -852,18 +1100,27 @@ function servidor(){
       pintarTablero();
       if(live && S.state === "playing"){ SFX.ok(); avisoTerminal(`${PISTAS[d.pista].sym} TERMINAL ${PISTAS[d.pista].n} · FRAGMENTO RECUPERADO`, PISTAS[d.pista].color); }
     }
+    if(d.k === "pista" && d.id === S.id && S.state === "playing" && PISTAS[d.pista] && !S.pistas.includes(d.pista)){
+      S.pistas.push(d.pista); S.end -= PENALTY * 1000; guardarS();
+      publicarEstado({ aviso:"pista", de:d.pista });
+      if(live){ SFX.denied(); avisoTerminal(`${PISTAS[d.pista].sym} TERMINAL ${PISTAS[d.pista].n} PIDIÓ UNA PISTA · −${PENALTY} SEG`, "var(--yellow)"); }
+      updateClock();
+    }
     if(d.k === "_net" || d.k === "_sync") netPaint();
   };
   const m = store.get("e500-srv-" + SALA);
   if(m && m.state === "playing" && m.end > Date.now()){
-    Object.assign(S, m); S.res = new Set();
+    Object.assign(S, m); S.res = new Set(); S.pistas = m.pistas || []; if(!S.cod) S.cod = { ...FIJO };
     jugando(true);
   } else renderServer(m && m.state === "idle" ? m.id : null);
 }
 function renderServer(idPrevia){
   stopGame();
-  Object.assign(S, { state:"idle", fails:0, res:new Set(), warned300:false, warned60:false, warned30:false, lastBeep:null });
-  S.id = idPrevia || nuevaId(); S.end = 0; guardarS();
+  Object.assign(S, { state:"idle", fails:0, res:new Set(), pistas:[], warned300:false, warned60:false, warned30:false, lastBeep:null });
+  const prev = store.get("e500-srv-" + SALA);
+  S.id = idPrevia || nuevaId();
+  S.cod = idPrevia && prev && prev.id === idPrevia && prev.cod ? prev.cod : sortearCodigo();
+  S.end = 0; guardarS();
   if(!idPrevia) limpiarSala();   // los mensajes del grupo anterior ya no hacen falta
   publicarEstado();   // las terminales pasan a "esperando" con un caso nuevo
   app.innerHTML = `
@@ -874,7 +1131,7 @@ function renderServer(idPrevia){
         <h1 class="glitch">ERROR 500</h1>
         <p class="mono muted">Internal Server Error · el sistema se cayó</p>
         <h2>Falta una semana para las inscripciones.<br>¿Pueden restaurarlo en 10 minutos?</h2>
-        <p class="muted" style="max-width:60ch;margin:0 auto">Hay cuatro terminales con fragmentos perdidos: <b style="color:var(--pink)">1 ▲ Calidad</b>, <b style="color:var(--cyan)">2 ◆ Cliente</b>, <b style="color:var(--yellow)">3 ● Código</b> y <b style="color:var(--green)">4 ★ Diseño</b>. Pueden resolverlas al mismo tiempo. Después vuelvan acá con el código: tienen ${MAX_TRIES} intentos y cada error les cuesta ${PENALTY} segundos.</p>
+        <p class="muted" style="max-width:60ch;margin:0 auto">Hay cuatro terminales, una por cada etapa de un proyecto: <b style="color:var(--cyan)">1 ◆ Cliente</b>, <b style="color:var(--green)">2 ★ Diseño</b>, <b style="color:var(--yellow)">3 ● Código</b> y <b style="color:var(--pink)">4 ▲ Calidad</b>. Pueden resolverlas al mismo tiempo. Después vuelvan acá con el código: tienen ${MAX_TRIES} intentos, y cada error o pista les cuesta ${PENALTY} segundos.</p>
         <div class="row c"><button class="btn big" id="go" type="button">▶ Iniciar partida · 10:00</button></div>
       </div>
     </div>`;
@@ -906,10 +1163,7 @@ function jugando(reanudada){
           <h2>Ingresá el código de restauración</h2>
           <form id="cf" autocomplete="off" style="display:flex;flex-direction:column;gap:18px;align-items:center">
             <div class="slots">
-              <label class="slot"><input id="d0" inputmode="numeric" maxlength="1" aria-label="Fragmento 1, Calidad"><span style="color:var(--pink)">1 ▲</span></label>
-              <label class="slot"><input id="d1" inputmode="numeric" maxlength="1" aria-label="Fragmento 2, Cliente"><span style="color:var(--cyan)">2 ◆</span></label>
-              <label class="slot"><input id="d2" inputmode="numeric" maxlength="1" aria-label="Fragmento 3, Código"><span style="color:var(--yellow)">3 ●</span></label>
-              <label class="slot"><input id="d3" inputmode="numeric" maxlength="1" aria-label="Fragmento 4, Diseño"><span style="color:var(--green)">4 ★</span></label>
+              ${ORDEN_P.map((k, i) => `<label class="slot"><input id="d${i}" inputmode="numeric" maxlength="1" aria-label="Fragmento ${i + 1}"><span style="color:${PISTAS[k].color}">${i + 1} ${PISTAS[k].sym}</span></label>`).join("")}
             </div>
             <div class="tries" id="tries" aria-label="Intentos restantes"></div>
             <button class="btn big" type="submit">Restaurar sistema</button>
@@ -932,7 +1186,7 @@ function jugando(reanudada){
     const v = ds.map(d => d.value).join("");
     const empty = ds.find(d => !d.value);
     if(empty){ SFX.bad(); empty.focus(); return; }   // incompleto: no gasta intento
-    if(v === CODE) return gameWon();
+    if(codigoOk(v)) return gameWon();
     S.fails++;
     const left = MAX_TRIES - S.fails;
     if(left <= 0) return gameLost("locked");
@@ -942,6 +1196,7 @@ function jugando(reanudada){
     box.hidden = false;
     box.innerHTML = `<span class="px" style="font-size:clamp(18px,2.4vw,26px)">ACCESO DENEGADO · −${PENALTY} SEG</span><span>El código <b class="mono">${esc(v.split("").join(" - "))}</b> no restauró el sistema. ${left === 1 ? "<b>¡Les queda UN solo intento!</b>" : `Les quedan ${left} intentos.`}</span>`;
     box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
+    clearTimeout(S.deniedT); S.deniedT = setTimeout(() => { box.hidden = true; }, 5000);
     const t = document.getElementById("t"); t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake");
     ds.forEach(d => d.value = ""); ds[0].focus();
     updateClock();
@@ -983,7 +1238,7 @@ function gameWon(){
       ${bar("servidor instituto-125 · en línea", false, `<span class="net" data-net></span>`)}
       <div class="body win">
         <p class="mono" style="color:var(--green)">$ status --servidor instituto-125 → 200 OK ✔</p>
-        <h1 class="party" style="font-size:clamp(34px,6vw,72px)">SISTEMA RESTAURADO</h1>
+        <h1 class="party" style="font-size:clamp(30px,4.6vw,58px)">SISTEMA RESTAURADO</h1>
         <div class="stats">
           <div><span class="px">TIEMPO</span><b>${fmt(used)}</b></div>
           <div><span class="px">SOBRARON</span><b>${fmt(left)}</b></div>
@@ -1034,7 +1289,11 @@ function gameLost(reason){
 
 /* ---------------- menú (lo usa el equipo para preparar cada notebook) ---------------- */
 function renderMenu(){
-  stopGame(); NET.on = d => { if(d.k === "_net" || d.k === "_sync") netPaint(); };
+  stopGame();
+  NET.on = d => {
+    if(d.k === "_net" || d.k === "_sync") netPaint();
+    if(d.k === "estado" && d.cod){ const el = document.getElementById("codnow"); if(el) el.textContent = ORDEN_P.map(k => d.cod[k]).join(" - "); }
+  };
   const base = location.origin + location.pathname + location.search;
   const dir = h => esc((base + "#" + h).replace(/^https?:\/\//, ""));
   const card = (h, c, tag, t) => `<a class="card" href="#${h}" style="--c:${c}"><b>${tag}</b><strong>${t}</strong><code>${dir(h)}</code></a>`;
@@ -1042,15 +1301,15 @@ function renderMenu(){
     <div class="menu">
       <div class="menu-h">
         <div><span class="px small" style="font-size:11px">ISFDyT N° 125 · NOCHE DEL INSTITUTO</span><h1>ERROR 500</h1></div>
-        <div class="menu-net"><span class="net" data-net></span><span class="px small" style="font-size:10px">SALA: ${esc(SALA)} · ${VIA === "firebase" ? "FIREBASE" : "NTFY.SH"}</span></div>
+        <div class="menu-net"><span class="net" data-net></span><span class="px small" style="font-size:10px">SALA: ${esc(SALA)} · ${VIA === "firebase" ? "FIREBASE" : "NTFY.SH"}</span><span class="px small" style="font-size:10px">CÓDIGO DE LA PARTIDA: <b id="codnow" style="color:var(--yellow)">—</b></span></div>
       </div>
       <p class="muted" style="font-size:18px">Abrí en cada notebook su dirección (o tocá su tarjeta). Quedan conectadas entre sí: el servidor inicia la partida y todas se reinician juntas al terminar.</p>
       <div class="cards">
         ${card("servidor", "#F4F0FF", "■ SERVIDOR · PROYECTOR", "Timer, música y código final · desde acá se inicia cada partida")}
-        ${card("calidad", "#FF4FA3", "1 ▲ CALIDAD", "Encontrar los errores")}
-        ${card("cliente", "#3EE6FF", "2 ◆ CLIENTE", "Descifrar el mensaje del cliente")}
-        ${card("codigo", "#FFD23F", "3 ● CÓDIGO", "Leer un programa en inglés")}
-        ${card("diseno", "#5CF28B", "4 ★ DISEÑO", "Arreglar el CSS de la página")}
+        ${card("cliente", "#3EE6FF", "1 ◆ CLIENTE", "Descifrar el mensaje del cliente")}
+        ${card("diseno", "#5CF28B", "2 ★ DISEÑO", "Arreglar el diseño de la página")}
+        ${card("codigo", "#FFD23F", "3 ● CÓDIGO", "Leer un programa")}
+        ${card("calidad", "#FF4FA3", "4 ▲ CALIDAD", "Encontrar los errores")}
       </div>
       <p class="small">Para el equipo: <b>Ctrl + Alt + R</b> reinicia a mano cualquier notebook (sirve sin internet). En el servidor corta la partida; en una terminal pone un caso nuevo.</p>
     </div>`;
@@ -1059,6 +1318,7 @@ function renderMenu(){
 
 /* ---------------- router ---------------- */
 function route(){
+  const sb = document.getElementById("snd"); if(sb){ sb.hidden = (location.hash || "") !== "#servidor"; pintarSonido(); }
   clearInterval(T.tick); T.key = null;
   const h = (location.hash || "").replace("#","");
   if(PISTAS[h]) terminal(h);
@@ -1080,6 +1340,7 @@ document.addEventListener("keydown", e => {
 document.addEventListener("pointerdown", () => ac(), { once:true });
 
 /* pantalla completa (opcional) */
+document.getElementById("snd").addEventListener("click", () => { setSonido((SONIDO + 2) % 3); if(SONIDO > 0){ ac(); SFX.key(); } });
 document.getElementById("fs").addEventListener("click", () => {
   try{
     if(document.fullscreenElement) document.exitFullscreen();
