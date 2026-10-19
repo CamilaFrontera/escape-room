@@ -233,6 +233,9 @@ pre.code.small-code{font-size:clamp(14px,2vw,18px);padding:14px 18px;background:
 .split-l .hint{font-size:16px;padding:10px 14px;line-height:1.4}
 .body.split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:28px;align-items:start;padding:20px 28px}
 .split-l{display:flex;flex-direction:column;gap:10px}
+.split-l > .row:first-child{flex-wrap:nowrap;gap:8px}
+.split-l > .row:first-child .px{font-size:12px!important;white-space:nowrap}
+.split-l > .row:first-child .px.small{font-size:10px!important}
 .split-r .hint{font-size:15px;padding:9px 13px;line-height:1.4}
 .split-r .gloss span{font-size:15px;padding:4px 10px}
 .split-l h2{font-size:clamp(26px,2.6vw,34px)}
@@ -264,6 +267,7 @@ pre.code.small-code{font-size:clamp(14px,2vw,18px);padding:14px 18px;background:
 .ed-tag{margin-left:auto;font-family:var(--pixel);font-size:10px;color:var(--yellow)}
 .ed-lines{margin:0;padding:10px 0;list-style:none;counter-reset:ln;font-family:var(--mono);font-size:clamp(18px,1.6vw,22px);line-height:1.45}
 .ed-lines li{counter-increment:ln;display:flex;white-space:pre}
+.ed-lines.long{font-size:clamp(16px,1.4vw,19px);line-height:1.35;padding:8px 0}
 .ed-lines li::before{content:counter(ln);width:2.4em;flex:none;text-align:right;padding-right:16px;color:#5a4b8f;user-select:none}
 .ed-lines code{font-family:inherit;color:var(--ink)}
 .ed-console{border-top:3px solid var(--line);background:#05030c;padding:10px 16px;display:flex;flex-direction:column;gap:6px}
@@ -312,6 +316,59 @@ pre.code.small-code{font-size:clamp(14px,2vw,18px);padding:14px 18px;background:
   .seg button{min-height:34px;padding:4px 9px}
   .swb{width:28px;height:28px}
 }
+.rt{background:#F4F0FF;color:#1b1433;border-radius:14px;padding:10px 14px 12px;display:flex;flex-direction:column}
+.rt-h .px{font-size:11px;color:#5b4f80}
+.rt-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1.1fr);gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #d9d2f0}
+.rt-row:last-child{border-bottom:0}
+.rt-head{font-size:12px;font-weight:700;color:#5b4f80;text-transform:uppercase;letter-spacing:.04em}
+.rt-c{font-weight:700;font-size:16px}
+.rt-r{font-size:15px;color:#3b3360}
+.rt-v{font-family:var(--mono);font-size:16px;background:#fff;border:2px solid #cfc8e6;border-radius:8px;padding:4px 8px;overflow-wrap:anywhere}
+.rt-v .vacio{font-family:var(--body);color:#8a84a6}
+.dz.solo{grid-template-columns:1fr}
+.dedit{font-size:clamp(15px,1.4vw,18px);padding:10px 14px;gap:3px;line-height:1.3}
+.dedit .prop{padding-left:18px;gap:6px}
+.dedit select{font-size:clamp(14px,1.3vw,17px);padding:2px 6px}
+.brand-rows code{font-family:var(--mono);font-size:15px;background:#e6e0f8;padding:1px 6px;border-radius:5px}
+.body.lobby{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start;padding:20px 28px}
+.lobby-l,.lobby-r{display:flex;flex-direction:column;gap:10px;min-width:0}
+.lobby-l h1.glitch{font-size:clamp(30px,3.3vw,44px);white-space:nowrap}
+.lobby .btn.big{font-size:clamp(15px,1.5vw,19px);padding:16px 22px}
+.lobby-l h2{font-size:clamp(20px,2.1vw,26px)}
+.lobby-l > p.muted{font-size:16px;margin:0}
+.lobby.fin .lobby-l{align-items:center;text-align:center}
+.lobby.fin .stats{max-width:none}
+.grupo{display:flex;flex-direction:column;gap:8px;background:var(--dark);padding:12px 14px}
+.grupo label{display:flex;flex-direction:column;gap:4px;min-width:0}
+.grupo label span{font-family:var(--pixel);font-size:10px;color:var(--muted)}
+.grupo input{font-family:var(--body);font-size:17px;padding:6px 10px;background:var(--screen);color:var(--ink);border:2px solid var(--line);min-width:0}
+.grupo input:focus{border-color:var(--cyan);outline:none}
+.gr2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:10px}
+.grupo .fb{min-height:0;font-size:16px;margin:0}
+.grupo .btn.big{font-size:clamp(15px,1.5vw,19px);padding:16px 20px}
+.niveles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.nvb{display:flex;flex-direction:column;gap:4px;align-items:center;padding:10px 6px;background:transparent;border:3px solid var(--line);color:var(--muted);cursor:pointer}
+.nvb b{font-family:var(--pixel);font-size:12px;font-weight:400}
+.nvb span{font-size:13px;font-weight:700}
+.nvb[aria-checked="true"]{border-color:var(--yellow);background:rgba(255,210,63,.12);color:var(--yellow)}
+.rk{display:flex;flex-direction:column;gap:4px;width:100%}
+.rk-row{display:grid;grid-template-columns:2.2em minmax(0,1fr) 3.4em 5.6em;gap:10px;align-items:center;background:var(--dark);padding:7px 12px;text-align:left}
+.rk-head{background:transparent;font-family:var(--pixel);font-size:8px;color:var(--muted);padding:2px 12px}
+.rk-head span:nth-child(3){text-align:center}.rk-head span:nth-child(4){text-align:right}
+.rk-pos{font-family:var(--pixel);font-size:14px;color:var(--yellow)}
+.rk-row:nth-child(2) .rk-pos{color:#FFD23F}.rk-row:nth-child(3) .rk-pos{color:#D6CEF2}.rk-row:nth-child(4) .rk-pos{color:#E3A06A}
+.rk-eq{display:flex;flex-direction:column;min-width:0}
+.rk-eq b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-eq small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-nv{font-family:var(--pixel);font-size:12px;text-align:center;color:var(--cyan)}
+.rk-res{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--green);text-align:right}
+.rk-row.perdio .rk-res{color:var(--red)}
+.rk-row.yo{box-shadow:inset 0 0 0 3px var(--yellow)}
+.rk-vacio{font-size:17px}
+.rk-full{gap:12px;padding:18px 26px}
+.rk-full .rk-row{padding:6px 16px}
+.rk-full .rk-eq b{font-size:18px}
+.rk-full .rk-res{font-size:18px}
 </style>
 </head>
 <body>
@@ -461,6 +518,130 @@ function formPhone(tag, tagColor, title, rows, btnTxt, broken){
     </div>`;
 }
 
+/* ---------------- niveles de dificultad ----------------
+   1 = inicial (sin conocimientos de informática) · 2 = intermedio · 3 = avanzado (pensado para chicos de escuela técnica).
+   Lo elige el game master en el servidor antes de cada partida. */
+const NIVELES = { 1:"INICIAL", 2:"INTERMEDIO", 3:"AVANZADO" };
+
+/* ejecuta un programa armado como lista de instrucciones (para buscar uno que dé el número sorteado) */
+function ejecutarOps(ops){
+  let x = 0, lo = 0, hi = 0;
+  const f = list => list.forEach(o => {
+    if(o[0] === "set") x = o[1];
+    else if(o[0] === "rep"){ for(let i = 0; i < o[1]; i++) f(o[2]); }
+    else if(o[0] === "if") f(x > o[1] ? o[2] : o[3]);
+    else x = o[0] === "add" ? x + o[1] : o[0] === "sub" ? x - o[1] : x * o[1];
+    lo = Math.min(lo, x); hi = Math.max(hi, x);
+  });
+  f(ops); return { x, lo, hi };
+}
+/* nivel 2: pseudocódigo que combina bucle y condición */
+function codigoN2(d, r, v){
+  const R = (a, b) => a + Math.floor(r() * (b - a + 1));
+  const T = [
+    () => [["set", R(0, 10)], ["rep", R(2, 3), [["add", R(1, 3)]]], ["if", pick(r, [4,5,6,8,10]), [["sub", R(1, 4)]], [["add", R(1, 4)]]]],
+    () => { const n = R(2, 3), k = R(1, 3); return [["set", R(0, 14)], ["if", pick(r, [5,6,8]), [["rep", n, [["sub", k]]]], [["rep", n, [["add", k]]]]]]; },
+    () => [["set", R(1, 3)], ["rep", R(1, 2), [["mul", 2]]], ["if", pick(r, [4,5,6]), [["sub", R(1, 4)]], [["add", R(1, 4)]]]],
+    () => [["set", R(3, 14)], ["sub", R(1, 4)], ["if", pick(r, [5,6,7]), [["sub", R(1, 3)]], [["add", R(1, 3)]]], ["add", R(1, 3)]],
+    () => [["set", R(0, 6)], ["rep", R(2, 3), [["add", R(2, 3)]]], ["rep", R(2, 3), [["sub", R(1, 2)]]]]
+  ];
+  for(let i = 0; i < 2000; i++){
+    const ops = T[v](), e = ejecutarOps(ops);
+    if(e.x === d && e.lo >= 0 && e.hi <= 30) return ops;
+  }
+  return [["set", 0], ["rep", d, [["add", 1]]]];
+}
+/* nivel 3: Python de verdad, corto */
+function codigoN3(d, r, v){
+  const R = (a, b) => a + Math.floor(r() * (b - a + 1));
+  const kw = w => `<span class="kw">${w}</span>`, nu = w => `<span class="num">${w}</span>`, fn = w => `<span class="fn">${w}</span>`;
+  const rng = (a, b) => `${fn("range")}(${b === undefined ? nu(a) : nu(a) + ", " + nu(b)})`;
+  const gen = [
+    () => { const a = R(0, 8), n = R(2, 3), vals = [], pasos = [`x empieza en ${a}.`]; let x = a;
+      for(let i = 1; i <= n; i++){ x += i; pasos.push(`i vale ${i} → x vale ${x}.`); }
+      return { x, pasos, lines:[`x = ${nu(a)}`, `${kw("for")} i ${kw("in")} ${rng(1, n + 1)}:`, `    x = x + i`] }; },
+    () => { const n = R(4, 11), t = R(1, 8), pasos = ["x empieza en 0."]; let x = 0;
+      for(let i = 1; i < n; i++){ if(i > t){ x++; pasos.push(`i vale ${i}: ¿es mayor que ${t}? SÍ → x vale ${x}.`); } else pasos.push(`i vale ${i}: ¿es mayor que ${t}? NO.`); }
+      return { x, pasos, lines:[`x = ${nu(0)}`, `${kw("for")} i ${kw("in")} ${rng(1, n)}:`, `    ${kw("if")} i &gt; ${nu(t)}:`, `        x = x + ${nu(1)}`] }; },
+    () => { const a = R(3, 15), n = R(2, 4), k = R(1, 3), pasos = [`x empieza en ${a}.`]; let x = a;
+      for(let i = 0; i < n; i++){ x -= k; pasos.push(`i vale ${i} → x vale ${x}.`); }
+      return { x, pasos, lines:[`x = ${nu(a)}`, `${kw("for")} i ${kw("in")} ${rng(n)}:`, `    x = x - ${nu(k)}`] }; },
+    () => { const a = R(1, 4), b = R(0, 4), pasos = [`x empieza en ${a}.`]; let x = a;
+      for(let i = 1; i < 3; i++){ x *= i; pasos.push(`i vale ${i} → x vale ${x}.`); }
+      const lines = [`x = ${nu(a)}`, `${kw("for")} i ${kw("in")} ${rng(1, 3)}:`, `    x = x * i`];
+      if(b){ x += b; pasos.push(`Fuera del for, se le suma ${b} → x vale ${x}.`); lines.push(`x = x + ${nu(b)}`); }
+      return { x, pasos, lines }; },
+    () => { const s = R(4, 16), n = R(2, 5), pasos = [`x empieza en ${s}.`]; let x = s, lo = s;
+      for(let i = 1; i < n; i++){ x -= i; lo = Math.min(lo, x); pasos.push(`i vale ${i} → x vale ${x}.`); }
+      return { x: lo < 0 ? -1 : x, pasos, lines:[`x = ${nu(s)}`, `${kw("for")} i ${kw("in")} ${rng(1, n)}:`, `    x = x - i`] }; }
+  ];
+  for(let i = 0; i < 3000; i++){ const p = gen[v](); if(p.x === d) return p; }
+  const pasos = ["x empieza en 0."]; for(let i = 0; i < d; i++) pasos.push(`i vale ${i} → x vale ${i + 1}.`);
+  return { x:d, pasos, lines:[`x = ${nu(0)}`, `${kw("for")} i ${kw("in")} ${rng(d)}:`, `    x = x + ${nu(1)}`] };
+}
+
+/* nivel 3 de Código: arma la pantalla con el programa en Python */
+function codigoPython(d, r, v){
+  const p = codigoN3(d, r, v);
+  const lines = [...p.lines, `<span class="fn">print</span>(x)`];
+  const ultimo = p.pasos[p.pasos.length - 1].replace(/x vale -?\d+\.$/, "x vale ?");
+  const pasos2 = p.pasos.length > 5 ? [p.pasos[0], p.pasos[1], "…", p.pasos[p.pasos.length - 2], ultimo] : [...p.pasos.slice(0, -1), ultimo];
+  return {
+    how: "Es Python, un lenguaje real. Seguí el programa línea por línea y anotá cuánto vale x en cada vuelta del for. Lo que muestra print es la respuesta.",
+    fact: "Leíste <b>Python</b>, uno de los lenguajes más usados del mundo. El <b>for</b> repite lo de adentro una vez por cada número que da <b>range</b>, y la variable <b>i</b> va tomando esos números. Seguirlo a mano se llama <b>prueba de escritorio</b>.",
+    hint1: `${p.pasos[0]} ${p.pasos[1] || ""} Seguí así con cada valor de i.`,
+    hint2: pasos2.join(" ") + " Lo que muestra print es ese último valor de x.",
+    check: s => [String(d), NUM[d]].includes(norm(s)),
+    content: () => `
+      <div class="editor" aria-label="Programa en Python">
+        <div class="ed-bar"><span class="dot" style="background:#FF4FA3"></span><span class="dot" style="background:#FFD23F"></span><span class="dot" style="background:#5CF28B"></span><span class="ed-file">inscripciones.py</span><span class="ed-tag">PYTHON</span></div>
+        <ol class="ed-lines${lines.length > 5 ? " long" : ""}">${lines.map(l => `<li><code>${l}</code></li>`).join("")}</ol>
+        <div class="ed-console"><span class="px">CONSOLA · LO QUE MUESTRA EL PROGRAMA</span><span class="ed-out">&gt; <b>?</b></span></div>
+      </div>
+      <p class="code-note"><b>range(1, 4)</b> da los números 1, 2 y 3: el último no entra. <b>range(3)</b> da 0, 1 y 2.</p>`
+  };
+}
+/* niveles 2 y 3 de Calidad: un formulario cargado y las reglas que tiene que cumplir cada dato */
+function calidadReglas(d, r, v, nv){
+  const LETRAS = "Solo letras", FECHA = "Una fecha que exista", EMAIL = "Una @ y un punto después", TEL = "Solo números y un guion";
+  const FORMS = [
+    { t:"Inscripción ISFDyT 125", intro:"Así quedó cargada la inscripción al instituto. Hay que probarla contra las reglas del sistema.",
+      rows:[["Nombre",LETRAS,["Juan"],["Ju4n"]], ["DNI","8 números, sin puntos",["45127789"],["4512778","45.127.789"]], ["Fecha de nacimiento",FECHA,["14/03/2009"],["31/02/2009","14/13/2009"]],
+            ["Email",EMAIL,["juan@mail.com"],["juanmail.com","juan@@mail.com"]], ["Teléfono",TEL,["2475-123456"],["2475-12A456"]]],
+      x2:["Edad","Mayor de 16",["18"],["15"]], x3:["Edad","Entre 17 y 99, incluidos",["17","99"],["16","100"]] },
+    { t:"Pedido de certificado", intro:"Así quedó cargado el pedido de certificado. Hay que probarlo contra las reglas del sistema.",
+      rows:[["Nombre",LETRAS,["Lucía"],["Luc1a"]], ["DNI","8 números, sin puntos",["38123456"],["3812345","38.123.456"]], ["Teléfono",TEL,["11-45678901"],["11-ABC-8901"]],
+            ["Fecha de retiro",FECHA,["15/11/2026"],["35/11/2026","15/13/2026"]], ["Email",EMAIL,["lucia@mail.com"],["lucia@mail","luciamail.com"]]],
+      x2:["Copias","Al menos 1",["2"],["0"]], x3:["Copias","Entre 1 y 5, incluidas",["1","5"],["0","6"]] },
+    { t:"Mesa de examen", intro:"Así quedó cargada la inscripción a la mesa de examen. Hay que probarla contra las reglas del sistema.",
+      rows:[["Alumna",LETRAS,["Martina"],["Mart1na"]], ["Legajo","4 números",["1250"],["125","12500"]], ["Fecha",FECHA,["26/02/2027"],["30/02/2027","26/14/2027"]],
+            ["Email",EMAIL,["martina@mail.com"],["martina.mail.com"]], ["Horario","Una hora que exista (00:00 a 23:59)",["18:00"],["25:00","18:75"]]],
+      x2:["Nota anterior","Un número del 1 al 10",["7"],["12"]], x3:["Nota anterior","Entre 1 y 10, incluidos",["10","1"],["0","11"]] },
+    { t:"Préstamo de biblioteca", intro:"Así quedó cargado el préstamo de la biblioteca. Hay que probarlo contra las reglas del sistema.",
+      rows:[["Usuario",LETRAS,["Tomás"],["T0más"]], ["Libro","No puede estar vacío",["Rayuela"],[""]], ["Fecha de préstamo",FECHA,["10/11/2026"],["10/00/2026","32/11/2026"]],
+            ["Email",EMAIL,["tomas@mail.com"],["tomas@mailcom"]], ["Teléfono",TEL,["2475-998877"],["2475-99887A"]]],
+      x2:["Días de préstamo","Máximo 14",["7"],["21"]], x3:["Días de préstamo","Entre 1 y 14, incluidos",["14","1"],["0","15"]] }
+  ];
+  const f = FORMS[v], rows = [...f.rows, nv === 3 ? f.x3 : f.x2];
+  const malos = new Set(barajar(r, rows.map((_, i) => i)).slice(0, d));
+  const datos = rows.map((row, i) => [row[0], row[1], malos.has(i) ? pick(r, row[3]) : pick(r, row[2])]);
+  const nombres = barajar(r, [...malos].map(i => rows[i][0]));
+  return {
+    intro: f.intro,
+    mission: "Contá cuántos datos rompen su regla.",
+    how: "Cada campo tiene una regla. Leé la regla y fijate si el dato cargado la cumple. Escribí cuántos datos están mal.",
+    hint1: "Revisá fila por fila: si el dato no cumple su regla, es un error (uno por fila)." + (nv === 3 ? " Ojo con los bordes: «incluidos» significa que el número del borde también vale." : ""),
+    hint2: `Ya hay errores en: ${nombres.slice(0, -1).join(", ")}. Falta encontrar uno más.`,
+    check: s => [String(d), NUM[d]].includes(norm(s)),
+    content: () => `
+      <div class="rt" aria-label="Formulario y reglas">
+        <div class="rt-h"><span class="px">${esc(f.t.toUpperCase())}</span></div>
+        <div class="rt-row rt-head"><span>Campo</span><span>Regla</span><span>Dato cargado</span></div>
+        ${datos.map(x => `<div class="rt-row"><span class="rt-c">${esc(x[0])}</span><span class="rt-r">${esc(x[1])}</span><span class="rt-v">${x[2] === "" ? '<i class="vacio">(vacío)</i>' : esc(x[2])}</span></div>`).join("")}
+      </div>`
+  };
+}
+
 const PISTAS = {
   /* ◆ 1 · CLIENTE — solo la palabra del número viene en clave */
   cliente: {
@@ -470,24 +651,36 @@ const PISTAS = {
     mission: "Descifrá la palabra en clave.",
     stage: "Etapa 1: entender qué pide el cliente",
     placeholder: "Palabra",
-    build(d, r, v){
+    build(d, r, v, nv = 1){
       const w = NUM[d];
       const ctx = pick(r, ["Instalen el servidor nuevo en el aula", "Guarden la copia de seguridad en el estante",
                            "Las notebooks nuevas van al laboratorio", "El formulario de inscripción tiene que tener esta cantidad de pasos:"]);
       const corrido = (s, k) => s.split("").map(c => ABC[(ABC.indexOf(c) + k + 26) % 26]).join("");
       const atrasLetras = (c, k) => Array.from({length:k + 1}, (_, i) => ABC[(ABC.indexOf(c) - i + 26) % 26]).join(" → ");
-      let enc, clave, how, h1, fact, extra = "", big = "";
-      if(v === 0 || v === 1){
+      let enc, clave, how, h1, fact, extra = "", big = "", abc = true, firma = "", h2 = null;
+      if(nv === 3){
+        /* César sin decir cuánto se corrió: se deduce con la firma del cliente */
+        const nombre = ["ANA","LUIS","SOL","JUAN"][v], k = 2 + Math.floor(r() * 5);
+        enc = corrido(w, k); firma = corrido(nombre, k);
+        const N0 = nombre[0] + nombre.slice(1).toLowerCase();
+        clave = `el cliente se llama ${N0}`;
+        how = `La palabra y la firma están corridas la misma cantidad de lugares. El cliente se llama ${N0}: compará su nombre con la firma para saber cuántos lugares se corrió, y después descifrá la palabra.`;
+        h1 = `Mirá la primera letra de la firma (${firma[0]}) y la primera del nombre (${nombre[0]}): contá cuántos lugares hay entre las dos en el abecedario. Ese es el corrimiento.`;
+        h2 = `El corrimiento es ${k}: cada letra se corrió ${k} lugares hacia adelante. Ya está casi todo: ${w.slice(0, -1).split("").join(" ")} _ · Falta la última letra.`;
+        fact = "Acabás de <b>romper un cifrado</b> sin tener la clave, usando una parte del mensaje que ya conocías. Así se descifraron mensajes reales en la historia, y por eso hoy las claves son mucho más largas.";
+      } else if(v === 0 || v === 1){
         const k = v === 0 ? 3 : 1; enc = corrido(w, k);
         clave = `A → ${ABC[k]}`;
         how = k === 3 ? "Cada letra está 3 lugares más adelante que la verdadera. Buscá cada letra en el abecedario y volvé 3 lugares para atrás."
                       : "Cada letra está 1 lugar más adelante que la verdadera. Buscá cada letra en el abecedario y fijate cuál está justo antes.";
         h1 = `Ejemplo con la primera letra: ${atrasLetras(enc[0], k)}. La primera letra es ${w[0]}. Hacé lo mismo con las demás.`;
+        if(nv === 2){ abc = false; how += " Esta vez no hay abecedario: si te sirve, escribilo en un papel."; }
         fact = `Acabás de <b>descifrar</b> un mensaje con el <b>cifrado César</b>${k === 1 ? " (corrimiento de 1)" : ""}, que según se cuenta usaba Julio César. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.`;
       } else if(v === 2){
         enc = w.split("").map(c => ABC.indexOf(c) + 1).join("·"); big = "font-size:clamp(30px,4.4vw,56px);letter-spacing:.06em";
         clave = "A = 1, B = 2, C = 3…";
         how = "Cada número es una letra: el 1 es la A, el 2 es la B, el 3 es la C… Contá en el abecedario para saber qué letra es cada número.";
+        if(nv === 2){ clave = "A = 1"; how = "Cada número es la posición de una letra en el abecedario (la A es la 1). Contá para saber qué letra es cada número."; }
         h1 = `Ejemplo: el ${ABC.indexOf(w[0]) + 1} es la ${w[0]} (contá desde la A). Hacé lo mismo con los demás números.`;
         fact = "Acabás de <b>descifrar</b> un mensaje donde cada letra era un número. Las computadoras guardan todo así: cada letra que escribís se convierte en un número.";
       } else {
@@ -497,16 +690,18 @@ const PISTAS = {
         h1 = `Ejemplo: la ${enc[0]} de la fila celeste tiene arriba la ${w[0]}. La primera letra es ${w[0]}. Hacé lo mismo con las demás.`;
         fact = "Acabás de <b>descifrar</b> un mensaje con el <b>cifrado Atbash</b>, que da vuelta el abecedario. Hoy tus mensajes de WhatsApp también viajan cifrados, con claves mucho más difíciles.";
         extra = `<div class="abc" style="color:var(--cyan)">${ABC_ROW.split(" ").reverse().join(" ")}</div>`;
+        if(nv === 2){ extra = ""; clave = "A ↔ Z"; how = "El abecedario está dado vuelta: la A se cambia por la Z, la B por la Y, la C por la X… Para cada letra, buscá la que está en el lugar opuesto.";
+          h1 = `Ejemplo: la ${enc[0]} está en el lugar ${ABC.indexOf(enc[0]) + 1} empezando por la A; contá el mismo número de lugares empezando por la Z y llegás a la ${w[0]}.`; }
       }
       return {
         how, fact, hint1: h1,
-        hint2: `Ya está casi todo: ${w.slice(0, -1).split("").join(" ")} _ · Falta la última letra.`,
+        hint2: h2 || `Ya está casi todo: ${w.slice(0, -1).split("").join(" ")} _ · Falta la última letra.`,
         check: x => [w, String(d)].includes(norm(x)),
         content: () => `
-          <div class="clientmsg"><span class="px">MENSAJE DEL CLIENTE</span><p>«${esc(ctx)} <b class="enc">${esc(enc)}</b>»</p></div>
+          <div class="clientmsg"><span class="px">MENSAJE DEL CLIENTE</span><p>«${esc(ctx)} <b class="enc">${esc(enc)}</b>.${firma ? ` Saludos, <b class="enc">${esc(firma)}</b>` : ""}»</p></div>
           <div class="cipher" style="${big}" aria-label="Palabra en clave: ${esc(enc.split("").join(" "))}">${esc(enc)}</div>
           <p class="mono" style="text-align:center;font-size:20px;color:var(--yellow);margin:0">Pista del cliente: ${clave}</p>
-          <div class="abc">${ABC_ROW}</div>${extra}`
+          ${abc ? `<div class="abc">${ABC_ROW}</div>` : ""}${extra}`
       };
     }
   },
@@ -521,22 +716,25 @@ const PISTAS = {
     stage: "Etapa 2: diseño web",
     live: true,
     fact: "Usaste <b>CSS</b>, el lenguaje que decide cómo se ve cada página web. Cada línea tiene una <b>propiedad</b> (background, color, border-radius…) y un <b>valor</b>. Los diseñadores web siguen el <b>manual de marca</b> del cliente para que todo se vea igual en cada pantalla.",
-    build(d, r, v){
+    build(d, r, v, nv = 1){
       const FONDOS = [ ["violeta","#5B3FD6"], ["lila","#B49CF0"], ["verde","#1E8E5A"], ["amarillo","#FFC93C"], ["azul","#1F5FBF"], ["rojo","#D93838"], ["gris","#8A86A0"] ];
       const ESQ = [ ["recto","0px"], ["redondeado","12px"], ["píldora","999px"] ];
       const ESQ_L = { "recto":"recto", "redondeado":"redondo", "píldora":"píldora" };
       const MARCAS = [
-        { quien:"Instituto 125", fondo:"violeta", letra:"white", esq:"redondeado", px:24, may:true },
-        { quien:"Biblioteca 125", fondo:"verde", letra:"white", esq:"píldora", px:20, may:false },
-        { quien:"Centro de estudiantes", fondo:"amarillo", letra:"black", esq:"recto", px:28, may:true },
-        { quien:"Secretaría 125", fondo:"azul", letra:"white", esq:"redondeado", px:32, may:false }
+        { quien:"Instituto 125", fondo:"violeta", letra:"white", esq:"redondeado", px:24, may:true, pad:"12px 24px" },
+        { quien:"Biblioteca 125", fondo:"verde", letra:"white", esq:"píldora", px:20, may:false, pad:"8px 28px" },
+        { quien:"Centro de estudiantes", fondo:"amarillo", letra:"black", esq:"recto", px:28, may:true, pad:"20px 40px" },
+        { quien:"Secretaría 125", fondo:"azul", letra:"white", esq:"redondeado", px:32, may:false, pad:"12px 24px" }
       ];
       const M = MARCAS[v];
       const hex = n => FONDOS.find(f => f[0] === n)[1];
       const esqTxt = { "recto":"esquinas rectas", "redondeado":"esquinas redondeadas", "píldora":"forma de píldora (bien redonda)" };
-      const st = { fondo:"gris", letra:"black", esq:"recto", px:12, may:false };   // arranca mal a propósito
+      const PADS = ["4px 8px", "8px 28px", "12px 24px", "24px 12px", "20px 40px"];
+      const padTxt = p => { const [a, b] = p.split(" ").map(x => parseInt(x)); return `${a} px arriba y abajo, ${b} px a los costados`; };
+      const st = { fondo:"gris", letra:"black", esq:"recto", px:12, may:false, pad:"4px 8px" };   // arranca mal a propósito
       if(M.letra === "black") st.letra = "white";
-      const faltan = () => [st.fondo !== M.fondo, st.letra !== M.letra, st.esq !== M.esq, st.px !== M.px, st.may !== M.may].filter(Boolean).length;
+      const faltan = () => [st.fondo !== M.fondo, st.letra !== M.letra, st.esq !== M.esq, st.px !== M.px, st.may !== M.may, nv === 3 && st.pad !== M.pad].filter(Boolean).length;
+      const letraHex = l => l === "white" ? "#FFFFFF" : "#000000";
       const css = (cambio) => {
         const L = [
           ["fondo", `background: ${N(hex(st.fondo))};`, `/* ${st.fondo} */`],
@@ -547,12 +745,31 @@ const PISTAS = {
         ];
         return `<div><span class="fn">.boton</span> {</div>` + L.map(l => `<div class="cl${l[0] === cambio ? " hot" : ""}">  ${l[1].replace(/^([a-z-]+):/, '<span class="kw">$1</span>:')} <span class="cm">${l[2]}</span></div>`).join("") + `<div>}</div>`;
       };
+      const h2 = nv === 3
+        ? `Elegí: background ${hex(M.fondo)}, color ${letraHex(M.letra)}, border-radius ${ESQ.find(e => e[0] === M.esq)[1]}, font-size ${M.px}px, text-transform ${M.may ? "uppercase" : "none"} y padding ${M.pad}.`
+        : `Elegí: fondo ${nv === 2 ? hex(M.fondo) : M.fondo}, letra ${M.letra === "white" ? "blanca" : "negra"}, ${esqTxt[M.esq]}, ${M.px} px y ${M.may ? "MAYÚSCULAS" : "texto normal"}.`;
+      const opt = (k, pairs, cur) => `<select data-k="${k}">${pairs.map(([val, txt]) => `<option value="${val}"${String(val) === String(cur) ? " selected" : ""}>${txt}</option>`).join("")}</select>`;
+      const controls3 = () => `
+          <div class="css dedit" aria-label="Editor de CSS">
+            <div><span class="fn">.boton</span> {</div>
+            <label class="prop"><span>background:</span>${opt("fondo", FONDOS.map(f => [f[0], f[1]]), st.fondo)};</label>
+            <label class="prop"><span>color:</span>${opt("letra", [["white","#FFFFFF"],["black","#000000"]], st.letra)};</label>
+            <label class="prop"><span>border-radius:</span>${opt("esq", ESQ.map(e => [e[0], e[1]]), st.esq)};</label>
+            <label class="prop"><span>font-size:</span>${opt("px", [12,16,20,24,28,32,36,40].map(n => [n, n + "px"]), st.px)};</label>
+            <label class="prop"><span>text-transform:</span>${opt("may", [["0","none"],["1","uppercase"]], st.may ? "1" : "0")};</label>
+            <label class="prop"><span>padding:</span>${opt("pad", PADS.map(p => [p, p]), st.pad)};</label>
+            <div>}</div>
+          </div>`;
       return {
-        hint1: "Compará línea por línea: color de fondo, color de la letra, esquinas, tamaño y mayúsculas. Fijate bien el tono del color y el número exacto de px.",
-        hint2: `Elegí: fondo ${M.fondo}, letra ${M.letra === "white" ? "blanca" : "negra"}, ${esqTxt[M.esq]}, ${M.px} px y ${M.may ? "MAYÚSCULAS" : "texto normal"}.`,
-        controls: () => `
+        mission: nv === 3 ? "Escribí el CSS del botón «Inscribirme» para que quede igual que en el manual de marca." : undefined,
+        how: nv === 3 ? "Elegí el valor de cada línea. A la derecha ves el botón en vivo; si coincide con el manual, aparece el número." : undefined,
+        hint1: nv === 3 ? "Los colores tienen que ser exactamente el código del manual. En padding, el primer número es arriba y abajo, y el segundo, los costados."
+             : nv === 2 ? "El manual da el color con su código (#…). Al elegir una muestra, mirá el código que aparece en el CSS y comparalo con el del manual."
+             : "Compará línea por línea: color de fondo, color de la letra, esquinas, tamaño y mayúsculas. Fijate bien el tono del color y el número exacto de px.",
+        hint2: h2,
+        controls: () => nv === 3 ? controls3() : `
           <div class="ctrls">
-            <div class="ctrl"><span class="cl-l">Fondo</span><div class="sw">${FONDOS.map(f => `<button type="button" class="swb" data-k="fondo" data-v="${f[0]}" style="--sw:${f[1]}" title="${f[0]}" aria-label="Fondo ${f[0]}"></button>`).join("")}</div></div>
+            <div class="ctrl"><span class="cl-l">Fondo</span><div class="sw">${FONDOS.map(f => `<button type="button" class="swb" data-k="fondo" data-v="${f[0]}" style="--sw:${f[1]}" title="${nv === 2 ? f[1] : f[0]}" aria-label="Fondo ${nv === 2 ? f[1] : f[0]}"></button>`).join("")}</div></div>
             <div class="ctrl"><span class="cl-l">Letra</span><div class="seg"><button type="button" data-k="letra" data-v="white">Blanca</button><button type="button" data-k="letra" data-v="black">Negra</button></div></div>
             <div class="ctrl"><span class="cl-l">Esquinas</span><div class="seg">${ESQ.map(e => `<button type="button" data-k="esq" data-v="${e[0]}"><i class="shape" style="border-radius:${e[0] === "píldora" ? "999px" : e[1] === "12px" ? "5px" : e[1]}"></i>${ESQ_L[e[0]]}</button>`).join("")}</div></div>
             <div class="ctrl"><span class="cl-l">Tamaño</span><div class="rng"><input type="range" id="px" min="12" max="40" step="4" value="12" aria-label="Tamaño del texto"><b id="pxv">12 px</b></div></div>
@@ -562,21 +779,24 @@ const PISTAS = {
           <div class="brand">
             <span class="px">MANUAL DE MARCA · ${esc(M.quien.toUpperCase())}</span>
             <div class="brand-rows">
-              <div><span>Fondo</span><b><i class="chip" style="background:${hex(M.fondo)}"></i>${esc(M.fondo)}</b></div>
-              <div><span>Letra</span><b>${M.letra === "white" ? "blanca" : "negra"}</b></div>
-              <div><span>Esquinas</span><b><i class="shape" style="border-radius:${M.esq === "píldora" ? "999px" : ESQ.find(e => e[0] === M.esq)[1]}"></i>${esc(esqTxt[M.esq])}</b></div>
+              ${nv === 1 ? `<div><span>Fondo</span><b><i class="chip" style="background:${hex(M.fondo)}"></i>${esc(M.fondo)}</b></div>`
+                : nv === 2 ? `<div><span>Fondo</span><b>${esc(M.fondo)} · <code>${hex(M.fondo)}</code></b></div>`
+                : `<div><span>Fondo</span><b><code>${hex(M.fondo)}</code></b></div>`}
+              <div><span>Letra</span><b>${M.letra === "white" ? "blanca" : "negra"}${nv === 3 ? ` · <code>${letraHex(M.letra)}</code>` : ""}</b></div>
+              <div><span>Esquinas</span><b>${nv === 3 ? `redondeo de ${ESQ.find(e => e[0] === M.esq)[1] === "999px" ? "999 px (píldora)" : parseInt(ESQ.find(e => e[0] === M.esq)[1]) + " px"}` : `<i class="shape" style="border-radius:${M.esq === "píldora" ? "999px" : ESQ.find(e => e[0] === M.esq)[1]}"></i>${esc(esqTxt[M.esq])}`}</b></div>
               <div><span>Tamaño</span><b>${M.px} px</b></div>
               <div><span>Texto</span><b>${M.may ? "TODO EN MAYÚSCULAS" : "normal, sin mayúsculas"}</b></div>
+              ${nv === 3 ? `<div><span>Relleno</span><b>${padTxt(M.pad)}</b></div>` : ""}
             </div>
           </div>
-          <div class="dz">
+          <div class="dz${nv === 3 ? " solo" : ""}">
             <div class="phone dprev" aria-label="Vista previa">
               <span class="tag" style="background:var(--green)">VISTA PREVIA</span>
               <h4>Inscripciones 2027</h4>
               <div class="dbtnwrap"><span class="dbtn" id="dbtn">Inscribirme</span></div>
               <p class="aula-ok" id="aulaok" hidden>Tu aula asignada: <b>${d}</b></p>
             </div>
-            <div class="css dcss" id="dcss" aria-label="CSS que se va escribiendo">${css()}</div>
+            ${nv === 3 ? "" : `<div class="css dcss" id="dcss" aria-label="CSS que se va escribiendo">${css()}</div>`}
           </div>`,
         mount(cb){
           const btn = document.getElementById("dbtn"), out = document.getElementById("dcss"), rng = document.getElementById("px");
@@ -584,8 +804,9 @@ const PISTAS = {
             btn.style.background = hex(st.fondo); btn.style.color = st.letra;
             btn.style.borderRadius = ESQ.find(e => e[0] === st.esq)[1]; btn.style.fontSize = st.px + "px";
             btn.style.textTransform = st.may ? "uppercase" : "none";
-            out.innerHTML = css(cambio);
-            document.getElementById("pxv").textContent = st.px + " px";
+            if(nv === 3) btn.style.padding = st.pad;
+            if(out) out.innerHTML = css(cambio);
+            const pv = document.getElementById("pxv"); if(pv) pv.textContent = st.px + " px";
             app.querySelectorAll(".ctrls [data-k]").forEach(b => {
               const k = b.dataset.k, val = k === "may" ? b.dataset.v === "1" : b.dataset.v;
               b.setAttribute("aria-pressed", String(st[k] === val));
@@ -595,7 +816,10 @@ const PISTAS = {
           app.querySelectorAll(".ctrls [data-k]").forEach(b => b.addEventListener("click", () => {
             const k = b.dataset.k; st[k] = k === "may" ? b.dataset.v === "1" : b.dataset.v; cb.onChange(); pintar(k);
           }));
-          rng.addEventListener("input", () => { st.px = +rng.value; cb.onChange(); pintar("px"); });
+          if(rng) rng.addEventListener("input", () => { st.px = +rng.value; cb.onChange(); pintar("px"); });
+          app.querySelectorAll(".dedit select").forEach(sel => sel.addEventListener("change", () => {
+            const k = sel.dataset.k; st[k] = k === "px" ? +sel.value : k === "may" ? sel.value === "1" : sel.value; cb.onChange(); pintar(k);
+          }));
           pintar();
           return { faltan };
         }
@@ -612,7 +836,8 @@ const PISTAS = {
     how: "x es una cajita que guarda un número. Seguí las líneas en orden y anotá cuánto vale x. Lo que muestra «print» es la respuesta.",
     stage: "Etapa 3: programar",
     placeholder: "Número",
-    build(d, r, v){
+    build(d, r, v, nv = 1){
+      if(nv === 3) return codigoPython(d, r, v);
       /* el programa se arma como una lista de instrucciones; se dibuja y se "ejecuta" para armar las pistas */
       let ops, fact;
       if(v === 0){
@@ -636,6 +861,10 @@ const PISTAS = {
       } else {
         ops = [["set", 0], ["rep", d, [["add", 1]]]];
         fact = "Leíste un <b>programa</b>: <b>repeat</b> es un <b>bucle</b> que repite lo de adentro las veces que le digas. Así un programa puede hacer lo mismo miles de veces sin cansarse.";
+      }
+      if(nv === 2){
+        ops = codigoN2(d, r, v);
+        fact = "Leíste un <b>programa</b> que combina un <b>bucle</b> (repeat) y una <b>condición</b> (if/else). Seguirlo a mano, paso a paso, se llama <b>prueba de escritorio</b> y es lo primero que se aprende al programar.";
       }
       /* dibujar */
       const lines = [];
@@ -664,10 +893,12 @@ const PISTAS = {
       run(ops);
       const ultimo = pasos[pasos.length - 1].replace(/x vale -?\d+\.$/, "x vale ?");
       const usadas = new Set(ops.flat(3).filter(t => typeof t === "string"));
-      const g = ["print = mostrar"];
-      if(usadas.has("rep")) g.unshift("repeat = repetir", "times = veces");
-      if(usadas.has("if")) g.unshift("if = si", "else = si no", "&gt; = mayor que");
-      if(usadas.has("mul")) g.unshift("* = multiplicar");
+      const g = nv === 2 ? [] : ["print = mostrar"];
+      if(nv === 1){
+        if(usadas.has("rep")) g.unshift("repeat = repetir", "times = veces");
+        if(usadas.has("if")) g.unshift("if = si", "else = si no", "&gt; = mayor que");
+        if(usadas.has("mul")) g.unshift("* = multiplicar");
+      }
       return {
         fact,
         hint1: `${pasos[0]} ${pasos[1] || ""} Seguí así, línea por línea.`,
@@ -676,11 +907,11 @@ const PISTAS = {
         content: () => `
           <div class="editor" aria-label="Programa">
             <div class="ed-bar"><span class="dot" style="background:#FF4FA3"></span><span class="dot" style="background:#FFD23F"></span><span class="dot" style="background:#5CF28B"></span><span class="ed-file">inscripciones.code</span><span class="ed-tag">CÓDIGO</span></div>
-            <ol class="ed-lines">${lines.map(l => `<li><code>${l}</code></li>`).join("")}</ol>
+            <ol class="ed-lines${lines.length > 5 ? " long" : ""}">${lines.map(l => `<li><code>${l}</code></li>`).join("")}</ol>
             <div class="ed-console"><span class="px">CONSOLA · LO QUE MUESTRA EL PROGRAMA</span><span class="ed-out">&gt; <b>?</b></span></div>
           </div>
           <p class="code-note">Esto es un <b>programa</b>: la computadora ejecuta las líneas en orden, de arriba hacia abajo, y va guardando números en <b>x</b>.</p>
-          ${gloss(g)}`
+          ${g.length ? gloss(g) : ""}`
       };
     }
   },
@@ -694,7 +925,8 @@ const PISTAS = {
     stage: "Etapa 4: probar",
     placeholder: "Cantidad",
     fact: "Hiciste <b>testing</b>. Los programas detectan estos errores con <b>condiciones</b>: <span class=\"mono\">SI</span> un dato no tiene sentido <span class=\"mono\">→</span> mostrar error. Por eso un formulario te avisa cuando algo está mal.",
-    build(d, r, v){
+    build(d, r, v, nv = 1){
+      if(nv > 1) return calidadReglas(d, r, v, nv);
       /* cada fila tiene su dato correcto y versiones con UN solo error */
       const FORMS = [
         { t:"Inscripción ISFDyT 125", intro:"Así tenía que quedar la inscripción al instituto, y así quedó programada.",
@@ -875,7 +1107,10 @@ function equipoHTML(res){
    o = { v: caso, d: número, seed, solved, hint (pista ya pedida), onWin, onHint, reset, paint } */
 function renderPista(key, o = {}){
   const base = PISTAS[key];
-  const P = { ...base, ...base.build(o.d, rngFrom(o.seed || String(Math.random())), o.v), vIndex:o.v, digit:o.d };
+  const nv = o.nv || 1;
+  const B = base.build(o.d, rngFrom(o.seed || String(Math.random())), o.v, nv);
+  Object.keys(B).forEach(k => { if(B[k] === undefined) delete B[k]; });
+  const P = { ...base, ...B, vIndex:o.v, digit:o.d, nv };
   let fails = 0, solved = false, hintUsed = !!o.hint;
   const rid = renderPista.n = (renderPista.n || 0) + 1;   // si se vuelve a dibujar, los temporizadores viejos no hacen nada
   document.body.classList.remove("alarm");
@@ -895,7 +1130,7 @@ function renderPista(key, o = {}){
           ${P.side ? `<div class="split-l">` : ""}
           <div class="row" style="justify-content:space-between">
             <span class="px" style="font-size:14px;color:${P.color}">${P.sym} FRAGMENTO ${P.n} DE 4 PERDIDO</span>
-            <span class="px small" style="font-size:11px">CASO ${P.vIndex + 1}</span>
+            <span class="px small" style="font-size:11px">NIVEL ${P.nv} · CASO ${P.vIndex + 1}</span>
           </div>
           <h2>${esc(P.title)}</h2>
           ${P.intro ? `<p class="muted">${esc(P.intro)}</p>` : ""}
@@ -974,8 +1209,8 @@ function renderPista(key, o = {}){
 /* ---------------- terminal: sigue al servidor ----------------
    espera → pantalla de espera · jugando → desafío · fin → resultado del grupo.
    Solo se reinicia cuando el servidor arranca una partida nueva. */
-const T = { key:null, id:null, fase:null, end:0, res:new Set(), resultado:null, v:0, d:0, solved:false, hint:false, offline:false, tick:null, shown:"" };
-const memT = () => store.set("e500-p-" + T.key, { id:T.id, v:T.v, d:T.d, solved:T.solved, hint:T.hint });
+const T = { key:null, id:null, fase:null, end:0, res:new Set(), resultado:null, v:0, d:0, nv:1, solved:false, hint:false, offline:false, tick:null, shown:"" };
+const memT = () => store.set("e500-p-" + T.key, { id:T.id, v:T.v, d:T.d, nv:T.nv, solved:T.solved, hint:T.hint });
 function terminal(key){
   Object.assign(T, { key, id:null, fase:null, end:0, res:new Set(), resultado:null, offline:false, shown:"" });
   const mem = store.get("e500-p-" + key);
@@ -985,10 +1220,11 @@ function terminal(key){
       if(d.id !== T.id){
         T.id = d.id; T.res = new Set();
         const m = store.get("e500-p-" + key);
-        if(m && m.id === d.id){ T.v = m.v; T.d = m.d; T.solved = m.solved; T.hint = !!m.hint; }
+        if(m && m.id === d.id){ T.v = m.v; T.d = m.d; T.nv = m.nv || 1; T.solved = m.solved; T.hint = !!m.hint; }
         else{ T.v = pickVariant(key); T.d = (d.cod && d.cod[key]) || FIJO[key]; T.solved = false; T.hint = false; memT(); }
       }
       if(d.cod && d.cod[key] && d.cod[key] !== T.d){ T.d = d.cod[key]; memT(); }
+      if(d.fase !== "fin" && (d.nivel || 1) !== T.nv && !T.solved){ T.nv = d.nivel || 1; memT(); }
       T.fase = d.fase; T.resultado = d.resultado || null; T.info = d;
       if(d.fase === "jugando") T.end = d._recv + d.restante * 1000;
       if(live && d.aviso === "denegado") avisoTerminal(`EN EL SERVIDOR: ACCESO DENEGADO · −${PENALTY} SEG`);
@@ -1017,11 +1253,11 @@ function terminal(key){
 function pintarTerminal(){
   const key = T.key, P = PISTAS[key]; if(!key) return;
   if(T.offline) return;
-  const ahora = T.id ? `${T.id}|${T.fase}|${T.fase === "jugando" ? "" : T.resultado}` : `nada|${NET.ok}|${NET.ready}|${performance.now() > 7500}`;
+  const ahora = T.id ? `${T.id}|${T.fase}|${T.nv}|${T.fase === "jugando" ? "" : T.resultado}|${T.fase === "espera" && T.info ? T.info.equipo || "" : ""}` : `nada|${NET.ok}|${NET.ready}|${performance.now() > 7500}`;
   if(ahora !== T.shown){
     T.shown = ahora;
     if(T.id && T.fase === "jugando"){
-      renderPista(key, { v:T.v, d:T.d, seed:T.id + key, solved:T.solved, hint:T.hint, paint:pintarEquipo,
+      renderPista(key, { v:T.v, d:T.d, nv:T.nv, seed:T.id + key, solved:T.solved, hint:T.hint, paint:pintarEquipo,
         onHint:() => { T.hint = true; memT(); enviar({ k:"pista", id:T.id, pista:key }); },
         onWin:() => { T.solved = true; T.res.add(key); memT(); enviar({ k:"resuelto", id:T.id, pista:key }); } });
     } else if(T.id && T.fase === "fin") finTerminal();
@@ -1045,6 +1281,7 @@ function esperaTerminal(){
         <span class="px" style="font-size:clamp(48px,8vw,80px);color:${P.color}">${P.sym}</span>
         <span class="px" style="font-size:16px;color:${P.color}">${esc(P.term)}</span>
         <h2>Esperando al servidor</h2>
+        ${T.id ? `<span class="px" style="font-size:12px;color:var(--yellow)">NIVEL ${T.nv} · ${NIVELES[T.nv]}${T.info && T.info.equipo ? " · " + esc(T.info.equipo) : ""}</span>` : ""}
         <p class="muted" style="max-width:40ch">Cuando el servidor inicie la partida, acá aparece tu desafío.</p>
         <span class="net" data-net></span>
         ${sinRed ? `<p class="small" style="max-width:46ch">No hay conexión con las otras notebooks. Revisá el wifi; se reconecta solo. Si no vuelve, el equipo puede usar esta terminal sin conexión.</p>
@@ -1056,7 +1293,7 @@ function esperaTerminal(){
 }
 function manualTerminal(){
   T.offline = true; T.shown = "";
-  const go = () => { renderPista(T.key, { v:pickVariant(T.key), d:FIJO[T.key], offline:true, reset:go }); window.scrollTo(0,0); };
+  const go = () => { renderPista(T.key, { v:pickVariant(T.key), d:FIJO[T.key], nv:T.nv || 1, offline:true, reset:go }); window.scrollTo(0,0); };
   go();
 }
 function finTerminal(){
@@ -1067,9 +1304,10 @@ function finTerminal(){
       ${bar(P.term + " · sistema-academico-125", !won)}
       <div class="body win">
         <h1 class="${won ? "party" : ""}" style="${won ? "" : "color:var(--red);"}font-size:clamp(32px,6vw,64px)">${titulo}</h1>
-        ${won && d.nivel ? `<p class="px" style="font-size:clamp(13px,2vw,18px);color:var(--yellow)">★ ${esc(d.nivel)} ★</p>` : ""}
+        ${won && d.rango ? `<p class="px" style="font-size:clamp(13px,2vw,18px);color:var(--yellow)">★ RANGO: ${esc(d.rango)} ★</p>` : ""}
+        ${d.equipo ? `<p class="px" style="font-size:12px;color:var(--muted)">${esc(d.equipo)}</p>` : ""}
         <h2>${won ? "¡Lo lograron en equipo!" : "Esta vez el servidor ganó."}</h2>
-        <p class="muted" style="max-width:44ch">Miren el proyector. Esta terminal se reinicia sola cuando empiece el próximo grupo.</p>
+        <p class="muted" style="max-width:44ch">Miren el proyector: ahí está el ranking. Esta terminal se reinicia sola cuando empiece el próximo grupo.</p>
         <span class="net" data-net></span>
       </div>
     </div>`;
@@ -1082,16 +1320,16 @@ function avisoTerminal(txt, color){
 }
 
 /* ---------------- servidor (proyector) ---------------- */
-const S = { state:"idle", id:null, cod:null, end:0, tick:null, fails:0, res:new Set(), pistas:[], warned300:false, warned60:false, warned30:false, lastBeep:null };
+const S = { state:"idle", id:null, cod:null, nivel:0, grupo:null, end:0, tick:null, fails:0, res:new Set(), pistas:[], warned300:false, warned60:false, warned30:false, lastBeep:null };
 function stopGame(){ clearInterval(S.tick); musicStop(); document.body.classList.remove("alarm"); }
 function nuevaId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
-function guardarS(){ store.set("e500-srv-" + SALA, { id:S.id, cod:S.cod, state:S.state, end:S.end, fails:S.fails, pistas:S.pistas }); }
+function guardarS(){ store.set("e500-srv-" + SALA, { id:S.id, cod:S.cod, nivel:S.nivel, grupo:S.grupo, state:S.state, end:S.end, fails:S.fails, pistas:S.pistas }); }
 const codigoTxt = c => ORDEN_P.map(k => c[k]).join("");
 /* acepta, casillero por casillero, el número sorteado o el de respaldo (por si una terminal jugó sin conexión) */
 function codigoOk(v){ return ORDEN_P.every((k, i) => +v[i] === S.cod[k] || +v[i] === FIJO[k]); }
 function restante(){ return Math.max(0, Math.ceil((S.end - Date.now()) / 1000)); }
 function publicarEstado(extra = {}){
-  enviar({ k:"estado", id:S.id, cod:S.cod, fase:S.state === "playing" ? "jugando" : S.state === "idle" ? "espera" : "fin", restante:restante(), ...extra });
+  enviar({ k:"estado", id:S.id, cod:S.cod, nivel:S.nivel || 1, equipo:S.grupo ? `${S.grupo.escuela}${S.grupo.anio ? " · " + S.grupo.anio : ""}` : "", fase:S.state === "playing" ? "jugando" : S.state === "idle" ? "espera" : "fin", restante:restante(), ...extra });
 }
 function servidor(){
   NET.on = (d, live) => {
@@ -1110,7 +1348,7 @@ function servidor(){
   };
   const m = store.get("e500-srv-" + SALA);
   if(m && m.state === "playing" && m.end > Date.now()){
-    Object.assign(S, m); S.res = new Set(); S.pistas = m.pistas || []; if(!S.cod) S.cod = { ...FIJO };
+    Object.assign(S, m); S.res = new Set(); S.pistas = m.pistas || []; if(!S.cod) S.cod = { ...FIJO }; if(!S.nivel) S.nivel = 1;
     jugando(true);
   } else renderServer(m && m.state === "idle" ? m.id : null);
 }
@@ -1119,25 +1357,57 @@ function renderServer(idPrevia){
   Object.assign(S, { state:"idle", fails:0, res:new Set(), pistas:[], warned300:false, warned60:false, warned30:false, lastBeep:null });
   const prev = store.get("e500-srv-" + SALA);
   S.id = idPrevia || nuevaId();
-  S.cod = idPrevia && prev && prev.id === idPrevia && prev.cod ? prev.cod : sortearCodigo();
+  const misma = idPrevia && prev && prev.id === idPrevia;
+  S.cod = misma && prev.cod ? prev.cod : sortearCodigo();
+  S.grupo = misma && prev.grupo ? prev.grupo : { escuela:"", anio:"", jugadores:"" };
+  if(!S.nivel) S.nivel = (prev && prev.nivel) || 1;
   S.end = 0; guardarS();
   if(!idPrevia) limpiarSala();   // los mensajes del grupo anterior ya no hacen falta
   publicarEstado();   // las terminales pasan a "esperando" con un caso nuevo
   app.innerHTML = `
     <div class="term alert">
       ${bar("ALERTA · servidor instituto-125", true, `<span class="net" data-net></span>`)}
-      <div class="body center" style="text-align:center">
-        <p class="mono" style="color:var(--cyan)">$ conectar --servidor instituto-125</p>
-        <h1 class="glitch">ERROR 500</h1>
-        <p class="mono muted">Internal Server Error · el sistema se cayó</p>
-        <h2>Falta una semana para las inscripciones.<br>¿Pueden restaurarlo en 10 minutos?</h2>
-        <p class="muted" style="max-width:60ch;margin:0 auto">Hay cuatro terminales, una por cada etapa de un proyecto: <b style="color:var(--cyan)">1 ◆ Cliente</b>, <b style="color:var(--green)">2 ★ Diseño</b>, <b style="color:var(--yellow)">3 ● Código</b> y <b style="color:var(--pink)">4 ▲ Calidad</b>. Pueden resolverlas al mismo tiempo. Después vuelvan acá con el código: tienen ${MAX_TRIES} intentos, y cada error o pista les cuesta ${PENALTY} segundos.</p>
-        <div class="row c"><button class="btn big" id="go" type="button">▶ Iniciar partida · 10:00</button></div>
+      <div class="body lobby">
+        <div class="lobby-l">
+          <h1 class="glitch">ERROR 500</h1>
+          <h2>Falta una semana para las inscripciones. ¿Pueden restaurar el sistema en 10 minutos?</h2>
+          <p class="muted">Cuatro terminales: <b style="color:var(--cyan)">◆ Cliente</b>, <b style="color:var(--green)">★ Diseño</b>, <b style="color:var(--yellow)">● Código</b> y <b style="color:var(--pink)">▲ Calidad</b>. Se resuelven al mismo tiempo y el código va acá: ${MAX_TRIES} intentos; cada error o pista cuesta ${PENALTY} segundos.</p>
+          <form class="grupo" id="grupo" autocomplete="off">
+            <div class="niveles" role="radiogroup" aria-label="Nivel">
+              ${[1,2,3].map(n => `<button type="button" class="nvb" data-n="${n}" role="radio" aria-checked="${S.nivel === n}"><b>NIVEL ${n}</b><span>${NIVELES[n]}</span></button>`).join("")}
+            </div>
+            <div class="gr2">
+              <label><span>Escuela</span><input id="g-esc" value="${esc(S.grupo.escuela)}" placeholder="Ej.: EEST N.º 1" maxlength="40"></label>
+              <label><span>Año / curso</span><input id="g-anio" value="${esc(S.grupo.anio)}" placeholder="Ej.: 6.º B" maxlength="12"></label>
+            </div>
+            <label><span>Jugadores (separados por coma)</span><input id="g-jug" value="${esc(S.grupo.jugadores)}" placeholder="Ej.: Sofi, Tomás, Valen" maxlength="160"></label>
+            <p class="fb bad" id="g-fb" role="alert"></p>
+            <button class="btn big" id="go" type="submit">▶ Iniciar · 10:00</button>
+          </form>
+        </div>
+        <div class="lobby-r">
+          <span class="px" style="font-size:13px;color:var(--yellow)">★ RANKING DE LA NOCHE ★</span>
+          <div id="rk">${rankTabla(rankCargar(), 7)}</div>
+        </div>
       </div>
     </div>`;
   bindReset(() => renderServer());
   netPaint();
-  document.getElementById("go").addEventListener("click", () => startGame());
+  rankTraer().then(l => { const el = document.getElementById("rk"); if(el) el.innerHTML = rankTabla(l, 7); });
+  const leer = () => { S.grupo = { escuela:document.getElementById("g-esc").value.trim(), anio:document.getElementById("g-anio").value.trim(), jugadores:document.getElementById("g-jug").value.trim() }; guardarS(); };
+  ["g-esc","g-anio","g-jug"].forEach(id => document.getElementById(id).addEventListener("change", () => { leer(); publicarEstado(); }));
+  app.querySelectorAll(".nvb").forEach(b => b.addEventListener("click", () => {
+    S.nivel = +b.dataset.n; guardarS(); ac(); SFX.key();
+    app.querySelectorAll(".nvb").forEach(x => x.setAttribute("aria-checked", String(x === b)));
+    publicarEstado();
+  }));
+  document.getElementById("grupo").addEventListener("submit", e => {
+    e.preventDefault(); leer();
+    const fb = document.getElementById("g-fb");
+    if(!S.grupo.escuela){ fb.textContent = "> Falta la escuela."; document.getElementById("g-esc").focus(); return; }
+    if(!S.grupo.jugadores){ fb.textContent = "> Faltan los nombres de los jugadores."; document.getElementById("g-jug").focus(); return; }
+    startGame();
+  });
 }
 function startGame(){
   ac(); SFX.start();
@@ -1227,33 +1497,50 @@ function updateClock(){
   if(left <= 10 && left > 0 && S.lastBeep !== left){ S.lastBeep = left; SFX.beep(); banner.textContent = `⚠ ${left}`; }
   if(left <= 0) gameLost("time");
 }
-function nivelDe(left){ return left >= 360 ? "NIVEL: LEYENDAS DEL CÓDIGO" : left >= 180 ? "NIVEL: EQUIPO SENIOR" : left >= 60 ? "NIVEL: EQUIPO DE EMERGENCIA" : "NIVEL: SALVADOS POR UN PIXEL"; }
-function gameWon(){
-  const left = restante(), used = DURATION - left;
-  S.state = "won"; stopGame(); SFX.win(); guardarS();
-  const rank = nivelDe(left);
-  publicarEstado({ resultado:"ganado", nivel:rank, restante:left });
+function rangoDe(left){ return left >= 360 ? "LEYENDAS DEL CÓDIGO" : left >= 180 ? "EQUIPO SENIOR" : left >= 60 ? "EQUIPO DE EMERGENCIA" : "SALVADOS POR UN PIXEL"; }
+const equipoTxt = () => S.grupo ? `${S.grupo.escuela}${S.grupo.anio ? " · " + S.grupo.anio : ""}` : "";
+function guardarResultado(ganado, left){
+  const e = { id:S.id, escuela:(S.grupo && S.grupo.escuela) || "Sin nombre", anio:(S.grupo && S.grupo.anio) || "",
+    jugadores:((S.grupo && S.grupo.jugadores) || "").split(",").map(x => x.trim()).filter(Boolean).slice(0, 8),
+    nivel:S.nivel || 1, ganado, sobraron:ganado ? left : 0, fragmentos:S.res.size, intentos:S.fails + (ganado ? 1 : 0), pistas:S.pistas.length, ts:Date.now() };
+  return { puesto:rankAgregar(e), total:RK.lista.length };
+}
+function finServidor(ganado, reason){
+  const left = ganado ? restante() : 0, used = DURATION - restante();
+  S.state = ganado ? "won" : "lost"; stopGame(); (ganado ? SFX.win : SFX.lose)(); guardarS();
+  const rango = ganado ? rangoDe(left) : "";
+  publicarEstado({ resultado:ganado ? "ganado" : reason === "locked" ? "bloqueado" : "tiempo", rango, restante:left });
+  const { puesto, total } = guardarResultado(ganado, left);
+  const locked = reason === "locked";
   app.innerHTML = `
-    <div class="term winterm">
-      ${bar("servidor instituto-125 · en línea", false, `<span class="net" data-net></span>`)}
-      <div class="body win">
-        <p class="mono" style="color:var(--green)">$ status --servidor instituto-125 → 200 OK ✔</p>
-        <h1 class="party" style="font-size:clamp(30px,4.6vw,58px)">SISTEMA RESTAURADO</h1>
-        <div class="stats">
-          <div><span class="px">TIEMPO</span><b>${fmt(used)}</b></div>
-          <div><span class="px">SOBRARON</span><b>${fmt(left)}</b></div>
-          <div><span class="px">INTENTOS</span><b>${S.fails + 1}/${MAX_TRIES}</b></div>
+    <div class="term ${ganado ? "winterm" : "alert"}">
+      ${bar(ganado ? "servidor instituto-125 · en línea" : "ALERTA · servidor instituto-125", !ganado, `<span class="net" data-net></span>`)}
+      <div class="body lobby fin">
+        <div class="lobby-l win">
+          <p class="mono" style="color:${ganado ? "var(--green)" : "var(--red)"}">$ status → ${ganado ? "200 OK ✔" : locked ? "423 LOCKED" : "500"}</p>
+          <h1 class="${ganado ? "party" : ""}" style="font-size:clamp(28px,3.8vw,50px);${ganado ? "" : "color:var(--red)"}">${ganado ? "SISTEMA RESTAURADO" : locked ? "SISTEMA BLOQUEADO" : "SE ACABÓ EL TIEMPO"}</h1>
+          <p class="px" style="font-size:12px;color:var(--yellow)">${esc(equipoTxt())} · NIVEL ${S.nivel} ${NIVELES[S.nivel]}</p>
+          <div class="stats">
+            <div><span class="px">${ganado ? "TIEMPO" : "FRAGMENTOS"}</span><b>${ganado ? fmt(used) : S.res.size + "/4"}</b></div>
+            <div><span class="px">${ganado ? "SOBRARON" : "INTENTOS"}</span><b>${ganado ? fmt(left) : S.fails + "/" + MAX_TRIES}</b></div>
+            <div><span class="px">PUESTO</span><b>${puesto}/${total}</b></div>
+          </div>
+          ${ganado ? `<p class="px" style="font-size:clamp(12px,1.6vw,16px);color:var(--yellow)">★ RANGO: ${rango} ★</p>
+          <p class="muted" style="max-width:52ch">Entendieron al cliente, diseñaron, leyeron código y probaron el sistema, en equipo y contra reloj. Eso es lo que hacemos en la <b style="color:var(--ink)">Tecnicatura en Desarrollo de Software</b>.</p>`
+          : `<p class="muted" style="max-width:52ch">${locked ? `Usaron los ${MAX_TRIES} intentos y el sistema se bloqueó por seguridad.` : "El servidor sigue caído… por ahora."} En la vida real también pasa: se revisa qué falló y se vuelve a intentar.</p>`}
+          <div class="row c"><button class="btn big" id="again" type="button">▶ Siguiente grupo</button></div>
         </div>
-        <p class="px" style="font-size:clamp(13px,2vw,18px);color:var(--yellow)">★ ${rank} ★</p>
-        <h2>¡Salvaron las inscripciones del instituto!</h2>
-        <p class="muted" style="max-width:60ch">Encontraron los errores, entendieron al cliente, leyeron código y arreglaron el diseño, en equipo y contra reloj. Eso es exactamente lo que hacemos en la <b style="color:var(--ink)">Tecnicatura en Desarrollo de Software</b>. ¿Se imaginan haciéndolo todos los días?</p>
-        <div class="row c"><button class="btn big" id="again" type="button">▶ Siguiente grupo</button></div>
+        <div class="lobby-r">
+          <span class="px" style="font-size:13px;color:var(--yellow)">★ RANKING DE LA NOCHE ★</span>
+          ${rankTabla(RK.lista, 7, S.id)}
+        </div>
       </div>
     </div>`;
   netPaint();
-  document.getElementById("again").addEventListener("click", () => renderServer());
-  confetti();
+  document.getElementById("again").addEventListener("click", () => { S.grupo = null; renderServer(); });
+  if(ganado) confetti();
 }
+function gameWon(){ finServidor(true); }
 /* lluvia de píxeles para la celebración */
 function confetti(){
   if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -1268,23 +1555,69 @@ function confetti(){
     if(t - t0 < 6000 && document.body.contains(c)) requestAnimationFrame(frame); else c.remove();
   })(t0);
 }
-function gameLost(reason){
-  S.state = "lost"; stopGame(); SFX.lose(); guardarS();
-  const locked = reason === "locked";
-  publicarEstado({ resultado:locked ? "bloqueado" : "tiempo", restante:0 });
-  app.innerHTML = `
-    <div class="term alert">
-      ${bar("ALERTA · servidor instituto-125", true, `<span class="net" data-net></span>`)}
-      <div class="body win">
-        <p class="mono" style="color:var(--red)">$ status --servidor instituto-125 → ${locked ? "423 LOCKED" : "500"}</p>
-        <h1 style="color:var(--red);font-size:clamp(32px,6vw,68px)">${locked ? "SISTEMA<br>BLOQUEADO" : "SE ACABÓ<br>EL TIEMPO"}</h1>
-        <h2>${locked ? `Usaron los ${MAX_TRIES} intentos y el sistema se bloqueó por seguridad.` : "El servidor sigue caído… por ahora."}</h2>
-        <p class="muted" style="max-width:52ch">En la vida real también pasa: se aprende, se revisa qué falló y se vuelve a intentar. Pidan ayuda al equipo y descubran juntos cuál era el código.</p>
-        <div class="row c"><button class="btn big" id="again" type="button">▶ Siguiente grupo</button></div>
-      </div>
-    </div>`;
-  netPaint();
-  document.getElementById("again").addEventListener("click", () => renderServer());
+function gameLost(reason){ finServidor(false, reason); }
+
+/* ---------------- ranking de la noche ----------------
+   Se guarda en la notebook del servidor y, si hay Firebase, también en la base (así lo ve la pantalla #ranking).
+   Orden: primero los que restauraron el sistema (más nivel, después más tiempo sobrante);
+   después los que no (más fragmentos recuperados, después más nivel). */
+const RK = { key:"e500-rank-" + SALA, lista:[] };
+function rankCargar(){ RK.lista = store.get(RK.key) || []; return RK.lista; }
+function rankOrden(a, b){
+  if(a.ganado !== b.ganado) return a.ganado ? -1 : 1;
+  if(a.ganado) return (b.nivel - a.nivel) || (b.sobraron - a.sobraron) || (a.ts - b.ts);
+  return (b.fragmentos - a.fragmentos) || (b.nivel - a.nivel) || (a.ts - b.ts);
+}
+function rankMezclar(entradas){
+  const m = new Map(rankCargar().map(e => [e.id, e]));
+  (entradas || []).forEach(e => { if(e && e.id) m.set(e.id, e); });
+  RK.lista = [...m.values()].sort(rankOrden); store.set(RK.key, RK.lista); return RK.lista;
+}
+function rankAgregar(e){
+  const lista = rankMezclar([e]);
+  if(VIA === "firebase") fetch(`${DB}/salas/${SALA}/ranking/${e.id}.json`, { method:"PUT", body:JSON.stringify(e) }).catch(() => {});
+  return lista.findIndex(x => x.id === e.id) + 1;
+}
+function rankTraer(){   // trae lo que haya en Firebase (por si se cambió la notebook del servidor)
+  if(VIA !== "firebase") return Promise.resolve(rankCargar());
+  return fetch(`${DB}/salas/${SALA}/ranking.json`).then(r => r.ok ? r.json() : null)
+    .then(o => rankMezclar(o ? Object.values(o) : [])).catch(() => rankCargar());
+}
+const resTxt = e => e.ganado ? `✔ ${fmt(e.sobraron)}` : `✖ ${e.fragmentos}/4`;
+function rankTabla(lista, max, resaltar){
+  if(!lista.length) return `<p class="muted rk-vacio">Todavía no jugó ningún grupo. ¡El primero se lleva el puesto 1!</p>`;
+  return `<div class="rk">
+    <div class="rk-row rk-head"><span>#</span><span>EQUIPO</span><span>NV</span><span>RESULT.</span></div>
+    ${lista.slice(0, max).map((e, i) => `<div class="rk-row${e.id === resaltar ? " yo" : ""}${e.ganado ? "" : " perdio"}">
+      <span class="rk-pos">${i + 1}</span>
+      <span class="rk-eq"><b>${esc(e.escuela)}${e.anio ? " · " + esc(e.anio) : ""}</b><small>${esc((e.jugadores || []).join(", "))}</small></span>
+      <span class="rk-nv">${e.nivel}</span>
+      <span class="rk-res">${resTxt(e)}</span></div>`).join("")}
+  </div>`;
+}
+function rankCSV(){
+  const filas = [["Puesto","Escuela","Año","Jugadores","Nivel","Restauraron","Tiempo sobrante","Fragmentos","Intentos","Pistas","Fecha"]]
+    .concat(rankCargar().map((e, i) => [i + 1, e.escuela, e.anio, (e.jugadores || []).join(" / "), e.nivel, e.ganado ? "sí" : "no", e.ganado ? fmt(e.sobraron) : "", e.fragmentos, e.intentos, e.pistas, new Date(e.ts).toLocaleString("es-AR")]));
+  const csv = filas.map(f => f.map(c => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type:"text/csv" }));
+  a.download = "ranking-error500.csv"; document.body.appendChild(a); a.click(); a.remove();
+}
+/* pantalla #ranking: para un monitor aparte; se actualiza sola */
+function pantallaRanking(){
+  stopGame(); NET.on = d => { if(d.k === "_net" || d.k === "_sync") netPaint(); if(d.k === "estado" && d.fase === "fin") setTimeout(pintar, 1500); };
+  const pintar = () => rankTraer().then(lista => {
+    app.innerHTML = `
+      <div class="term">
+        ${bar("ranking · noche-del-instituto-125", false, `<span class="net" data-net></span>`)}
+        <div class="body rk-full">
+          <div class="row" style="justify-content:space-between"><h1 style="font-size:clamp(24px,3vw,38px)">RANKING</h1><span class="px small" style="font-size:12px">ERROR 500 · ${lista.length} ${lista.length === 1 ? "GRUPO" : "GRUPOS"}</span></div>
+          ${rankTabla(lista, 8)}
+        </div>
+      </div>`;
+    netPaint();
+  });
+  pintar();
+  clearInterval(RK.tick); RK.tick = setInterval(() => { if((location.hash || "") === "#ranking") pintar(); else clearInterval(RK.tick); }, 15000);
 }
 
 /* ---------------- menú (lo usa el equipo para preparar cada notebook) ---------------- */
@@ -1301,7 +1634,7 @@ function renderMenu(){
     <div class="menu">
       <div class="menu-h">
         <div><span class="px small" style="font-size:11px">ISFDyT N° 125 · NOCHE DEL INSTITUTO</span><h1>ERROR 500</h1></div>
-        <div class="menu-net"><span class="net" data-net></span><span class="px small" style="font-size:10px">SALA: ${esc(SALA)} · ${VIA === "firebase" ? "FIREBASE" : "NTFY.SH"}</span><span class="px small" style="font-size:10px">CÓDIGO DE LA PARTIDA: <b id="codnow" style="color:var(--yellow)">—</b></span></div>
+        <div class="menu-net"><span class="net" data-net></span><span class="px small" style="font-size:10px">SALA: ${esc(SALA)} · ${VIA === "firebase" ? "FIREBASE" : "NTFY.SH"}</span><span class="px small" style="font-size:10px">CÓDIGO DE LA PARTIDA: <b id="codnow" style="color:var(--yellow)">—</b></span><button class="btn ghost" id="csv" type="button" style="font-size:10px;padding:6px 10px">⬇ RANKING (CSV)</button></div>
       </div>
       <p class="muted" style="font-size:18px">Abrí en cada notebook su dirección (o tocá su tarjeta). Quedan conectadas entre sí: el servidor inicia la partida y todas se reinician juntas al terminar.</p>
       <div class="cards">
@@ -1310,10 +1643,12 @@ function renderMenu(){
         ${card("diseno", "#5CF28B", "2 ★ DISEÑO", "Arreglar el diseño de la página")}
         ${card("codigo", "#FFD23F", "3 ● CÓDIGO", "Leer un programa")}
         ${card("calidad", "#FF4FA3", "4 ▲ CALIDAD", "Encontrar los errores")}
+        ${card("ranking", "#FFD23F", "★ RANKING · PANTALLA EXTRA (OPCIONAL)", "Tabla de posiciones que se actualiza sola")}
       </div>
       <p class="small">Para el equipo: <b>Ctrl + Alt + R</b> reinicia a mano cualquier notebook (sirve sin internet). En el servidor corta la partida; en una terminal pone un caso nuevo.</p>
     </div>`;
   netPaint();
+  document.getElementById("csv").addEventListener("click", () => rankTraer().then(rankCSV));
 }
 
 /* ---------------- router ---------------- */
@@ -1323,6 +1658,7 @@ function route(){
   const h = (location.hash || "").replace("#","");
   if(PISTAS[h]) terminal(h);
   else if(h === "servidor") servidor();
+  else if(h === "ranking") pantallaRanking();
   else renderMenu();
   window.scrollTo(0,0);
 }
