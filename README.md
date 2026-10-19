@@ -2,7 +2,7 @@
 
 Juego para el stand de 3.º año de la **Tecnicatura Superior en Desarrollo de Software** del ISFDyT N° 125 en la Noche del Instituto.
 
-El sistema del instituto "se cayó" y un grupo de 3 a 6 visitantes tiene **10 minutos** para resolver cuatro acertijos en cuatro terminales, armar el código y restaurarlo desde el servidor conectado al proyector.
+El sistema del instituto "se cayó" y un grupo de 3 a 6 visitantes tiene **10 minutos** para resolver cuatro acertijos en cuatro terminales, armar el código y restaurarlo desde la pantalla del servidor.
 
 ## Direcciones para cada PC
 
@@ -14,7 +14,7 @@ Las terminales siguen el orden real de un proyecto: primero se escucha al client
 | 2 ★ Diseño | https://camilafrontera.github.io/escape-room/#diseno | Armar el botón «Inscribirme» igual que el manual de marca del cliente: fondo, letra, esquinas, tamaño y mayúsculas, viendo el CSS que se genera |
 | 3 ● Código | https://camilafrontera.github.io/escape-room/#codigo | Averiguar qué número muestra un programa |
 | 4 ▲ Calidad | https://camilafrontera.github.io/escape-room/#calidad | Contar los errores entre la pantalla esperada y la obtenida |
-| Proyector | https://camilafrontera.github.io/escape-room/#servidor | ERROR 500, timer de 10 minutos con música y código final |
+| Servidor (pantalla principal) | https://camilafrontera.github.io/escape-room/#servidor | ERROR 500, timer de 10 minutos con música y código final |
 
 Sin nada después del `#` se abre un menú con la dirección exacta de cada notebook, el estado de la conexión y **el código de la partida en curso** (para el equipo).
 
@@ -45,6 +45,18 @@ Los tres niveles tienen 10 minutos.
 - El ranking se guarda en la notebook del servidor y, con Firebase, también en la base. Por eso hay que agregar `ranking` en las reglas, como figura más abajo.
 - `#ranking` es una pantalla extra opcional: muestra la tabla grande y se actualiza sola.
 - En el menú hay un botón **⬇ RANKING (CSV)** para bajar todos los resultados de la noche y abrirlos en Excel.
+- **Partidas de prueba:** en el inicio del servidor hay una casilla **"Partida de prueba (no entra al ranking)"**. Se desmarca sola en el grupo siguiente.
+- **Borrar el ranking:** en el menú, **🗑 BORRAR RANKING** (hay que tocarlo dos veces). Borra la tabla en Firebase y en la notebook. Conviene hacerlo antes de que empiece la noche, para sacar las pruebas.
+- Con Firebase, la tabla de la base es la que vale: cada notebook guarda solo una copia por si se corta internet.
+
+## Cómo responde cada terminal
+
+- **◆ Cliente:** debajo de cada símbolo en clave hay un casillero; se completa letra por letra y se verifica solo al llenar todos.
+- **★ Diseño:** dos paneles enfrentados, "Lo que pide el cliente" y "Tu botón". Los controles van en el mismo orden que los pedidos. En el nivel 1 aparece ✔ al lado de cada pedido cumplido. El botón **¿Cuántos me faltan?** dice cuántas cosas faltan.
+- **● Código:** la respuesta se escribe en la consola del editor (`> ?`). Hay un espacio de "Tus anotaciones" para seguir el valor de x.
+- **▲ Calidad:** se tocan las filas con error para marcarlas (también el botón, si corresponde) y después se verifica. Tienen que estar marcadas exactamente las filas con error.
+
+Mientras esperan, cada terminal muestra un brief: qué número tienen que conseguir, de qué se trata su desafío y las reglas de pistas. Al conseguirlo, la pantalla indica a qué casillero del servidor llevar el número. En el servidor, cada casillero se marca cuando su terminal ya consiguió el número, y cuando están los 4 aparece un aviso.
 
 ## Cómo se juega
 
@@ -111,7 +123,7 @@ Las terminales que están esperando y no tienen conexión también muestran un b
 - **El código cambia en cada partida.** El menú (la dirección sin `#`) muestra el de la partida en curso.
 - **Código de respaldo: 3 7 5 4.** Si una terminal se juega sin conexión (o con Ctrl + Alt + R), usa su número de respaldo: Cliente 3, Diseño 7, Código 5, Calidad 4. El servidor acepta, casillero por casillero, el número sorteado o el de respaldo, así una terminal sin conexión no traba al grupo.
 - **Próximo grupo:** botón **Siguiente grupo** en el servidor. **Cortar una partida a la mitad:** Ctrl + Alt + R en el servidor (o triple clic en su barra rosa).
-- **Sonido:** se genera en el navegador, sin archivos. Los navegadores solo permiten audio después de un clic, por eso la música arranca con el botón Iniciar. Subir el volumen de la PC del proyector.
+- **Sonido:** se genera en el navegador, sin archivos. Los navegadores solo permiten audio después de un clic, por eso la música arranca con el botón Iniciar. Subir el volumen de la notebook del servidor.
 - Botón **Pantalla completa** abajo a la derecha (o F11).
 
 ## Publicar en GitHub Pages
