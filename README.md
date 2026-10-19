@@ -18,6 +18,34 @@ Las terminales siguen el orden real de un proyecto: primero se escucha al client
 
 Sin nada después del `#` se abre un menú con la dirección exacta de cada notebook, el estado de la conexión y **el código de la partida en curso** (para el equipo).
 
+## Niveles y ranking
+
+**Antes de cada partida**, en la pantalla del servidor:
+
+1. Se elige el **nivel**:
+   - **Nivel 1 · Inicial:** para quien nunca vio nada de informática.
+   - **Nivel 2 · Intermedio:** un paso más.
+   - **Nivel 3 · Avanzado:** pensado para chicos de escuela técnica con orientación informática.
+2. Se cargan la **escuela**, el **año/curso** y los **nombres de los jugadores**. Sin escuela o sin jugadores no se puede iniciar.
+
+| Terminal | Nivel 1 | Nivel 2 | Nivel 3 |
+|---|---|---|---|
+| ◆ Cliente | Palabra en clave con la clave y el abecedario a la vista | Sin las ayudas de apoyo (sin abecedario en César, sin la segunda fila en el invertido) | César sin decir cuánto se corrió: se deduce con la firma del cliente |
+| ★ Diseño | Muestras de color con nombre y manual en palabras | Manual con el color en hexadecimal; hay que comparar el código | Se elige el valor de cada línea del CSS (hex, px, `padding`) |
+| ● Código | Pseudocódigo con glosario | Pseudocódigo que combina bucle y condición, sin glosario | Python corto con `for` y `range` |
+| ▲ Calidad | Comparar esperado contra obtenido | Formulario con reglas: contar los datos que rompen su regla | Igual, con una regla de rango con bordes ("entre 17 y 99, incluidos") |
+
+Los tres niveles tienen 10 minutos.
+
+**Ranking:** al terminar cada partida, el resultado se guarda y se muestra la tabla de la noche, con el puesto del grupo resaltado. El orden es:
+
+1. Primero, los que restauraron el sistema: más nivel primero y, dentro del mismo nivel, más tiempo sobrante.
+2. Después, los que no lo restauraron: más fragmentos recuperados y, después, más nivel.
+
+- El ranking se guarda en la notebook del servidor y, con Firebase, también en la base. Por eso hay que agregar `ranking` en las reglas, como figura más abajo.
+- `#ranking` es una pantalla extra opcional: muestra la tabla grande y se actualiza sola.
+- En el menú hay un botón **⬇ RANKING (CSV)** para bajar todos los resultados de la noche y abrirlos en Excel.
+
 ## Cómo se juega
 
 Las cinco notebooks están **conectadas en tiempo real**:
@@ -57,7 +85,8 @@ Cada pantalla muestra **● EN LÍNEA** u **○ SIN CONEXIÓN**. Si se corta, se
       "$sala": {
         ".read": true,
         "msgs": { ".write": true, "$m": { ".validate": "newData.hasChildren(['k', 'u'])" } },
-        "hora": { ".write": true }
+        "hora": { ".write": true },
+        "ranking": { ".write": true }
       }
     }
   }
